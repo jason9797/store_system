@@ -1,0 +1,379 @@
+{% extends 'base.html' %}
+{% block head%}
+<link href="/static/css/pages/plans.css" rel="stylesheet" />
+{% endblock %}
+{% block body %}
+<div id="content">
+	<div class="container">
+
+		<div class="row">
+
+			<div class="span3">
+
+				<div class="account-container">
+
+					<div class="account-avatar">
+						<img src="/static/img/headshot.png" alt="" class="thumbnail" />
+					</div> <!-- /account-avatar -->
+
+					<div class="account-details">
+
+						<span class="account-name">Rod Howard</span>
+
+						<span class="account-role">Administrator</span>
+
+						<span class="account-actions">
+							<a href="javascript:;">Profile</a> |
+
+							<a href="javascript:;">Edit Settings</a>
+						</span>
+
+					</div> <!-- /account-details -->
+
+				</div> <!-- /account-container -->
+
+				<hr />
+
+				<ul id="main-nav" class="nav nav-tabs nav-stacked">
+
+					<li>
+						<a href="./">
+							<i class="icon-home"></i>
+							Dashboard
+						</a>
+					</li>
+
+					<li>
+						<a href="./faq.html">
+							<i class="icon-pushpin"></i>
+							FAQ
+						</a>
+					</li>
+
+					<li>
+						<a href="./plans.html">
+							<i class="icon-th-list"></i>
+							Pricing Plans
+						</a>
+					</li>
+
+					<li class="">
+						<a href="./grid.html">
+							<i class="icon-th-large"></i>
+							Grid Layout
+							<span class="label label-warning pull-right">5</span>
+						</a>
+					</li>
+
+					<li>
+						<a href="./charts.html">
+							<i class="icon-signal"></i>
+							Charts
+						</a>
+					</li>
+
+					<li class="active">
+						<a href="./account.html">
+							<i class="icon-user"></i>
+							User Account
+						</a>
+					</li>
+
+					<li>
+						<a href="./login.html">
+							<i class="icon-lock"></i>
+							Login
+						</a>
+					</li>
+
+				</ul>
+
+
+
+				<hr />
+
+				<div class="sidebar-extra">
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>
+				</div> <!-- .sidebar-extra -->
+
+				<br />
+
+			</div> <!-- /span3 -->
+
+
+
+			<div class="span9">
+
+				<h1 class="page-title">
+					<i class="icon-th-large"></i>
+					User Account
+				</h1>
+
+
+				<div class="row">
+
+					<div class="span9">
+
+						<div class="widget">
+
+							<div class="widget-header">
+								<h3>Basic Information</h3>
+							</div> <!-- /widget-header -->
+
+							<div class="widget-content">
+
+
+
+								<div class="tabbable">
+						<ul class="nav nav-tabs">
+						  <li class="active">
+						    <a href="#1" data-toggle="tab">用户信息</a>
+						  </li>
+						  <li><a href="#2" data-toggle="tab">用户管理</a></li>
+						</ul>
+
+						<br />
+
+							<div class="tab-content">
+								<div class="tab-pane active" id="1">
+								<form method="post" action='' id="edit-profile" class="form-horizontal" />
+									{% csrf_token %}
+                                    <fieldset>
+
+										<div class="control-group">
+											<label class="control-label" for="username">Username</label>
+											<div class="controls">
+												<input type="text" class="input-medium disabled" name="username" id="username" value="{{ user.username }}" readonly="readonly" />
+												<!--<p class="help-block">Your username is for logging in and cannot be changed.</p>-->
+											</div> <!-- /controls -->
+										</div> <!-- /control-group -->
+										<div class="control-group">
+											<label class="control-label" for="firstname">First Name</label>
+											<div class="controls">
+												<input type="text" class="input-medium" id="firstname" name="firstname" value="{{ user.first_name }}" />
+											</div> <!-- /controls -->
+										</div> <!-- /control-group -->
+										<div class="control-group">
+											<label class="control-label" for="lastname">Last Name</label>
+											<div class="controls">
+												<input type="text" class="input-medium" id="lastname" name="lastname" value="{{ user.last_name }}" />
+											</div> <!-- /controls -->
+										</div> <!-- /control-group -->
+										<div class="control-group">
+											<label class="control-label" for="email">Email Address</label>
+											<div class="controls">
+												<input type="text" class="input-large" id="email" name="email" value="{{ user.email }}" />
+											</div> <!-- /controls -->
+										</div> <!-- /control-group -->
+										<br /><br />
+										<div class="control-group">
+											<label class="control-label" for="password1">Password</label>
+											<div class="controls">
+												<input type="password" class="input-medium" id="password1" name="password1" value="" />
+											</div> <!-- /controls -->
+										</div> <!-- /control-group -->
+										<div class="control-group">
+											<label class="control-label" for="password2">Confirm</label>
+											<div class="controls">
+												<input type="password" class="input-medium" id="password2" name="password2" value="" />
+											</div> <!-- /controls -->
+										</div> <!-- /control-group -->
+											<br />
+										<div class="form-actions">
+											<button type="submit" class="btn btn-primary">Save</button>
+											<button class="btn">Cancel</button>
+										</div> <!-- /form-actions -->
+									</fieldset>
+								</form>
+								</div>
+                                <div class="tab-pane" id="2">
+									<div class="container">
+                                        <div class="row">
+                                        <div class="span4">
+                                            <div class="control-group">
+                                            <h2><strong>客服</strong></h2>
+                                                </div>
+                                                <table class="table">
+                                                <thead>
+                                                <tr>
+                                                <th>姓名</th>
+                                                <th>编辑</th>
+                                                <th>删除</th>
+                                                <th><a href="#" data-toggle="modal" data-target="#addrole0">添加客服</a></th>
+                                                </tr>
+                                                </thead>
+                                                    {% for i in role%}
+                                                    {% if i.role == 0 %}
+                                                    <tr>
+                                                        <td>{{ i.first_name }}</td>
+                                                        <td><a href="#" data-toggle="modal" data-target="#editrole{{ i.user.id }}">edit</a></td>
+                                                        <td><a>remove</a></td>
+                                                    </tr>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </table>
+                                        </div>
+                                        <div class="span4">
+                                            <h2><strong>仓管</strong></h2>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                <th>姓名</th>
+                                                <th>编辑</th>
+                                                <th>删除</th>
+                                                <th><a href="#" data-toggle="modal" data-target="#addrole1">添加仓管</a></th>
+                                                </tr>
+                                                </thead>
+                                                {% for i in role%}
+                                                    {% if i.role == 1 %}
+                                                    <tr>
+                                                        <td>{{ i.user.first_name }}</td>
+                                                        <td><a href="#" data-toggle="modal" data-target="#editrole{{ i.user.id }}">edit</a></td>
+                                                        <td><a>remove</a></td>
+                                                    </tr>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                            </div>
+                                        </div>
+								</div>
+
+							</div>
+
+
+						</div>
+							</div>
+						</div>
+							</div> <!-- /widget-content -->
+						</div> <!-- /widget -->
+					</div> <!-- /span9 -->
+				</div> <!-- /row -->
+			</div> <!-- /span9 -->
+<div class="modal fade" id="addrole0" tabindex="-1" role="dialog"
+   aria-labelledby="role0ModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+          <form method="post" action="/role/add/0">
+         <div class="modal-header">
+            <h4 class="modal-title" id="role0ModalLabel">
+               添加客服
+            </h4>
+         </div>
+         <div class="modal-body">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+            <button type="submit" class="btn btn-primary">
+               提交更改
+            </button>
+         </div>
+              </form>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+</div>
+<div class="modal fade" id="addrole1" tabindex="-1" role="dialog"
+   aria-labelledby="role1ModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+          <form method="post" action="/role/add/1">
+         <div class="modal-header">
+            <button type="button" class="close"
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="role1ModalLabel">
+               添加客服
+            </h4>
+         </div>
+         <div class="modal-body">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+            <button type="submit" class="btn btn-primary">
+               提交更改
+            </button>
+         </div>
+              </form>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+</div>
+    {% for i in role %}
+    {% if not i.user.is_superuser %}
+    <div class="modal fade" id="editrole{{ i.user.id }}" tabindex="-1" role="dialog"
+   aria-labelledby="role1ModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+                    <div class="modal-header">
+            <h4 class="modal-title" id="editrole1ModalLabel">
+               修改信息
+            </h4>
+         </div>
+          <form method="post" action="/role/edit/{{ i.user.id }}">
+									{% csrf_token %}
+                                    <div class="modal-body">
+										<p>
+											<label>Username</label>
+												<input type="text" class="input-medium disabled" name="username"  value="{{ i.user.username }}" readonly="readonly" />
+												<!--<p class="help-block">Your username is for logging in and cannot be changed.</p>-->
+										</p> <!-- /control-group -->
+										<p>
+											<label>First Name</label>
+												<input type="text" class="input-medium"  name="firstname" value="{{ i.user.first_name }}" />
+										</p>
+										<p>
+											<label>Last Name</label>
+												<input type="text" class="input-medium" name="lastname" value="{{ i.user.last_name }}" />
+										</p>
+										<p>
+											<label>Email Address</label>
+												<input type="text" class="input-large" name="email" value="{{ i.user.email }}" />
+											</p> <!-- /controls -->
+										<p>
+											<label>Password</label>
+												<input type="password" class="input-medium" name="password1" value="" />
+										</p> <!-- /control-group -->
+										<p>
+											<label>Confirm</label>
+												<input type="password" class="input-medium"  name="password2" value="" />
+										</p> <!-- /control-group -->
+											</div>
+										<div class="modal-footer">
+                                            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+											<button type="submit" class="btn btn-primary">Save</button>
+										</div> <!-- /form-actions -->
+
+              </form>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+</div>
+    {% endif %}
+    {% endfor %}
+         </div>
+
+{% endblock %}
+
+{% block js %}
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.7.2.min.js"></script>
+<script src="/static/js/bootstrap.js"></script>
+<!--<script type="text/javascript">
+$('body').on('hidden.bs.modal', '.modal', function () {
+$(this).removeData('bs.modal');
+});
+</script>-->
+{% endblock %}
