@@ -15,7 +15,7 @@ class Stock(models.Model):
     quantity = models.IntegerField(verbose_name='数量')
     stock_type = models.ForeignKey('Stock_Type',verbose_name='类别')
     stock_channel = models.ForeignKey('Stock_Channel',verbose_name='进货渠道')
-
+    jointime = models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
     class Meta:
         verbose_name='原料'
 
@@ -43,7 +43,7 @@ class Stock_Channel(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone_number = models.CharField(verbose_name='手机号码',max_length=20,validators=[phone_regex], blank=True)
-    
+    jointime=models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
     class Meta:
         verbose_name='原料渠道'
 
@@ -57,7 +57,7 @@ class Stock_Management(models.Model):
     stock_mode = models.BooleanField(verbose_name='出/入库',default=True)
     stock = models.ForeignKey(Stock,verbose_name='原料')
     mode = models.ForeignKey('Stock_Mode',verbose_name='出入方式')
-
+    jointime =models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
     class Meta:
         verbose_name='库存管理'
 

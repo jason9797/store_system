@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block order %}
+class="active"
+{% endblock %}
+{% block body %}
+
+
+
+                <div class="container">
+                    <ol class="breadcrumb">
+  <li><a href="{% url 'order_home' %}">订单管理</a></li>
+  <li><a href="{% url 'order_contact' %}">联系方式管理</a></li>
+  <li><a href="{% url 'order_customer' %}">客户管理</a></li>
+  <li><a href="{% url 'order_customer_level' %}">客户水平管理</a></li>
+  <li><a href="{% url 'order_product' %}">产品管理</a></li>
+  <li><a href="{% url 'order_stock_product' %}">产品原料管理</a></li>
+  <li class="active">订单状态管理</li>
+  <li><a href="{% url 'order_issuing_person' %}">出单人管理</a></li>
+
+</ol>
+                    <div class="container">
+                        <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                        <th>订单状态</th>
+                        <th>操作</th>
+                        </tr>
+                        <thead>
+                    </thead>
+                        {% for i in state_data %}
+                        <tr>
+                        <td>{{ i.name }}</td>
+                        <td><a href="?id={{ i.id }}">edit</a>,<a href="{% url 'order_state_remove' %}?id={{ i.id }}">remove</a></td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                            </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                        <p><label>名称:</label>{{ state_form.name }}</p>
+                        <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+{% endblock %}

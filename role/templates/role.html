@@ -1,138 +1,18 @@
 {% extends 'base.html' %}
-{% block head%}
-<link href="/static/css/pages/plans.css" rel="stylesheet" />
+{% block role %}
+class="active"
 {% endblock %}
 {% block body %}
-<div id="content">
-	<div class="container">
+			<div class="col-md-9">
 
-		<div class="row">
-
-			<div class="span3">
-
-				<div class="account-container">
-
-					<div class="account-avatar">
-						<img src="/static/img/headshot.png" alt="" class="thumbnail" />
-					</div> <!-- /account-avatar -->
-
-					<div class="account-details">
-
-						<span class="account-name">Rod Howard</span>
-
-						<span class="account-role">Administrator</span>
-
-						<span class="account-actions">
-							<a href="javascript:;">Profile</a> |
-
-							<a href="javascript:;">Edit Settings</a>
-						</span>
-
-					</div> <!-- /account-details -->
-
-				</div> <!-- /account-container -->
-
-				<hr />
-
-				<ul id="main-nav" class="nav nav-tabs nav-stacked">
-
-					<li>
-						<a href="./">
-							<i class="icon-home"></i>
-							Dashboard
-						</a>
-					</li>
-
-					<li>
-						<a href="./faq.html">
-							<i class="icon-pushpin"></i>
-							FAQ
-						</a>
-					</li>
-
-					<li>
-						<a href="./plans.html">
-							<i class="icon-th-list"></i>
-							Pricing Plans
-						</a>
-					</li>
-
-					<li class="">
-						<a href="./grid.html">
-							<i class="icon-th-large"></i>
-							Grid Layout
-							<span class="label label-warning pull-right">5</span>
-						</a>
-					</li>
-
-					<li>
-						<a href="./charts.html">
-							<i class="icon-signal"></i>
-							Charts
-						</a>
-					</li>
-
-					<li class="active">
-						<a href="./account.html">
-							<i class="icon-user"></i>
-							User Account
-						</a>
-					</li>
-
-					<li>
-						<a href="./login.html">
-							<i class="icon-lock"></i>
-							Login
-						</a>
-					</li>
-
-				</ul>
-
-
-
-				<hr />
-
-				<div class="sidebar-extra">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>
-				</div> <!-- .sidebar-extra -->
-
-				<br />
-
-			</div> <!-- /span3 -->
-
-
-
-			<div class="span9">
-
-				<h1 class="page-title">
-					<i class="icon-th-large"></i>
-					User Account
-				</h1>
-
-
-				<div class="row">
-
-					<div class="span9">
-
-						<div class="widget">
-
-							<div class="widget-header">
-								<h3>Basic Information</h3>
-							</div> <!-- /widget-header -->
-
-							<div class="widget-content">
-
-
-
-								<div class="tabbable">
 						<ul class="nav nav-tabs">
 						  <li class="active">
 						    <a href="#1" data-toggle="tab">用户信息</a>
 						  </li>
+                            {% if user.is_superuser %}
 						  <li><a href="#2" data-toggle="tab">用户管理</a></li>
-						</ul>
-
-						<br />
+						    {% endif %}
+                        </ul>
 
 							<div class="tab-content">
 								<div class="tab-pane active" id="1">
@@ -188,54 +68,38 @@
 								</div>
                                 <div class="tab-pane" id="2">
 									<div class="container">
-                                        <div class="row">
-                                        <div class="span4">
+                                        <strong><a href="#" class='btn' data-toggle="modal" data-target="#rolenameadd">创建新角色</a></strong>
+                                        {% for k in role_name %}
                                             <div class="control-group">
-                                            <h2><strong>客服</strong></h2>
+                                            <h2><strong>{{ k.name }}</strong>
+                                                <a href="#" data-toggle="modal" data-target="#addrole{{k.id}}">添加{{ k.name }}</a>
+                                                <a href="{% url 'role_name_remove' %}?id={{k.id}}">删除{{ k.name }}</a>
+                                            </h2>
                                                 </div>
+                                            <div class="row">
+
+                                            <div class="span5 offset2">
                                                 <table class="table">
                                                 <thead>
                                                 <tr>
                                                 <th>姓名</th>
                                                 <th>编辑</th>
                                                 <th>删除</th>
-                                                <th><a href="#" data-toggle="modal" data-target="#addrole0">添加客服</a></th>
                                                 </tr>
                                                 </thead>
                                                     {% for i in role%}
-                                                    {% if i.role == 0 %}
+                                                    {% if i.role == k %}
                                                     <tr>
-                                                        <td>{{ i.first_name }}</td>
+                                                        <td>{{i.user.last_name}}{{ i.user.first_name }}</td>
                                                         <td><a href="#" data-toggle="modal" data-target="#editrole{{ i.user.id }}">edit</a></td>
-                                                        <td><a>remove</a></td>
+                                                        <td><a href="{% url 'role_remove' %}?id={{ i.user.id }}">remove</a></td>
                                                     </tr>
                                                     {% endif %}
                                                     {% endfor %}
                                                 </table>
                                         </div>
-                                        <div class="span4">
-                                            <h2><strong>仓管</strong></h2>
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                <th>姓名</th>
-                                                <th>编辑</th>
-                                                <th>删除</th>
-                                                <th><a href="#" data-toggle="modal" data-target="#addrole1">添加仓管</a></th>
-                                                </tr>
-                                                </thead>
-                                                {% for i in role%}
-                                                    {% if i.role == 1 %}
-                                                    <tr>
-                                                        <td>{{ i.user.first_name }}</td>
-                                                        <td><a href="#" data-toggle="modal" data-target="#editrole{{ i.user.id }}">edit</a></td>
-                                                        <td><a>remove</a></td>
-                                                    </tr>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </table>
-                                            </div>
-                                            </div>
+                                                </div>
+                                            {% endfor %}
                                         </div>
 								</div>
 
@@ -243,52 +107,16 @@
 
 
 						</div>
-							</div>
-						</div>
-							</div> <!-- /widget-content -->
-						</div> <!-- /widget -->
-					</div> <!-- /span9 -->
-				</div> <!-- /row -->
-			</div> <!-- /span9 -->
-<div class="modal fade" id="addrole0" tabindex="-1" role="dialog"
-   aria-labelledby="role0ModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-      <div class="modal-content">
-          <form method="post" action="/role/add/0">
-         <div class="modal-header">
-            <h4 class="modal-title" id="role0ModalLabel">
-               添加客服
-            </h4>
-         </div>
-         <div class="modal-body">
-                {% csrf_token %}
-                {{ form.as_p }}
 
-         </div>
-         <div class="modal-footer">
-            <button type="button" class="btn btn-default"
-               data-dismiss="modal">关闭
-            </button>
-            <button type="submit" class="btn btn-primary">
-               提交更改
-            </button>
-         </div>
-              </form>
-      </div><!-- /.modal-content -->
-</div><!-- /.modal -->
-</div>
-<div class="modal fade" id="addrole1" tabindex="-1" role="dialog"
+{% for k in role_name %}
+<div class="modal fade" id="addrole{{ k.id }}" tabindex="-1" role="dialog"
    aria-labelledby="role1ModalLabel" aria-hidden="true">
    <div class="modal-dialog">
       <div class="modal-content">
-          <form method="post" action="/role/add/1">
+          <form method="post" action="{% url 'role_add' k.id %}">
          <div class="modal-header">
-            <button type="button" class="close"
-               data-dismiss="modal" aria-hidden="true">
-                  &times;
-            </button>
             <h4 class="modal-title" id="role1ModalLabel">
-               添加客服
+               添加{{ k.name }}
             </h4>
          </div>
          <div class="modal-body">
@@ -308,6 +136,7 @@
       </div><!-- /.modal-content -->
 </div><!-- /.modal -->
 </div>
+    {% endfor %}
     {% for i in role %}
     {% if not i.user.is_superuser %}
     <div class="modal fade" id="editrole{{ i.user.id }}" tabindex="-1" role="dialog"
@@ -319,32 +148,37 @@
                修改信息
             </h4>
          </div>
-          <form method="post" action="/role/edit/{{ i.user.id }}">
+          <form method="post" action="{% url 'role_edit' i.user.id %}">
 									{% csrf_token %}
                                     <div class="modal-body">
 										<p>
-											<label>Username</label>
+											Username:
 												<input type="text" class="input-medium disabled" name="username"  value="{{ i.user.username }}" readonly="readonly" />
 												<!--<p class="help-block">Your username is for logging in and cannot be changed.</p>-->
 										</p> <!-- /control-group -->
 										<p>
-											<label>First Name</label>
+											First Name:
 												<input type="text" class="input-medium"  name="firstname" value="{{ i.user.first_name }}" />
 										</p>
 										<p>
-											<label>Last Name</label>
+											Last Name:
 												<input type="text" class="input-medium" name="lastname" value="{{ i.user.last_name }}" />
 										</p>
 										<p>
-											<label>Email Address</label>
+											Email Address:
 												<input type="text" class="input-large" name="email" value="{{ i.user.email }}" />
 											</p> <!-- /controls -->
+                                        <p>
+                                            {% for k in role_name %}
+                                            {{ k.name }}:<input type="radio" name="role" value="{{ k.name }}" {% if i.role.name == k.name %}checked{% endif %}/>
+                                            {% endfor %}
+                                        </p>
 										<p>
-											<label>Password</label>
+											Password:
 												<input type="password" class="input-medium" name="password1" value="" />
 										</p> <!-- /control-group -->
 										<p>
-											<label>Confirm</label>
+											Confirm:
 												<input type="password" class="input-medium"  name="password2" value="" />
 										</p> <!-- /control-group -->
 											</div>
@@ -362,18 +196,30 @@
     {% endif %}
     {% endfor %}
          </div>
-
-{% endblock %}
-
-{% block js %}
-<!-- Le javascript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="/static/js/jquery-1.7.2.min.js"></script>
-<script src="/static/js/bootstrap.js"></script>
-<!--<script type="text/javascript">
-$('body').on('hidden.bs.modal', '.modal', function () {
-$(this).removeData('bs.modal');
-});
-</script>-->
+<div class="modal fade" id="rolenameadd" tabindex="-1" role="dialog"
+   aria-labelledby="role1ModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+          <form method="post" action="{% url 'role_name_add' %}">
+         <div class="modal-header">
+            <h4 class="modal-title" id="rolenameModalLabel">
+               添加新角色
+            </h4>
+         </div>
+         <div class="modal-body">
+                {% csrf_token %}
+                <P>name:<input type="text" name="name" value=""></P>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+            <button type="submit" class="btn btn-primary">
+               提交更改
+            </button>
+         </div>
+              </form>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+    </div>
 {% endblock %}

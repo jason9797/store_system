@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block stock %}
+class="active"
+{% endblock %}
+{% block body %}
+
+
+
+                <div class="container">
+                    <ol class="breadcrumb">
+  <li class="active"><a href="{% url 'stock_home' %}">原料管理</a></li>
+  <li><a href="#">库存管理</a></li>
+  <li><a href="#">订单号管理</a></li>
+</ol>
+                    <div class="container">
+                        <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                        <th>name</th>
+                        <th>detail</th>
+                        <th>price</th>
+                        <th>quantity</th>
+                        <th>stock_type</th>
+                        <th>stock_channel</th>
+                        <th>jointime</th>
+                        </tr>
+                        <thead>
+                    </thead>
+                        {% for i in stock_data %}
+                        <tr>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.detail }}</td>
+                        <td>{{ i.price }}</td>
+                        <td>{{ i.quantity }}</td>
+                        <td>{{ i.stock_type }}</td>
+                        <td>{{ i.stock_channel }}</td>
+                        <td>{{ i.jointime|date:'Y-m-d H:i:s' }}</td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                            </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                        <p><label>Name:</label>{{ stock_form.name }}</p>
+                        <p><label>Detail:</label>{{ stock_form.detail }}</p>
+                        <p><label>Price:</label>{{ stock_form.price }}</p>
+                        <p><label>Quantity:</label>{{ stock_form.quantity }}</p>
+                        <p><label>Stock_type:</label>{{ stock_form.stock_type }}<a href="#" data-toggle="modal" data-target="#add_stock_type">add</a></p>
+                        <p><label>Stock_channel:</label>{{ stock_form.stock_channel }}<a href="#" data-toggle="modal" data-target="#add_stock_channel">add</a></p>
+                        <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+
+<div class="modal fade" id="add_stock_type" tabindex="-1" role="dialog"
+   aria-labelledby="role1ModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+          <form method="post" action="{% url 'stock_type_add' %}">
+         <div class="modal-header">
+            <h4 class="modal-title">
+               添加新类型
+            </h4>
+         </div>
+         <div class="modal-body">
+                {% csrf_token %}
+                {{ stock_type }}
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+            <button type="submit" class="btn btn-primary">
+               提交更改
+            </button>
+         </div>
+              </form>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+    </div>
+
+<div class="modal fade" id="add_stock_channel" tabindex="-1" role="dialog"
+   aria-labelledby="role1ModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+          <form method="post" action="{% url 'stock_channel_add' %}">
+         <div class="modal-header">
+            <h4 class="modal-title">
+               添加新类型
+            </h4>
+         </div>
+         <div class="modal-body">
+                {% csrf_token %}
+                {{ stock_channel }}
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+            <button type="submit" class="btn btn-primary">
+               提交更改
+            </button>
+         </div>
+              </form>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+    </div>
+{% endblock %}
+
+</div>
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->

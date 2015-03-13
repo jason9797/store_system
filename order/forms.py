@@ -6,12 +6,12 @@ from stock.models import *
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext as _
 
-class Product(forms.Form):
+class ProductForm(forms.Form):
 
     name = forms.CharField(label='名称',max_length=100)
     price = forms.DecimalField(label='价钱',max_digits=6, decimal_places=2)
-    delivery_type = forms.CharField(label='快递类型',max_length=100,blank=True)
-    stock = forms.ModeMultipleChoiceField(queryset=Stock)
+    delivery_type = forms.CharField(label='快递类型',max_length=100,initial=True)
+    #stock = forms.ModelMultipleChoiceField(queryset=Stock.objects.all())
 
 
 level_choices = (
@@ -19,14 +19,14 @@ level_choices = (
     (2, _("vvip")),
     (3, _("vvvip")),
 )
-class Customer_Level(forms.Form):
+class Customer_LevelForm(forms.Form):
     '''
     客户水平
     '''
     level = forms.ChoiceField(choices=level_choices, initial=1)
 
 
-class Customer(forms.Form):
+class CustomerForm(forms.Form):
     '''
     客户信息
     '''
@@ -34,7 +34,7 @@ class Customer(forms.Form):
     sex = forms.BooleanField(initial=True)
     level = forms.ModelChoiceField(queryset=Customer_Level.objects.all())
 
-class Stock_Product(forms.Form):
+class Stock_ProductForm(forms.Form):
     '''
     原料产品关系
     '''
@@ -44,14 +44,14 @@ class Stock_Product(forms.Form):
     stock = forms.ModelChoiceField(queryset=Stock.objects.all())
 
 
-class Order_State(forms.Form):
+class Order_StateForm(forms.Form):
     '''
     订单状态
     '''
     name = forms.CharField(max_length=50)
 
 
-class Contact_info(forms.Form):
+class Contact_infoForm(forms.Form):
     '''
     联系方式
     '''
@@ -61,13 +61,14 @@ class Contact_info(forms.Form):
     customer = forms.ModelChoiceField(queryset=Customer.objects.all())
 
 
-class Order(forms.Form):
+class OrderForm(forms.Form):
     '''
     订单
     '''
-    delivery_no = forms.CharField(max_length=30,initial='')
-    fact_money = forms.DecimalField(max_digits=4, decimal_places=2,initial=0)
+    delivery_no = forms.CharField(max_length=30,initial='',required=False)
+    fact_money = forms.DecimalField(max_digits=4, decimal_places=2,initial=0,required=False)
     customer = forms.ModelChoiceField(queryset=Customer.objects.all())
     issuing_person = forms.ModelChoiceField(queryset=Issuing_person.objects.all())
     product = forms.ModelChoiceField(queryset=Product.objects.all())
     state = forms.ModelChoiceField(queryset=Order_State.objects.all())
+

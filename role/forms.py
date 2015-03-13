@@ -15,7 +15,7 @@ class UserForm(forms.Form):
     user = forms.ModelChoiceField(queryset=User.objects.all())
 
 
-class Issuing_person(forms.Form):
+class Issuing_personForm(forms.Form):
 
     name = forms.CharField(label='出单人',max_length=50)
 

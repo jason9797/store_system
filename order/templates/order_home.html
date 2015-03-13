@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block order %}
+class="active"
+{% endblock %}
+{% block body %}
+
+
+
+                <div class="container">
+                    <ol class="breadcrumb">
+  <li class="active">订单管理</li>
+  <li><a href="{% url 'order_contact' %}">联系方式管理</a></li>
+  <li><a href="{% url 'order_customer' %}">客户管理</a></li>
+  <li><a href="{% url 'order_customer_level' %}">客户水平管理</a></li>
+  <li><a href="{% url 'order_product' %}">产品管理</a></li>
+  <li><a href="{% url 'order_stock_product' %}">产品原料管理</a></li>
+  <li><a href="{% url 'order_state' %}">订单状态管理</a></li>
+  <li><a href="{% url 'order_issuing_person' %}">出单人管理</a></li>
+
+</ol>
+                    <div class="container">
+                        <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                        <th>订单号</th>
+                        <th>实收金额</th>
+                        <th>客户</th>
+                        <th>出单人</th>
+                        <th>产品</th>
+                        <th>订单状态</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                        </tr>
+                        <thead>
+                    </thead>
+                        {% for i in order_data %}
+                        <tr>
+                        <td>{{ i.delivery_no }}</td>
+                        <td>{{ i.fact_money }}</td>
+                        <td>{{ i.customer }}</td>
+                        <td>{{ i.issuing_person }}</td>
+                        <td>{{ i.product }}</td>
+                        <td>{{ i.state }}</td>
+                        <td>{{ i.jointime|date:'Y-m-d H:i:s' }}</td>
+                        <td><a href="?id={{ i.id }}">edit</a>,<a href="order/remove/?id={{ i.id }}">remove</a></td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                            </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                        <p><label>delivery_no:</label>{{ order_form.delivery_no }}</p>
+                        <p><label>fact_money:</label>{{ order_form.fact_money }}</p>
+                        <p><label>customer:</label>{{ order_form.customer }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
+                        <p><label>issuing_person:</label>{{ order_form.issuing_person }}<a href="#" data-toggle="modal" data-target="#add_order_issuing_person">add</a></p>
+                        <p><label>product:</label>{{ order_form.product }}<a href="#" data-toggle="modal" data-target="#add_order_product">add</a></p>
+                        <p><label>state:</label>{{ order_form.state }}<a href="#" data-toggle="modal" data-target="#add_order_state">add</a></p>
+                        <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+{% endblock %}

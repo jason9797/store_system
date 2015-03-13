@@ -14,11 +14,11 @@ class Product(models.Model):
     price = models.DecimalField(verbose_name='价钱',max_digits=6, decimal_places=2)
     delivery_type = models.CharField(verbose_name='快递类型',max_length=100,blank=True)
     stock = models.ManyToManyField(Stock,through="Stock_Product")
-
+    jointime =models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
     class Meta:
         verbose_name='产品'
     def __unicode__(self):
-        return self.name
+        return '%s'%self.name
     def get_stock(self):
         return "\n".join([s.name for s in self.stock.all()])
 
@@ -45,11 +45,11 @@ class Customer(models.Model):
     name = models.CharField(verbose_name='名称',max_length=100)
     sex = models.BooleanField(verbose_name='性别',default=True)
     level = models.ForeignKey(Customer_Level)
-
+    jointime =models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
     class Meta:
         verbose_name='客户'
     def __unicode__(self):
-        return self.name
+        return '%s'%self.name
 
 class Stock_Product(models.Model):
     '''
@@ -63,7 +63,7 @@ class Stock_Product(models.Model):
     class Meta:
         verbose_name='产品原料关系'
     def __unicode__(self):
-        return '%s-%s'%(self.product,self.stock)
+        return '%s-%s'%(self.product.name,self.stock.name)
 
 class Order_State(models.Model):
     '''
@@ -74,7 +74,7 @@ class Order_State(models.Model):
     class Meta:
         verbose_name='订单状态'
     def __unicode__(self):
-        return self.name
+        return '%s'%self.name
     
 
 class Contact_info(models.Model):
@@ -90,7 +90,7 @@ class Contact_info(models.Model):
     class Meta:
         verbose_name='联系方式'
     def __unicode__(self):
-        return '%s-%s'%(self.customer,self.phone_number)
+        return '%s-%s'%(self.customer.name,self.phone_number)
     
 class Order(models.Model):
     '''
@@ -102,7 +102,7 @@ class Order(models.Model):
     issuing_person = models.ForeignKey(Issuing_person)
     product = models.ForeignKey(Product)
     state = models.ForeignKey(Order_State)
-
+    jointime =models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
     class Meta:
         verbose_name='订单'
     def __unicode__(self):

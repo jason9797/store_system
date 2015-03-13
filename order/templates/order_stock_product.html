@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block order %}
+class="active"
+{% endblock %}
+{% block body %}
+
+
+
+                <div class="container">
+                    <ol class="breadcrumb">
+  <li><a href="{% url 'order_home' %}">订单管理</a></li>
+  <li><a href="{% url 'order_contact' %}">联系方式管理</a></li>
+  <li><a href="{% url 'order_customer' %}">客户管理</a></li>
+  <li><a href="{% url 'order_customer_level' %}">客户水平管理</a></li>
+  <li><a href="{% url 'order_product' %}">产品管理</a></li>
+  <li class="active">产品原料管理</li>
+  <li><a href="{% url 'order_state' %}">订单状态管理</a></li>
+  <li><a href="{% url 'order_issuing_person' %}">出单人管理</a></li>
+
+</ol>
+                    <div class="container">
+                        <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                        <th>数量</th>
+                        <th>是否运费</th>
+                        <th>产品</th>
+                        <th>原料</th>
+                        <th>操作</th>
+                        </tr>
+                        <thead>
+                    </thead>
+                        {% for i in stock_product_data %}
+                        <tr>
+                        <td>{{ i.quantity }}</td>
+                        <td>{{ i.delivery_bill }}</td>
+                        <td>{{ i.product }}</td>
+                        <td>{{ i.stock }}</td>
+                        <td><a href="?id={{ i.id }}">edit</a>,<a href="{% url 'order_stock_product_remove' %}?id={{ i.id }}">remove</a></td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                            </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                        <p><label>数量:</label>{{ stock_product_form.quantity }}</p>
+                        <p><label>是否运费:</label>{{ stock_product_form.delivery_bill }}</p>
+                        <p><label>产品:</label>{{ stock_product_form.product }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
+                        <p><label>原料:</label>{{ stock_product_form.stock }}<a href="#" data-toggle="modal" data-target="#add_order_issuing_person">add</a></p>
+                        <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+{% endblock %}

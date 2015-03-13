@@ -9,6 +9,11 @@ class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ('user',)
     ordering = ('user','role')
 
+class RoleAdmin(admin.ModelAdmin):
+    list_filter = ('name',)
+    list_display = ('name',)
+    search_fields = ('name',)
+    ordering = ('name',)
 class Issuing_personAdmin(admin.ModelAdmin):
     list_filter = ('name',)
     list_display = ('name',)
@@ -16,4 +21,5 @@ class Issuing_personAdmin(admin.ModelAdmin):
     ordering = ('name',)
 
 admin.site.register(Issuing_person,Issuing_personAdmin)
+admin.site.register(Role,RoleAdmin)
 admin.site.register(UserProfile,UserProfileAdmin)

@@ -1,62 +1,13 @@
 {% extends 'base.html' %}
-{% block head %}
-<link href="/static/css/pages/login.css" rel="stylesheet" />
-{% endblock %}
-{% block body %}
-<div id="login-container">
-
-
-	<div id="login-header">
-
-		<h3>Login</h3>
-
-	</div> <!-- /login-header -->
-
-	<div id="login-content" class="clearfix">
-
-	<form action="" method="post" />
-        {% csrf_token %}
-				<fieldset>
-					<div class="control-group">
-						<label class="control-label" for="username">Username</label>
-						<div class="controls">
-							<input type="text" class="" id="username" name="username"/>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="password">Password</label>
-						<div class="controls">
-							<input type="password" class="" id="password" name="password"/>
-						</div>
-					</div>
-				</fieldset>
-
-				<div id="remember-me" class="pull-left">
-					<input type="checkbox" name="remember" id="remember" />
-					<label id="remember-label" for="remember">Remember Me</label>
-				</div>
-
-				<div class="pull-right">
-					<button type="submit" class="btn btn-warning btn-large">
-						Login
-					</button>
-				</div>
-			</form>
-
-		</div> <!-- /login-content -->
-
-
-		<div id="login-extra">
-
-			<p>Don't have an account? <a href="javascript:;">Sign Up.</a></p>
-
-			<p>Remind Password?<a href="forgot_password.html">Retrieve.</a></p>
-
-		</div> <!-- /login-extra -->
-
-</div> <!-- /login-wrapper -->
-{% endblock %}
-{% block js %}
-<script src="/static/js/jquery-1.7.2.min.js"></script>
-<script src="/static/js/bootstrap.js"></script>
+{% block form %}
+<form class="navbar-form navbar-right" method="post" action="/login/" role="login">
+    {% csrf_token %}
+    <div class="form-group">
+            <input type="text" class="" id="username" name="username" placeholder="Username"/>
+         </div>
+           <div class="form-group">
+               <input type="password" class="" id="password" name="password" placeholder="Password"/>
+               </div>
+         <button type="submit" class="btn btn-default">登陆</button>
+      </form>
 {% endblock %}

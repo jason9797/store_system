@@ -8,4 +8,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'',include("role.urls")),
+    url(r'^stock/',include("stock.urls")),
+    url(r'^order/',include("order.urls")),
 )

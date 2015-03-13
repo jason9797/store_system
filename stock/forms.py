@@ -18,19 +18,21 @@ class StockForm(forms.Form):
     stock_channel = forms.ModelChoiceField(queryset=Stock_Channel.objects.all())
     
 
-class Stock_Type(forms.Form):
+class Stock_TypeForm(forms.Form):
 
     type_name = forms.CharField(max_length=50)
-class Stock_Channel(forms.Form):
+class Stock_ChannelForm(forms.ModelForm):
     '''
     原料渠道
     '''
-    company = forms.CharField(max_length=100)
-    person = forms.CharField(max_length=50)
-    phone_number = forms.RegexField(regex=r'^\+?1?\d{9,15}$', 
+    #company = forms.CharField(max_length=100)
+    #person = forms.CharField(max_length=50)
+    phone_number = forms.RegexField(regex=r'^\+?1?\d{9,15}$',
                                 error_message =("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."))
-    
-class Stock_Management(forms.Form):
+    class Meta:
+        model=Stock_Channel
+        fields=['company','person']
+class Stock_ManagementForm(forms.Form):
     '''
     库存管理
     '''
@@ -39,7 +41,7 @@ class Stock_Management(forms.Form):
     mode = forms.ModelChoiceField(queryset=Stock_Mode.objects.all())
 
 
-class Stock_Mode(models.Model):
+class Stock_ModeForm(forms.Form):
     '''
     出入方式
     '''

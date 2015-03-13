@@ -1,0 +1,22 @@
+from django.conf.urls import *
+from views import *
+urlpatterns=patterns('',
+            url(r'^home/$',order_home,name='order_home'),
+            url(r'^order/remove/$',order_home_remove,name='order_home_remove'),
+            url(r'^customer/$',order_customer,name='order_customer'),
+            url(r'^customer/remove/$',order_customer_remove,name='order_customer_remove'),
+            url(r'^customer_level/$',order_customer_level,name='order_customer_level'),
+            url(r'^customer_level/remove/$',order_customer_level_remove,name='order_customer_level_remove'),
+            url(r'^contact/$',order_contact,name="order_contact"),
+            url(r'^contact/remove/$',order_contact_remove,name='order_contact_remove'),
+            url(r'^state/$',order_state,name='order_state'),
+            url(r'^state/remove/$',order_state_remove,name='order_state_remove'),
+            url(r'^stock_product/$',order_stock_product,name='order_stock_product'),
+            url(r'^stock_product/remove/$',order_stock_product_remove,name='order_stock_product_remove'),
+            url(r'^product/$',order_product,name='order_product'),
+            url(r'^product/remove/$',order_product_remove,name='order_product_remove'),
+            url(r'^issuing_person/$',order_issuing_person,name='order_issuing_person'),
+            url(r'^issuing_person/remove/$',order_issuing_person_remove,name='order_issuing_person_remove'),
+        #url(r'^role/edit/(?P<id>\d+)$',edit_role,name="edit_role"),
+        #url(r'^role/remove$',remove_role,name="remove_role"),
+)
