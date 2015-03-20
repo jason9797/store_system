@@ -1,0 +1,76 @@
+<table id="user" class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <td width="40%">Username</td>
+                <td><a href="#" class="myeditable editable editable-click editable-empty" id="new_username" data-type="text" data-name="username" data-original-title="Enter username" style="background-color: rgba(0, 0, 0, 0);">Empty</a></td>
+            </tr>
+            <tr>
+                <td>First name</td>
+                <td><a href="#" class="myeditable editable editable-click editable-empty" data-type="text" data-name="firstname" data-original-title="Enter firstname">Empty</a></td>
+            </tr>
+            <tr>
+                <td>Group</td>
+                <td><a href="#" class="myeditable editable editable-click editable-empty" data-type="select" data-name="group" data-source="/groups" data-original-title="Select group">Empty</a></td>
+            </tr>
+            <tr>
+                <td>Date of birth</td>
+                <td><a href="#" class="myeditable editable editable-click editable-empty" data-type="date" data-name="dob" data-viewformat="dd/mm/yyyy" data-original-title="Select Date of birth">Empty</a></td>
+            </tr>
+            <tr>
+                <td>Comments</td>
+                <td><a href="#" class="myeditable editable editable-pre-wrapped editable-click editable-empty" data-type="textarea" data-name="comments" data-original-title="Enter comments">Empty</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    $('.myeditable').editable({
+    url: '/post' //this url will not be used for creating new user, it is only for update
+});
+＃1
+//make username required
+$('#new_username').editable('option', 'validate', function(v) {
+    if(!v) return 'Required field!';
+});
+
+//automatically show next editable
+$('.myeditable').on('save.newuser', function(){
+    var that = this;
+    setTimeout(function() {
+        $(that).closest('tr').next().find('.myeditable').editable('show');
+    }, 200);
+});
+
+＃2
+$('#save-btn').click(function() {
+   $('.myeditable').editable('submit', {
+       url: '/newuser',
+       ajaxOptions: {
+           dataType: 'json' //assuming json response
+       },
+       success: function(data, config) {
+           if(data && data.id) {  //record created, response like {"id": 2}
+               //set pk
+               $(this).editable('option', 'pk', data.id);
+               //remove unsaved class
+               $(this).removeClass('editable-unsaved');
+               //show messages
+               var msg = 'New user created! Now editables submit individually.';
+               $('#msg').addClass('alert-success').removeClass('alert-error').html(msg).show();
+               $('#save-btn').hide();
+               $(this).off('save.newuser');
+           } else if(data && data.errors){
+               //server-side validation error, response like {"errors": {"username": "username already exist"} }
+               config.error.call(this, data.errors);
+           }
+       },
+       error: function(errors) {
+           var msg = '';
+           if(errors && errors.responseText) { //ajax error, errors = xhr object
+               msg = errors.responseText;
+           } else { //validation error (client-side or server-side)
+               $.each(errors, function(k, v) { msg += k+": "+v+"<br>"; });
+           }
+           $('#msg').removeClass('alert-success').addClass('alert-error').html(msg).show();
+       }
+   });
+});

@@ -21,47 +21,47 @@ class="active"
                                     <fieldset>
 
 										<div class="control-group">
-											<label class="control-label" for="username">Username</label>
+											<label class="control-label" for="username">账号</label>
 											<div class="controls">
 												<input type="text" class="input-medium disabled" name="username" id="username" value="{{ user.username }}" readonly="readonly" />
 												<!--<p class="help-block">Your username is for logging in and cannot be changed.</p>-->
 											</div> <!-- /controls -->
 										</div> <!-- /control-group -->
 										<div class="control-group">
-											<label class="control-label" for="firstname">First Name</label>
+											<label class="control-label" for="firstname">名字</label>
 											<div class="controls">
 												<input type="text" class="input-medium" id="firstname" name="firstname" value="{{ user.first_name }}" />
 											</div> <!-- /controls -->
 										</div> <!-- /control-group -->
 										<div class="control-group">
-											<label class="control-label" for="lastname">Last Name</label>
+											<label class="control-label" for="lastname">姓</label>
 											<div class="controls">
 												<input type="text" class="input-medium" id="lastname" name="lastname" value="{{ user.last_name }}" />
 											</div> <!-- /controls -->
 										</div> <!-- /control-group -->
 										<div class="control-group">
-											<label class="control-label" for="email">Email Address</label>
+											<label class="control-label" for="email">邮箱地址</label>
 											<div class="controls">
 												<input type="text" class="input-large" id="email" name="email" value="{{ user.email }}" />
 											</div> <!-- /controls -->
 										</div> <!-- /control-group -->
 										<br /><br />
 										<div class="control-group">
-											<label class="control-label" for="password1">Password</label>
+											<label class="control-label" for="password1">密码</label>
 											<div class="controls">
 												<input type="password" class="input-medium" id="password1" name="password1" value="" />
 											</div> <!-- /controls -->
 										</div> <!-- /control-group -->
 										<div class="control-group">
-											<label class="control-label" for="password2">Confirm</label>
+											<label class="control-label" for="password2">确认密码</label>
 											<div class="controls">
 												<input type="password" class="input-medium" id="password2" name="password2" value="" />
 											</div> <!-- /controls -->
 										</div> <!-- /control-group -->
 											<br />
 										<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Save</button>
-											<button class="btn">Cancel</button>
+											<button type="submit" class="btn btn-primary">保存</button>
+											<button class="btn">取消</button>
 										</div> <!-- /form-actions -->
 									</fieldset>
 								</form>
@@ -152,20 +152,20 @@ class="active"
 									{% csrf_token %}
                                     <div class="modal-body">
 										<p>
-											Username:
+											账户:
 												<input type="text" class="input-medium disabled" name="username"  value="{{ i.user.username }}" readonly="readonly" />
 												<!--<p class="help-block">Your username is for logging in and cannot be changed.</p>-->
 										</p> <!-- /control-group -->
 										<p>
-											First Name:
+											名字:
 												<input type="text" class="input-medium"  name="firstname" value="{{ i.user.first_name }}" />
 										</p>
 										<p>
-											Last Name:
+											姓:
 												<input type="text" class="input-medium" name="lastname" value="{{ i.user.last_name }}" />
 										</p>
 										<p>
-											Email Address:
+											邮箱地址:
 												<input type="text" class="input-large" name="email" value="{{ i.user.email }}" />
 											</p> <!-- /controls -->
                                         <p>
@@ -174,11 +174,11 @@ class="active"
                                             {% endfor %}
                                         </p>
 										<p>
-											Password:
+											密码:
 												<input type="password" class="input-medium" name="password1" value="" />
 										</p> <!-- /control-group -->
 										<p>
-											Confirm:
+											确认密码:
 												<input type="password" class="input-medium"  name="password2" value="" />
 										</p> <!-- /control-group -->
 											</div>
@@ -186,7 +186,7 @@ class="active"
                                             <button type="button" class="btn btn-default"
                data-dismiss="modal">关闭
             </button>
-											<button type="submit" class="btn btn-primary">Save</button>
+											<button type="submit" class="btn btn-primary">保存</button>
 										</div> <!-- /form-actions -->
 
               </form>
@@ -208,7 +208,7 @@ class="active"
          </div>
          <div class="modal-body">
                 {% csrf_token %}
-                <P>name:<input type="text" name="name" value=""></P>
+                <P>名称:<input type="text" name="name" value=""></P>
          </div>
          <div class="modal-footer">
             <button type="button" class="btn btn-default"

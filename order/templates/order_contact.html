@@ -44,6 +44,7 @@ class="active"
                         <div class="col-md-6">
                         <form action="" method="post">
                             {% csrf_token %}
+                        {{  contact_form.errors }}
                         <p><label>地址:</label>{{ contact_form.address }}</p>
                         <p><label>手机号码:</label>{{ contact_form.phone_number }}</p>
                         <p><label>联系人:</label>{{ contact_form.customer }}<a href="{% url 'order_customer' %}" onclick="return showAddAnotherPopup(this)">add</a></p>

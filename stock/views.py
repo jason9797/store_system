@@ -8,8 +8,10 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core import serializers
 from django.template import RequestContext
+from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import user_passes_test
 from role.models import *
+from order.models import Order
 import datetime
 import json
 from models import *
@@ -44,17 +46,30 @@ def stock_home(request):
         form=StockForm(request.POST)
         if form.is_valid():
             data=form.cleaned_data
-            name=data['name']
-            detail=data['detail']
-            price=data['price']
-            quantity=data['quantity']
-            stock_type=data['stock_type']
-            stock_channel=data['stock_channel']
-            stock=Stock(name=name,detail=detail,price=price,quantity=quantity,stock_type=stock_type,stock_channel=stock_channel)
-            stock.save()
+            if request.GET.get("id"):
+                stock=Stock.objects.get(pk=request.GET.get('id'))
+                stock.name=data['name']
+                stock.detail=data['detail']
+                stock.price=data['price']
+                stock.quantity=data['quantity']
+                stock.stock_type=data['stock_type']
+                stock.stock_channel=data['stock_channel']
+                stock.save()
+            else:
+                name=data['name']
+                detail=data['detail']
+                price=data['price']
+                quantity=data['quantity']
+                stock_type=data['stock_type']
+                stock_channel=data['stock_channel']
+                stock=Stock(name=name,detail=detail,price=price,quantity=quantity,stock_type=stock_type,stock_channel=stock_channel)
+                stock.save()
             return HttpResponseRedirect('/stock/home')
+    if request.GET.get('id'):
+        stock_form=StockForm(model_to_dict(Stock.objects.get(pk=request.GET.get('id'))))
+    else:
+        stock_form=StockForm()
     stock_data=Stock.objects.all()
-    stock_form=StockForm()
     stock_type=Stock_TypeForm()
     stock_mode=Stock_ModeForm()
     stock_management=Stock_ManagementForm()
@@ -68,6 +83,15 @@ def stock_home(request):
                'stock_channel':stock_channel
     }
     return render(request,'stock_home.html',form_list)
+@store_required(login_url="/login")
+def stock_remove(request):
+    stock_id=request.GET.get("id")
+    stock=Stock.objects.get(pk=stock_id)
+    stock.delete()
+    response=HttpResponse()
+    response.write("<script language='javascript'>alert('删除成功!');window.location.href='/stock/home';</script>")
+    return response
+
 @store_required(login_url="/login")
 def stock_type_add(request):
     if request.method=="POST":
@@ -110,6 +134,95 @@ def stock_channel_remove(request):
     response.write("<script language='javascript'>alert('删除成功!');window.location.href='/stock/home';</script>")
     return response
 
-#@store_required(login_url="/login")
-#def stock_management(request):
+@store_required(login_url="/login")
+def stock_management(request):
+    if request.method=="POST":
+        stock_management_form=Stock_ManagementForm(request.POST)
+        if stock_management_form.is_valid():
+            data=stock_management_form.cleaned_data
+            if request.GET.get("id"):
+                stock_management=Stock_Management.objects.get(pk=request.GET.get('id'))
+
+                stock_management.stock_mode=data['stock_mode']
+                stock_management.stock=data['stock']
+                stock_management.mode=data['mode']
+                stock_management.save()
+            else:
+
+                stock_mode=data['stock_mode']
+                stock=data['stock']
+                mode=data['mode']
+                stock_data=Stock_Management(stock_mode=stock_mode,stock=stock,mode=mode)
+                stock_data.save()
+            return HttpResponseRedirect("/stock/management")
+    else:
+        if request.GET.get('id'):
+            stock_management_form=Stock_ManagementForm(model_to_dict(Stock_Management.objects.get(pk=request.GET.get('id'))))
+        else:
+            stock_management_form=Stock_ManagementForm()
+    stock_management_data=Stock_Management.objects.all()
+    form_list={
+               'stock_management_data':stock_management_data,
+               'stock_management_form':stock_management_form
+               }
+    return render(request,'stock_management.html',form_list)
+@store_required(login_url='/login')
+def stock_management_remove(request):
+    stock_management_id=request.GET.get("id")
+    stock_management=Stock_Management.objects.get(pk=stock_management_id)
+    stock_management.delete()
+    return HttpResponseRedirect("/stock/management")
+
+@store_required(login_url="/login")
+def stock_mode(request):
+    if request.method=="POST":
+        stock_mode_form=Stock_ModeForm(request.POST)
+        if stock_mode_form.is_valid():
+            data=stock_mode_form.cleaned_data
+            if request.GET.get("id"):
+                stock_mode=Stock_Mode.objects.get(pk=request.GET.get('id'))
+                stock_mode.method=data['method']
+                stock_mode.description=data['description']
+                stock_mode.save()
+            else:
+                method=data['method']
+                description=data['description']
+                stock_mode=Stock_Mode(method=method,description=description)
+                stock_mode.save()
+            return HttpResponseRedirect("/stock/mode")
+    else:
+        if request.GET.get('id'):
+            stock_mode_form=Stock_ModeForm(model_to_dict(Stock_Mode.objects.get(pk=request.GET.get('id'))))
+        else:
+            stock_mode_form=Stock_ModeForm()
+    stock_mode_data=Stock_Mode.objects.all()
+    form_list={
+               'stock_mode_data':stock_mode_data,
+               'stock_mode_form':stock_mode_form
+               }
+    return render(request,'stock_mode.html',form_list)
+@store_required(login_url='/login')
+def stock_mode_remove(request):
+    stock_mode_id=request.GET.get("id")
+    stock_mode=Stock_Mode.objects.get(pk=stock_mode_id)
+    stock_mode.delete()
+    return HttpResponseRedirect("/stock/mode")
+
+@store_required(login_url="/login")
+def stock_order_no(request):
+    if request.method=="POST":
+        order_id=request.POST.get("id")
+        order_no=request.POST.get("order_no")
+        order=Order.objects.get(pk=order_id)
+        order.delivery_no=order_no
+        order.save()
+        return HttpResponseRedirect("/stock/order/no")
+    else:
+        order_no_null=Order.objects.filter(delivery_no='').order_by('-jointime')
+        order_no_success=Order.objects.exclude(delivery_no__isnull=True).exclude(delivery_no__exact='')
+        form_list={
+               'order_no_null':order_no_null,
+               'order_no_success':order_no_success
+               }
+        return render(request,'stock_order_no.html',form_list)
 

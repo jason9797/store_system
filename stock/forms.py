@@ -36,7 +36,7 @@ class Stock_ManagementForm(forms.Form):
     '''
     库存管理
     '''
-    stock_mode = forms.BooleanField(widget=forms.CheckboxInput(attrs={'value':'True'}))
+    stock_mode = forms.BooleanField(widget=forms.CheckboxInput(attrs={'value':'True'}),required=False)
     stock = forms.ModelChoiceField(queryset=Stock.objects.all())
     mode = forms.ModelChoiceField(queryset=Stock_Mode.objects.all())
 

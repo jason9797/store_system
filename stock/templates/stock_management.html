@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block stock %}
+class="active"
+{% endblock %}
+{% block body %}
+
+
+
+                <div class="container">
+                    <ol class="breadcrumb">
+  <li><a href="{% url 'stock_home' %}">原料管理</a></li>
+  <li>库存管理</li>
+  <li><a href="{% url 'stock_mode' %}">库存方式</a></li>
+  <li><a href="{% url 'stock_order_no' %}">订单号管理</a></li>
+
+</ol>
+                    <div class="container">
+                        <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                        <th>出\入(库)</th>
+                        <th>原料</th>
+                        <th>模式</th>
+                        <th>操作</th>
+                        </tr>
+                        <thead>
+                    </thead>
+                        {% for i in stock_management_data %}
+                        <tr>
+                        <td>{{ i.stock_mode }}</td>
+                        <td>{{ i.stock }}</td>
+                        <td>{{ i.mode }}</td>
+                        <td><a href="?id={{ i.id }}">edit</a>,<a href="{% url 'stock_management_remove' %}?id={{ i.id }}">remove</a></td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                            </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ stock_management_form.errors }}
+                        <p><label>出\入(库):</label>{{ stock_management_form.stock_mode }}</p>
+                        <p><label>原料:</label>{{ stock_management_form.stock }}</p>
+                        <p><label>模式:</label>{{ stock_management_form.mode }}</p>
+                        <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+{% endblock %}

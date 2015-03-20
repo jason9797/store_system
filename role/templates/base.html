@@ -5,9 +5,82 @@
     {% block title %}
     {% endblock %}
     <!-- 新 Bootstrap 核心 CSS 文件 -->
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 <!-- 可选的Bootstrap主题文件（一般不用引入） -->
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!--<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">-->
+<link rel="stylesheet" href="/static/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-editable.css">
+<link rel="stylesheet" href="/static/css/bootstrap-table.css">
+      <style>
+        #main-nav {
+            margin-left: 1px;
+        }
+
+            #main-nav.nav-tabs.nav-stacked > li > a {
+                padding: 10px 8px;
+                font-size: 12px;
+                font-weight: 600;
+                color: #4A515B;
+                background: #E9E9E9;
+                background: -moz-linear-gradient(top, #FAFAFA 0%, #E9E9E9 100%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FAFAFA), color-stop(100%,#E9E9E9));
+                background: -webkit-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
+                background: -o-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
+                background: -ms-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
+                background: linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9');
+                -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9')";
+                border: 1px solid #D5D5D5;
+                border-radius: 4px;
+            }
+
+                #main-nav.nav-tabs.nav-stacked > li > a > span {
+                    color: #4A515B;
+                }
+
+                #main-nav.nav-tabs.nav-stacked > li.active > a, #main-nav.nav-tabs.nav-stacked > li > a:hover {
+                    color: #FFF;
+                    background: #3C4049;
+                    background: -moz-linear-gradient(top, #4A515B 0%, #3C4049 100%);
+                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4A515B), color-stop(100%,#3C4049));
+                    background: -webkit-linear-gradient(top, #4A515B 0%,#3C4049 100%);
+                    background: -o-linear-gradient(top, #4A515B 0%,#3C4049 100%);
+                    background: -ms-linear-gradient(top, #4A515B 0%,#3C4049 100%);
+                    background: linear-gradient(top, #4A515B 0%,#3C4049 100%);
+                    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4A515B', endColorstr='#3C4049');
+                    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#4A515B', endColorstr='#3C4049')";
+                    border-color: #2B2E33;
+                }
+
+                    #main-nav.nav-tabs.nav-stacked > li.active > a, #main-nav.nav-tabs.nav-stacked > li > a:hover > span {
+                        color: #FFF;
+                    }
+
+            #main-nav.nav-tabs.nav-stacked > li {
+                margin-bottom: 4px;
+            }
+
+        /*定义二级菜单样式*/
+        .secondmenu a {
+            font-size: 10px;
+            color: #4A515B;
+            text-align: center;
+        }
+
+        .navbar-static-top {
+            background-color: #212121;
+            margin-bottom: 5px;
+        }
+
+        .navbar-brand {
+            background: url('') no-repeat 10px 8px;
+            display: inline-block;
+            vertical-align: middle;
+            padding-left: 50px;
+            color: #fff;
+        }
+    </style>
     <![endif]-->
     {% block head %}
     {% endblock %}
@@ -21,7 +94,7 @@
    </div>
    <div>
        {% if user.is_active %}
-       <p class="navbar-text navbar-right">{{ user }}
+       <p class="navbar-text navbar-right" style="margin-right:20px;">{{ user }}
          <a href="/logout" class="navbar-link">logout</a>
       </p>
        {% endif %}
@@ -29,21 +102,83 @@
        {% endblock %}
    </div>
 </div>
-<div class="container">
-<div class="col-md-3">
-<ul class="nav nav-pills nav-stacked">
-   <li {% block home %}{% endblock %}><a href="/home">主页</a></li>
-   <li {% block role %}{% endblock %}><a href="/role">角色管理</a></li>
-   <li {% block stock %}{% endblock %}><a href="/stock/home">原料管理</a></li>
-   <li {% block order %}{% endblock %}><a href="/order/home">订单管理</a></li>
+<div class="container-fluid" style="overflow:hidden;">
+<div class="row">
+<div class="col-md-3 col-md-offset-1">
+<ul id="main-nav" class="nav nav-tabs nav-stacked">
+   <li {% block home %}{% endblock %}>
+       <a href="#home" class="nav-header collapsed" data-toggle="collapse">
+                            主页
+                               <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                        </a>
+                        <ul id="home" class="nav nav-list collapse secondmenu">
+                            <li><a href="#">操作记录</a></li>
+                        </ul>
+    </li>
+   <li {% block customer %}{% endblock %}>
+       <a href="#customer" class="nav-header collapsed" data-toggle="collapse">客户管理
+       <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
+       <ul id="customer" class="nav nav-list collapse secondmenu">
+                            <li><a href="{% url 'my_customer' %}">我的客户</a></li>
+                            <li><a href="#">客户检索</a></li>
+                            <li><a href="{% url 'order_customer_add' %}">客户添加</a></li>
+                            <li><a href="#">客户导入</a></li>
+                        </ul>
+   </li>
+   <li {% block product %}{% endblock %}>
+       <a href="#product" class="nav-header collapsed" data-toggle="collapse">产品管理
+       <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
+       <ul id="product" class="nav nav-list collapse secondmenu">
+                            <li><a href="#">产品检索</a></li>
+                            <li><a href="#">产品新增</a></li>
+                            <li><a href="#">产品修改</a></li>
+                        </ul>
+   </li>
+   <li {% block store %}{% endblock %}>
+       <a href="#store" class="nav-header collapsed" data-toggle="collapse">库存管理
+       <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
+       <ul id="store" class="nav nav-list collapse secondmenu">
+                            <li><a href="#">原料检索</a></li>
+                            <li><a href="#">新增原料</a></li>
+                            <li><a href="#">原料出库</a></li>
+                        </ul>
+   </li>
+   <li {% block order %}{% endblock %}>
+       <a href="#order" class="nav-header collapsed" data-toggle="collapse">订单管理
+       <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
+        <ul id="order" class="nav nav-list collapse secondmenu">
+                            <li><a href="#">订单检索</a></li>
+                            <li><a href="#">新增订单</a></li>
+                            <li><a href="#">订单导入</a></li>
+                            <li><a href="#">物流查询</a></li>
+                            <li><a href="#">签收单号导入</a></li>
+                        </ul>
+   </li>
+   <li {% block role %}{% endblock %}>
+       <a href="#role" class="nav-header collapsed" data-toggle="collapse">角色管理
+       <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
+       <ul id="role" class="nav nav-list collapse secondmenu">
+                            <li><a href="#">角色列表</a></li>
+                            <li><a href="#">新增角色</a></li>
+                        </ul>
+   </li>
+   <li {% block reporter %}{% endblock %}>
+       <a href="#reporter" class="nav-header collapsed" data-toggle="collapse">报表管理
+       <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
+       <ul id="reporter" class="nav nav-list collapse secondmenu">
+                            <li><a href="#">收入报表</a></li>
+                            <li><a href="#">成本报表</a></li>
+                            <li><a href="#">业务员业绩报表</a></li>
+                        </ul>
+   </li>
 </ul>
 </div>
-<div class="col-md-9">
+<div class="col-md-8">
 {% block body %}
 {% endblock %}
 </div>
 </div>
-
+</div>
 
 
 
@@ -53,6 +188,35 @@
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script src="/static/js/bootstrap-editable.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap-table.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$.fn.datetimepicker.dates['zh-CN'] = {
+			days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+			daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+			daysMin:  ["日", "一", "二", "三", "四", "五", "六", "日"],
+			months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+			monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+			today: "今日",
+			suffix: [],
+			meridiem: ["上午", "下午"]
+	};
+$('.form_datetime').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		todayHighlight: 1,
+		startView: 2,
+		minView:0,
+		maxView:3,
+		autoclose:1,
+		pickerPosition: "bottom-left"
+
+    });
+</script>
+
 {% block js %}
 {% endblock js %}
   </body>

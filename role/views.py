@@ -9,9 +9,50 @@ from django.contrib.auth import authenticate,login as auth_login,logout as auth_
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm
-login_required(login_url="/login/")
+from stock.models import *
+from role.models import *
+from order.models import *
+
 def home(request):
-    return render(request,'home.html')
+    user_info=UserProfile.history.all()
+    user_role=Role.history.all()
+    issuing_person=Issuing_person.history.all()
+    stock_stock=Stock.history.all()
+    stock_type=Stock_Type.history.all()
+    stock_channel=Stock_Channel.history.all()
+    stock_management=Stock_Management.history.all()
+    stock_mode=Stock_Mode.history.all()
+    order_product=Product.history.all()
+    order_customer_level=Customer_Level.history.all()
+    order_customer=Customer.history.all()
+    order_stock_product=Stock_Product.history.all()
+    order_state=Order_State.history.all()
+    order_contact=Contact_info.history.all()
+    order_order=Order.history.all()
+    data_list=[user_info,user_role,issuing_person,
+               stock_mode,stock_stock,stock_type,stock_channel,stock_management,
+               order_order,order_contact,order_product,order_state,order_stock_product,order_customer,order_customer_level]
+    #print data_list,len(data_list)
+    # data_info={
+    #     'user_info':user_info,
+    #     'user_role':user_role,
+    #     'issuing_person':issuing_person,
+    #     'stock_stock':stock_stock,
+    #     'stock_type':stock_type,
+    #     'stock_channel':stock_channel,
+    #     'stock_management':stock_management,
+    #     'stock_mode':stock_mode,
+    #     'order_product':order_product,
+    #     'order_customer_level':order_customer_level,
+    #     'order_customer':order_customer,
+    #     'order_stock_product':order_stock_product,
+    #     'order_state':order_state,
+    #     'order_contact':order_contact,
+    #     'order_order':order_order
+    # }
+
+
+    return render(request,'home.html',{'data':data_list})
 def login_validate(request,username,password):
     rtvalue = False
     user = authenticate(username=username,password=password)

@@ -1,0 +1,87 @@
+<thead>
+        <tr>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>客户等级</th>
+            <th>所属客服</th>
+            <th>出单人</th>
+            <th>创建时间</th>
+            <th>操作{{ customer|length }}</th>
+        </tr>
+        </thead>
+
+            {% for i in customer %}
+            <tr>
+            <td><a href="#" name="name" data-type="text" data-pk="{{ i.id }}" data-title="输入名称">{{ i.name }}</a></td>
+            <td><a href="#" name="sex" class='{{ i.sex }}' data-type="checklist" data-pk="{{ i.id }}" data-title="性别">{% if i.sex %}男{% else %}女{% endif %}</a></td>
+            <td><a href="#" name="level" data-type="select" data-pk="{{ i.id }}" data-title="等级">{{ i.level }}</a></td>
+            <td><a href="#" name="user" data-type="select" data-pk="{{ i.id }}" data-title="所属客服">{{ i.user }}</a></td>
+            <td><a href="#" name="issuing_person" data-type="select" data-pk="{{ i.id }}" data-title="出单人">{{ i.issuing_person }}</a></td>
+            <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+            <td><a href="{% url 'stock_management_remove' %}?id={{ i.id }}">删除</a></td>
+            </tr>
+            {% endfor %}
+<script type="text/javascript">
+$(document).ready(function() {
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+    var name1=$("td [name='name']").attr("name");
+    $("td [name='name']").editable({
+    name:name1,
+    url:"{% url 'order_customer_edit' %}"
+    }
+    );
+
+    var sex1=$("td [name='sex']").attr("name");
+    var now_sex=$("td [name='sex']").attr("class")
+    $("td [name='sex']").editable({
+        value: now_sex,
+        name:sex1,
+        url:"{% url 'order_customer_edit' %}",
+        source: [
+              {value: 'True', text: '男'},
+              {value: 'False', text: '女'}
+           ]
+    });
+
+   var level=$("td [name='level']").attr("name");
+   var now_level=$("td [name='level']").val();
+    $("td [name='level']").editable({
+        value: now_level,
+        name:level,
+        url:"{% url 'order_customer_edit' %}",
+        source: [
+        {% for i in level %}
+              {value: {{i}}, text: '{{i.level}}'},
+              {% endfor %}
+           ]
+    });
+
+    var user=$("td [name='user']").attr("name");
+   var now_user=$("td [name='level']").val();
+    $("td [name='user']").editable({
+        value: now_user,
+        name:user,
+        url:"{% url 'order_customer_edit' %}",
+        source: [
+        {% for i in userlist %}
+              {value: '{{i}}', text: '{{i.username}}'},
+              {% endfor %}
+           ]
+    });
+
+    var issuing_person=$("td [name='issuing_person']").attr("name");
+   var now_issuing_person=$("td [name='issuing_person']").val();
+    $("td [name='issuing_person']").editable({
+        value: now_issuing_person,
+        name:issuing_person,
+        url:"{% url 'order_customer_edit' %}",
+        source: [
+        {% for i in issuing_person %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+});
+</script>

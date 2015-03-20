@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block stock %}
+class="active"
+{% endblock %}
+{% block body %}
+
+
+
+                <div class="container">
+                    <ol class="breadcrumb">
+  <li><a href="{% url 'stock_home' %}">原料管理</a></li>
+  <li><a href="{% url 'stock_management' %}">库存管理</a></li>
+  <li><a href="{% url 'stock_mode' %}">库存方式</a></li>
+  <li>订单号管理</li>
+
+</ol>
+                    <div class="container">
+                        <div class="col-md-9">
+                            <p>未填订单号</p>
+                            <table class="table">
+                        <thead>
+                        <tr>
+                        <th>快递单号</th>
+                        <th>实收金额</th>
+                        <th>客户</th>
+                        <th>出单人</th>
+                        <th>产品</th>
+                        <th>状态</th>
+                        <th>添加时间</th>
+                        </tr>
+                        <thead>
+                    </thead>
+                        {% for i in order_no_null %}
+                        <tr>
+                        <td><form method="post" action="">{% csrf_token %}<input type="text" name="id" value="{{ i.id }}" hidden="hidden"/>
+                            <input type="text" name="order_no" value=""/><button type="sumbit">填写</button>
+                        </form></td>
+                        <td>{{ i.fact_money }}</td>
+                        <td>{{ i.customer }}</td>
+                        <td>{{ i.issuing_person }}</td>
+                        <td>{{ i.product }}</td>
+                        <td>{{ i.state }}</td>
+                        <td>{{ i.jointime|date:'Y-m-d H:i:s'}}</td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                            </div>
+                    <div class="col-md-9">
+                        <p>已填订单号</p>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                        <th>查看快递信息</th>
+                        <th>快递单号</th>
+                        <th>实收金额</th>
+                        <th>客户</th>
+                        <th>出单人</th>
+                        <th>产品</th>
+                        <th>状态</th>
+                        <th>添加时间</th>
+                        </tr>
+                        <thead>
+                    </thead>
+                        {% for i in order_no_success %}
+                        <tr>
+                        <td><a href="http://www.kuaidi100.com">链接</a></td>
+                        <td><form method="post" action="">{% csrf_token %}<input type="text" name="id" value="{{ i.id }}" hidden="hidden"/>
+                            <input type="text" name="order_no" value="{{ i.delivery_no }}"/><button type="sumbit">修改</button></td>
+                        <td>{{ i.fact_money }}</td>
+                        <td>{{ i.customer }}</td>
+                        <td>{{ i.issuing_person }}</td>
+                        <td>{{ i.product }}</td>
+                        <td>{{ i.state }}</td>
+                        <td>{{ i.jointime}}</td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                            </div>
+                </div>
+                </div>
+{% endblock %}

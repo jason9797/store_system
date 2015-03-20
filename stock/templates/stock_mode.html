@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block stock %}
+class="active"
+{% endblock %}
+{% block body %}
+
+
+
+                <div class="container">
+                    <ol class="breadcrumb">
+  <li><a href="{% url 'stock_home' %}">原料管理</a></li>
+  <li><a href="{% url 'stock_management' %}">库存管理</a></li>
+  <li>库存方式</li>
+  <li><a href="{% url 'stock_order_no' %}">订单号管理</a></li>
+
+</ol>
+                    <div class="container">
+                        <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                        <th>方式</th>
+                        <th>描述</th>
+                        <th>操作</th>
+                        </tr>
+                        <thead>
+                    </thead>
+                        {% for i in stock_mode_data %}
+                        <tr>
+                        <td>{{ i.method }}</td>
+                        <td>{{ i.description }}</td>
+                        <td><a href="?id={{ i.id }}">edit</a>,<a href="{% url 'stock_mode_remove' %}?id={{ i.id }}">remove</a></td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                            </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                        {{ stock_mode_form.errors }}
+                        <p><label>方式:</label>{{ stock_mode_form.method }}</p>
+                        <p><label>描述:</label>{{ stock_mode_form.description }}</p>
+                        <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+{% endblock %}

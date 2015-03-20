@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 # Create your models here.
-
+from simple_history.models import HistoricalRecords
 
 #job_choices = (
 #    (0, _("service")),
@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     #role = models.IntegerField(choices=job_choices, default=0)
     role = models.ForeignKey('Role')
-
+    history = HistoricalRecords()
     class Meta:
         verbose_name='用户角色关系'
     def __unicode__(self):
@@ -24,7 +24,7 @@ class UserProfile(models.Model):
 
 class Role(models.Model):
     name = models.CharField('名称',max_length=50)
-
+    history = HistoricalRecords()
     class Meta:
         verbose_name='角色'
     def __unicode__(self):
@@ -35,9 +35,9 @@ class Issuing_person(models.Model):
     出单人
     '''
     name = models.CharField('名称',max_length=50)
-
+    history = HistoricalRecords()
     class Meta:
         verbose_name='出单人'
     def __unicode__(self):
-        return self.name
+        return '%s'%self.name
         

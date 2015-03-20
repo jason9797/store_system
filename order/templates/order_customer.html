@@ -1,58 +1,28 @@
 {% extends 'base.html' %}
-{% block order %}
+{% block customer %}
 class="active"
 {% endblock %}
 {% block body %}
 
 
 
-                <div class="container">
-                    <ol class="breadcrumb">
-  <li><a href="{% url 'order_home' %}">订单管理</a></li>
-  <li><a href="{% url 'order_contact' %}">联系方式管理</a></li>
-  <li class="active">客户管理</li>
-  <li><a href="{% url 'order_customer_level' %}">客户水平管理</a></li>
-  <li><a href="{% url 'order_product' %}">产品管理</a></li>
-  <li><a href="{% url 'order_stock_product' %}">产品原料管理</a></li>
-  <li><a href="{% url 'order_state' %}">订单状态管理</a></li>
-  <li><a href="{% url 'order_issuing_person' %}">出单人管理</a></li>
+                <div class="container-fluid">
 
-</ol>
-                    <div class="container">
-                        <div class="col-md-6">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                        <th>姓名</th>
-                        <th>性别</th>
-                        <th>等级</th>
-                        <th>创建时间</th>
-                        <th>操作</th>
-                        </tr>
-                        <thead>
-                    </thead>
-                        {% for i in customer_data %}
-                        <tr>
-                        <td>{{ i.name }}</td>
-                        <td>{{ i.sex }}</td>
-                        <td>{{ i.level }}</td>
-                        <td>{{ i.jointime|date:'Y-m-d H:i:s' }}</td>
-                        <td><a href="?id={{ i.id }}">edit</a>,<a href="{% url 'order_customer_remove' %}?id={{ i.id }}">remove</a></td>
-                        </tr>
-                        {% endfor %}
-                        </table>
-                            </div>
                     <div class="row">
                         <div class="col-md-6">
                         <form action="" method="post">
                             {% csrf_token %}
+                            {{ customer_form.errors }}
                         <p><label>姓名:</label>{{ customer_form.name }}</p>
-                        <p><label>性别:</label>{{ customer_form.sex }}</p>
+                        <p><label>性别:</label>{{ customer_form.sex }}<strong>男的打勾，女的去掉</strong></p>
                         <p><label>等级:</label>{{ customer_form.level }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
-                        <p><button type="submit" class="btn">确定</button></p>
+                        <p><label>出单人:</label>{{ customer_form.issuing_person }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
+                        <p><label>客服:</label>{{ customer_form.user }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
+
+
+                            <p><button type="submit" class="btn">确定</button></p>
                         </form>
                         </div>
                     </div>
-                </div>
                 </div>
 {% endblock %}

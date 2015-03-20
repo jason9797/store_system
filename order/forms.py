@@ -5,6 +5,7 @@ from models import *
 from stock.models import *
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext as _
+from role.models import *
 
 class ProductForm(forms.Form):
 
@@ -31,15 +32,16 @@ class CustomerForm(forms.Form):
     客户信息
     '''
     name = forms.CharField(max_length=100)
-    sex = forms.BooleanField(initial=True)
+    sex = forms.BooleanField(initial=True,required=False)
     level = forms.ModelChoiceField(queryset=Customer_Level.objects.all())
-
+    user = forms.ModelChoiceField(queryset=UserProfile.objects.filter(role=Role.objects.get(name=u'客服')))
+    issuing_person=forms.ModelChoiceField(queryset=Issuing_person.objects.all())
 class Stock_ProductForm(forms.Form):
     '''
     原料产品关系
     '''
     quantity = forms.DecimalField(max_digits=4, decimal_places=2)
-    delivery_bill = forms.BooleanField(initial=True)
+    delivery_bill = forms.BooleanField(initial=True,required=False)
     product = forms.ModelChoiceField(queryset=Product.objects.all())
     stock = forms.ModelChoiceField(queryset=Stock.objects.all())
 

@@ -8,22 +8,24 @@ class="active"
 
                 <div class="container">
                     <ol class="breadcrumb">
-  <li class="active"><a href="{% url 'stock_home' %}">原料管理</a></li>
-  <li><a href="#">库存管理</a></li>
-  <li><a href="#">订单号管理</a></li>
+  <li class="active">原料管理</li>
+  <li><a href="{% url 'stock_management' %}">库存管理</a></li>
+  <li><a href="{% url 'stock_mode' %}">库存方式</a></li>
+  <li><a href="{% url 'stock_order_no' %}">订单号管理</a></li>
 </ol>
                     <div class="container">
                         <div class="col-md-6">
                     <table class="table">
                         <thead>
                         <tr>
-                        <th>name</th>
-                        <th>detail</th>
-                        <th>price</th>
-                        <th>quantity</th>
-                        <th>stock_type</th>
-                        <th>stock_channel</th>
-                        <th>jointime</th>
+                        <th>名称</th>
+                        <th>描述</th>
+                        <th>价钱</th>
+                        <th>数量</th>
+                        <th>原料类别</th>
+                        <th>原料渠道</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
                         </tr>
                         <thead>
                     </thead>
@@ -36,6 +38,7 @@ class="active"
                         <td>{{ i.stock_type }}</td>
                         <td>{{ i.stock_channel }}</td>
                         <td>{{ i.jointime|date:'Y-m-d H:i:s' }}</td>
+                        <td><a href="?id={{ i.id }}">edit</a>,<a href="{% url 'stock_remove' %}?id={{ i.id }}">remove</a></td>
                         </tr>
                         {% endfor %}
                         </table>
@@ -44,12 +47,13 @@ class="active"
                         <div class="col-md-5">
                         <form action="" method="post">
                             {% csrf_token %}
-                        <p><label>Name:</label>{{ stock_form.name }}</p>
-                        <p><label>Detail:</label>{{ stock_form.detail }}</p>
-                        <p><label>Price:</label>{{ stock_form.price }}</p>
-                        <p><label>Quantity:</label>{{ stock_form.quantity }}</p>
-                        <p><label>Stock_type:</label>{{ stock_form.stock_type }}<a href="#" data-toggle="modal" data-target="#add_stock_type">add</a></p>
-                        <p><label>Stock_channel:</label>{{ stock_form.stock_channel }}<a href="#" data-toggle="modal" data-target="#add_stock_channel">add</a></p>
+                            {{ stock_form.errors }}
+                        <p><label>名称:</label>{{ stock_form.name }}</p>
+                        <p><label>描述:</label>{{ stock_form.detail }}</p>
+                        <p><label>价格:</label>{{ stock_form.price }}</p>
+                        <p><label>数量:</label>{{ stock_form.quantity }}</p>
+                        <p><label>原料类别:</label>{{ stock_form.stock_type }}<a href="#" data-toggle="modal" data-target="#add_stock_type">add</a></p>
+                        <p><label>原料渠道:</label>{{ stock_form.stock_channel }}<a href="#" data-toggle="modal" data-target="#add_stock_channel">add</a></p>
                         <p><button type="submit" class="btn">确定</button></p>
                         </form>
                         </div>
