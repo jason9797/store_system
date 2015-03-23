@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block customer %}
+class="active"
+{% endblock %}
+{% block body %}
+
+
+
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ customer_form.errors }}
+                        <p><label>姓名:</label>{{ customer_form.name }}</p>
+                        <p><label>性别:</label>{{ customer_form.sex }}<strong>男的打勾，女的去掉</strong></p>
+                        <p><label>等级:</label>{{ customer_form.level }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
+                        <p><label>出单人:</label>{{ customer_form.issuing_person }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
+                        <p><label>客服:</label>{{ customer_form.user }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
+
+
+                            <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}

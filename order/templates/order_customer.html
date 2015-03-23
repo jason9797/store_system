@@ -3,26 +3,157 @@
 class="active"
 {% endblock %}
 {% block body %}
+<div class="container">
+    <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
+		  {% csrf_token %}
+        <div class="row">
+        <div class="col-md-3 form-group">
+            <label>名称:<input type="text" name="name" {% if filter.name %} value="{{ filter.name }}"{%else%}value=""{% endif %}></label>
+            </div>
+        <div class="col-md-3 form-group">
+            <label>性别:<input type="radio" name="sex" value="True" {% if filter.sex == True %} checked{% endif %}/>男
+                <input type="radio" name="sex" value="False" {% if filter.sex == False %} checked{% endif %}/>女
+            </label>
+            </div>
+        <div class="col-md-2 form-group">
+            <label>客户等级:{{ form.level }}</label>
+            </div>
+            </div>
+        <div class="row">
+        <div class="col-md-2 form-group">
+            <label>所属客服:{{ form.user }}</label>
+            </div>
 
+        <div class="col-md-2 form-group">
+            <label>出单人:
+            {{ form.issuing_person }}</label>
+            </div>
 
-
-                <div class="container-fluid">
-
-                    <div class="row">
-                        <div class="col-md-6">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            {{ customer_form.errors }}
-                        <p><label>姓名:</label>{{ customer_form.name }}</p>
-                        <p><label>性别:</label>{{ customer_form.sex }}<strong>男的打勾，女的去掉</strong></p>
-                        <p><label>等级:</label>{{ customer_form.level }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
-                        <p><label>出单人:</label>{{ customer_form.issuing_person }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
-                        <p><label>客服:</label>{{ customer_form.user }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
-
-
-                            <p><button type="submit" class="btn">确定</button></p>
-                        </form>
-                        </div>
-                    </div>
+        <div class="col-md-4 form-group">
+            <label>开始时间:
+                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" name="starttime" type="text" value="{{filter.starttime}}" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
+            <input type="hidden" id="dtp_input1" value="" /><br/></label>
+            </div>
+            </div>
+        <div class="row">
+        <div class="col-md-4 form-group">
+            <label>结束时间:
+                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" name="endtime" type="text" value="{{ filter.endtime }}" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            <input type="hidden" id="dtp_input2" value="" /><br/></label>
+            </div>
+    <div class="col-md-4 form-group">
+        <label class="col-md-2 control-label">             </label>
+	    <button type="SUBMIT" class="btn btn-primary">查询</button>
+        </div>
+            </div>
+    			</form>
+
+
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+        <table class="table" id="table">
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>客户等级</th>
+            <th>所属客服</th>
+            <th>出单人</th>
+            <th>创建时间</th>
+        </tr>
+        </thead>
+            {% for i in customer %}
+            <tr>
+            <td>{{ i.name }}</td>
+            <td>{% if i.sex %}男{% else %}女{% endif %}</td>
+            <td>{{ i.level }}</td>
+            <td>{{ i.user }}</td>
+            <td>{{ i.issuing_person }}</td>
+            <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if customer%}
+        <ul class="pagination" id="pagination"></ul>
+        {% endif %}
+        </div>
+        </div>
+    </div>
 {% endblock %}
+{% block js %}
+<script src="/static/js/jquery.twbsPagination.min.js"></script>
+<!--ajax——csrf验证-->
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+
+{% if customer %}
+<script type="text/javascript">
+$('#pagination').twbsPagination({
+        totalPages: {{ total_page }},
+		startPage:{{ current_page }},
+        visiblePages: {% if total_page > 4 %}5{% else %}{{ total_page }}{% endif %},
+        onPageClick: function (event, page) {
+            $.ajax({
+            type:"POST",
+            url:"{% url 'order_customer' %}",
+    data:{
+      name:$("[name='name']").val(),
+    sex:{% if filter.sex %}$("[name='sex']").val(){% else %}''{% endif %},
+    level:$("[name='level']").val(),
+    user:$("[name='user']").val(),
+    issuing_person:$("[name='issuing_person']").val(),
+    starttime:$("[name='starttime']").val(),
+    endtime:$("[name='endtime']").val(),
+    page:page},
+    datatype:"html",
+    success:
+        function(data){
+        //$('#table').children().remove();
+        //$('#table').append(data)
+        //$('#table').empty().append(data)
+        $('#table').html(data)
+    }
+            })
+            }
+    });
+</script>
+{% endif %}
+<!--分页-->
+{% endblock%}

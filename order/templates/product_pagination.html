@@ -1,0 +1,45 @@
+<thead>
+        <tr>
+            <th>名称</th>
+            <th>价格</th>
+            <th>快递类型</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+            {% for i in product %}
+            <tr>
+            <td><a href="#" name="name" data-type="text" data-pk="{{ i.id }}" data-title="输入名称">{{ i.name }}</a></td>
+            <td><a href="#" name="price" class='{{ i.price }}' data-type="text" data-pk="{{ i.id }}" data-title="输入价格">{{ i.price }}</a></td>
+            <td><a href="#" name="delivery_type" data-type="text" data-pk="{{ i.id }}" data-title="快递类型">{{ i.delivery_type }}</a></td>
+            <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+            <td><a href="{% url 'order_product_remove' %}?id={{ i.id }}">删除</a></td>
+            </tr>
+            {% endfor %}
+<script type="text/javascript">
+$(document).ready(function() {
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+    var name1=$("td [name='name']").attr("name");
+    $("td [name='name']").editable({
+    name:name1,
+    url:"{% url 'order_product_edit' %}"
+    }
+    );
+
+    var price1=$("td [name='price']").attr("name");
+    $("td [name='price']").editable({
+    name:price1,
+    url:"{% url 'order_product_edit' %}"
+    }
+    );
+
+    var delivery_type1=$("td [name='delivery_type']").attr("name");
+    $("td [name='delivery_type']").editable({
+    name:delivery_type1,
+    url:"{% url 'order_product_edit' %}"
+    }
+    );
+
+});
+</script>

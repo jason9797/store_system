@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block stock %}
+class="active"
+{% endblock %}
+{% block body %}
+
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ stock_form.errors }}
+                        <p><label>名称:</label>{{ stock_form.name }}</p>
+                        <p><label>描述:</label>{{ stock_form.detail }}</p>
+                        <p><label>价格:</label>{{ stock_form.price }}</p>
+                        <p><label>数量:</label>{{ stock_form.quantity }}</p>
+                        <p><label>原料类别:</label>{{ stock_form.stock_type }}<a href="#" data-toggle="modal" data-target="#add_stock_type">add</a></p>
+                        <p><label>原料渠道:</label>{{ stock_form.stock_channel }}<a href="#" data-toggle="modal" data-target="#add_stock_channel">add</a></p>
+                        <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+                    </div>
+                    </div>
+
+{% endblock %}
+
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->

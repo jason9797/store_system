@@ -1,0 +1,96 @@
+<thead>
+        <tr>
+            <th>订单号</th>
+            <th>实收金额</th>
+            <th>客户</th>
+            <th>出单人</th>
+            <th>产品</th>
+            <th>订单状态</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+            {% for i in order %}
+            <tr>
+            <td><a href="#" name="delivery_no" data-type="text" data-pk="{{ i.id }}" data-title="输入订单号">{{ i.delivery_no }}</a></td>
+            <td><a href="#" name="fact_money"  data-type="text" data-pk="{{ i.id }}" data-title="实收金额">{{ i.fact_money }}</a></td>
+            <td><a href="#" name="customer" data-type="select" data-pk="{{ i.id }}" data-title="客户">{{ i.customer }}</a></td>
+            <td><a href="#" name="issuing_person" data-type="select" data-pk="{{ i.id }}" data-title="出单人">{{ i.issuing_person }}</a></td>
+            <td><a href="#" name="product" data-type="select" data-pk="{{ i.id }}" data-title="产品">{{ i.product }}</a></td>
+            <td><a href="#" name="state" data-type="select" data-pk="{{ i.id }}" data-title="订单状态">{{ i.state }}</a></td>
+                <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+            <td><a href="{% url 'order_remove' %}?id={{ i.id }}">删除</a></td>
+            </tr>
+            {% endfor %}
+<script type="text/javascript">
+$(document).ready(function() {
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+    var delivery_no1=$("td [name='delivery_no']").attr("name");
+    $("td [name='delivery_no']").editable({
+    name:delivery_no1,
+    url:"{% url 'order_edit' %}"
+    }
+    );
+
+    var fact_money1=$("td [name='fact_money']").attr("name");
+    $("td [name='fact_money']").editable({
+        name:fact_money1,
+    url:"{% url 'order_edit' %}"
+    });
+
+   var customer1=$("td [name='customer']").attr("name");
+   var now_customer=$("td [name='customer']").val();
+    $("td [name='customer']").editable({
+        value: now_customer,
+        name:customer1,
+        url:"{% url 'order_edit' %}",
+        source: [
+        {% for i in customer %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+
+    var issuing_person=$("td [name='issuing_person']").attr("name");
+   var now_issuing_person=$("td [name='issuing_person']").val();
+    $("td [name='issuing_person']").editable({
+        value: now_issuing_person,
+        name:issuing_person,
+        url:"{% url 'order_customer_edit' %}",
+        source: [
+        {% for i in issuing_person %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+    var product1=$("td [name='product']").attr("name");
+   var now_product=$("td [name='product']").val();
+    $("td [name='product']").editable({
+        value: now_product,
+        name:product1,
+        url:"{% url 'order_edit' %}",
+        source: [
+        {% for i in product %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+    var state1=$("td [name='state']").attr("name");
+   var now_state=$("td [name='state']").val();
+    $("td [name='state']").editable({
+        value: now_state,
+        name:state1,
+        url:"{% url 'order_edit' %}",
+        source: [
+        {% for i in state %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+});
+</script>

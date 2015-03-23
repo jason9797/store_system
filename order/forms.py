@@ -11,7 +11,7 @@ class ProductForm(forms.Form):
 
     name = forms.CharField(label='名称',max_length=100)
     price = forms.DecimalField(label='价钱',max_digits=6, decimal_places=2)
-    delivery_type = forms.CharField(label='快递类型',max_length=100,initial=True)
+    delivery_type = forms.CharField(label='快递类型',max_length=100)
     #stock = forms.ModelMultipleChoiceField(queryset=Stock.objects.all())
 
 

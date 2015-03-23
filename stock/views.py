@@ -16,6 +16,7 @@ import datetime
 import json
 from models import *
 from forms import *
+import math
 
 # Create your views here.
 def is_server(self):
@@ -41,89 +42,122 @@ def store_required(login_url=None):
     return user_passes_test(lambda u:u.is_store_manager(),login_url=login_url)
 
 @store_required(login_url="/login")
-def stock_home(request):
+def stock_add(request):
     if request.method=="POST":
-        form=StockForm(request.POST)
-        if form.is_valid():
-            data=form.cleaned_data
-            if request.GET.get("id"):
-                stock=Stock.objects.get(pk=request.GET.get('id'))
-                stock.name=data['name']
-                stock.detail=data['detail']
-                stock.price=data['price']
-                stock.quantity=data['quantity']
-                stock.stock_type=data['stock_type']
-                stock.stock_channel=data['stock_channel']
-                stock.save()
-            else:
-                name=data['name']
-                detail=data['detail']
-                price=data['price']
-                quantity=data['quantity']
-                stock_type=data['stock_type']
-                stock_channel=data['stock_channel']
-                stock=Stock(name=name,detail=detail,price=price,quantity=quantity,stock_type=stock_type,stock_channel=stock_channel)
-                stock.save()
-            return HttpResponseRedirect('/stock/home')
-    if request.GET.get('id'):
-        stock_form=StockForm(model_to_dict(Stock.objects.get(pk=request.GET.get('id'))))
+        stock_form=StockForm(request.POST)
+        if stock_form.is_valid():
+            data=stock_form.cleaned_data
+            name=data['name']
+            detail=data['detail']
+            price=data['price']
+            quantity=data['quantity']
+            stock_type=data['stock_type']
+            stock_channel=data['stock_channel']
+            stock=Stock(name=name,detail=detail,price=price,quantity=quantity,stock_type=stock_type,stock_channel=stock_channel)
+            stock.save()
+            return HttpResponseRedirect('/stock/info')
+
     else:
         stock_form=StockForm()
-    stock_data=Stock.objects.all()
-    stock_type=Stock_TypeForm()
-    stock_mode=Stock_ModeForm()
-    stock_management=Stock_ManagementForm()
-    stock_channel=Stock_ChannelForm()
     form_list={
-               'stock_data':stock_data,
                'stock_form':stock_form,
-               'stock_type':stock_type,
-               'stock_mode':stock_mode,
-               'stock_management':stock_management,
-               'stock_channel':stock_channel
     }
-    return render(request,'stock_home.html',form_list)
+    return render(request,'stock_add.html',form_list)
+
+@store_required(login_url='/login')
+def stock_edit(request):
+    if request.method=="POST":
+        #print request.POST
+        name=request.POST.get('name')
+        value=request.POST.get('value')
+        if name=='stock_type':
+            value=Stock_Type.objects.get(type_name=value)
+        if name=='stock_channel':
+            value=Stock_Channel.objects.get(company=value)
+        info_dict={'%s'%name:value}
+        stock=Stock.objects.filter(pk=request.POST.get("pk"))
+        stock.update(**info_dict)
+        return HttpResponse('success')
+
 @store_required(login_url="/login")
 def stock_remove(request):
     stock_id=request.GET.get("id")
     stock=Stock.objects.get(pk=stock_id)
     stock.delete()
     response=HttpResponse()
-    response.write("<script language='javascript'>alert('删除成功!');window.location.href='/stock/home';</script>")
+    response.write("<script language='javascript'>alert('删除成功!');window.location.href='/stock/other';</script>")
     return response
 
 @store_required(login_url="/login")
-def stock_type_add(request):
+def stock_other(request):
+    return render(request,'stock_other.html')
+
+
+
+@store_required(login_url="/login")
+def stock_type(request):
     if request.method=="POST":
-        form=Stock_TypeForm(request.POST)
-        if form.is_valid():
-            name=request.POST.get('type_name')
-            stock_type=Stock_Type(type_name=name)
-            stock_type.save()
-            return HttpResponseRedirect('/stock/home')
+        stock_type_form=Stock_TypeForm(request.POST)
+        if stock_type_form.is_valid():
+            data=stock_type_form.cleaned_data
+            if request.GET.get("id"):
+                stock_type=Stock_Type.objects.get(pk=request.GET.get("id"))
+                stock_type.type_name=data['type_name']
+                stock_type.save()
+            else:
+                name=data['type_name']
+                stock_type=Stock_Type(type_name=name)
+                stock_type.save()
+            return HttpResponseRedirect('/stock/type')
+    else:
+        if request.GET.get('id'):
+            stock_type_form=Stock_TypeForm(model_to_dict(Stock_Type.objects.get(pk=request.GET.get('id'))))
         else:
-            pass
+            stock_type_form=Stock_TypeForm()
+    stock_type_data=Stock_Type.objects.all()
+    form_list={
+               'stock_type_data':stock_type_data,
+               'stock_type_form':stock_type_form
+               }
+    return render(request,'stock_type.html',form_list)
 @store_required(login_url="/login")
 def stock_type_remove(request):
     stock_type_id=request.GET.get("id")
     stock_type=Stock_Type.objects.get(pk=stock_type_id)
     stock_type.delete()
     response=HttpResponse()
-    response.write("<script language='javascript'>alert('删除成功!');window.location.href='/stock/home';</script>")
+    response.write("<script language='javascript'>alert('删除成功!');window.location.href='/stock/type';</script>")
     return response
 @store_required(login_url="/login")
-def stock_channel_add(request):
+def stock_channel(request):
     if request.method=="POST":
-        form=Stock_ChannelForm(request.POST)
-        if form.is_valid():
-            company=request.POST.get("company")
-            person=request.POST.get("person")
-            phone_number=request.POST.get("phone_number")
-            stock_channel=Stock_Channel(company=company,person=person,phone_number=phone_number)
-            stock_channel.save()
-            return HttpResponseRedirect('/stock/home')
+        stock_channel_form=Stock_ChannelForm(request.POST)
+        if stock_channel_form.is_valid():
+            data=stock_channel_form.cleaned_data
+            if request.GET.get("id"):
+                stock_channel=Stock_Channel.objects.get(pk=request.GET.get("id"))
+                stock_channel.company=data['company']
+                stock_channel.person=data['person']
+                stock_channel.phone_number=data['phone_number']
+                stock_channel.save()
+            else:
+                company=data["company"]
+                person=data["person"]
+                phone_number=data["phone_number"]
+                stock_channel=Stock_Channel(company=company,person=person,phone_number=phone_number)
+                stock_channel.save()
+            return HttpResponseRedirect('/stock/channel')
+    else:
+        if request.GET.get('id'):
+            stock_channel_form=Stock_ChannelForm(model_to_dict(Stock_Channel.objects.get(pk=request.GET.get('id'))))
         else:
-            pass
+            stock_channel_form=Stock_ChannelForm()
+    stock_channel_data=Stock_Channel.objects.all()
+    form_list={
+               'stock_channel_data':stock_channel_data,
+               'stock_channel_form':stock_channel_form
+               }
+    return render(request,'stock_channel.html',form_list)
 
 @store_required(login_url="/login")
 def stock_channel_remove(request):
@@ -131,7 +165,7 @@ def stock_channel_remove(request):
     stock_channel=Stock_Channel.objects.get(pk=stock_channel_id)
     stock_channel.delete()
     response=HttpResponse()
-    response.write("<script language='javascript'>alert('删除成功!');window.location.href='/stock/home';</script>")
+    response.write("<script language='javascript'>alert('删除成功!');window.location.href='/stock/channel';</script>")
     return response
 
 @store_required(login_url="/login")
@@ -226,3 +260,55 @@ def stock_order_no(request):
                }
         return render(request,'stock_order_no.html',form_list)
 
+@store_required(login_url='/login')
+def stock_info(request):
+    if request.method=='POST':
+        name=request.POST.get('name')
+        filter_dict={}
+        initial={}
+        if name:
+            stock=Stock.objects.filter(name__contains=name)
+            filter_dict['name']=name
+        else:
+            stock=Stock.objects.all()
+        starttime=request.POST.get('starttime')
+        if starttime:
+            stock=Stock.filter(jointime__gte=starttime)
+            filter_dict['starttime']=starttime
+        endtime=request.POST.get('endtime')
+        if endtime:
+            stock=Stock.filter(jointime__lte=endtime)
+            filter_dict['endtime']=endtime
+        form=StockForm(initial)
+        page=request.POST.get('page')
+        if page:
+            total_page=int(math.ceil(float(len(stock))/5))
+            if int(page)==1:
+                start_page=0
+                end_page=5
+            else:
+                start_page=5*(int(page)-1)
+                end_page=5*int(page)
+            stock=stock[start_page:end_page]
+            stock_type=Stock_Type.objects.all()
+            stock_channel=Stock_Channel.objects.all()
+            return render(request,'stock_pagination.html',{'stock':stock,'stock_type':stock_type,'stock_channel':stock_channel
+                                              })
+
+        else:
+            start_page=0
+            end_page=5
+            total_page=int(math.ceil(float(len(stock))/5))
+            product=stock[:end_page]
+            page=1
+    else:
+        form=StockForm()
+        stock=[]
+        filter_dict={}
+        total_page=0
+        page=0
+    stock_type=Stock_Type.objects.all()
+    stock_channel=Stock_Channel.objects.all()
+    info={'form':form,'stock':stock,'filter':filter_dict,
+        'total_page':total_page,'current_page':page,'stock_type':stock_type,'stock_channel':stock_channel}
+    return render(request,'stock_info.html',info)

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block product %}
+{% block store %}
 class="active"
 {% endblock %}
 {% block body %}
@@ -46,23 +46,29 @@ class="active"
         <thead>
         <tr>
             <th>名称</th>
+            <th>描述</th>
             <th>价格</th>
-            <th>快递类型</th>
+            <th>数量</th>
+            <th>原料类型</th>
+            <th>原料渠道</th>
             <th>创建时间</th>
             <th>操作</th>
         </tr>
         </thead>
-            {% for i in product %}
+            {% for i in stock %}
             <tr>
             <td><a href="#" name="name" data-type="text" data-pk="{{ i.id }}" data-title="输入名称">{{ i.name }}</a></td>
-            <td><a href="#" name="price" class='{{ i.price }}' data-type="text" data-pk="{{ i.id }}" data-title="输入价格">{{ i.price }}</a></td>
-            <td><a href="#" name="delivery_type" data-type="text" data-pk="{{ i.id }}" data-title="快递类型">{{ i.delivery_type }}</a></td>
-            <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
-            <td><a href="{% url 'order_product_remove' %}?id={{ i.id }}">删除</a></td>
+            <td><a href="#" name="detail" data-type="text" data-pk="{{ i.id }}" data-title="输入描述">{{ i.detail }}</a></td>
+            <td><a href="#" name="price"  data-type="text" data-pk="{{ i.id }}" data-title="输入价格">{{ i.price }}</a></td>
+            <td><a href="#" name="quantity" data-type="text" data-pk="{{ i.id }}" data-title="输入数量">{{ i.quantity }}</a></td>
+                <td><a href="#" name="stock_type" data-type="select" data-pk="{{ i.id }}" data-title="原料类型">{{ i.stock_type }}</a></td>
+            <td><a href="#" name="stock_channel" data-type="select" data-pk="{{ i.id }}" data-title="原料渠道">{{ i.stock_channel }}</a></td>
+                <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+                <td><a href="{% url 'stock_remove' %}?id={{ i.id }}">删除</a></td>
             </tr>
             {% endfor %}
         </table>
-        {% if product %}
+        {% if stock %}
         <ul class="pagination" id="pagination"></ul>
         {% endif %}
         </div>
@@ -103,7 +109,7 @@ $.ajaxSetup({
 </script>
 
 
-{% if product %}
+{% if stock %}
 <script type="text/javascript">
 $('#pagination').twbsPagination({
         totalPages: {{ total_page }},
@@ -112,7 +118,7 @@ $('#pagination').twbsPagination({
         onPageClick: function (event, page) {
             $.ajax({
             type:"POST",
-            url:"{% url 'order_product' %}",
+            url:"{% url 'stock_info' %}",
     data:{
       name:$("[name='name']").val(),
     starttime:$("[name='starttime']").val(),
@@ -140,23 +146,58 @@ $(document).ready(function() {
     var name1=$("td [name='name']").attr("name");
     $("td [name='name']").editable({
     name:name1,
-    url:"{% url 'order_product_edit' %}"
+    url:"{% url 'stock_edit' %}"
+    }
+    );
+
+    var detail1=$("td [name='detail']").attr("name");
+    $("td [name='detail']").editable({
+    name:detail1,
+    url:"{% url 'stock_edit' %}"
     }
     );
 
     var price1=$("td [name='price']").attr("name");
     $("td [name='price']").editable({
     name:price1,
-    url:"{% url 'order_product_edit' %}"
+    url:"{% url 'stock_edit' %}"
     }
     );
 
-    var delivery_type1=$("td [name='delivery_type']").attr("name");
-    $("td [name='delivery_type']").editable({
-    name:delivery_type1,
-    url:"{% url 'order_product_edit' %}"
+    var quantity1=$("td [name='quantity']").attr("name");
+    $("td [name='quantity']").editable({
+    name:quantity1,
+    url:"{% url 'stock_edit' %}"
     }
     );
+
+    var stock_type1=$("td [name='stock_type']").attr("name");
+   var now_stock_type=$("td [name='stock_type']").val();
+    $("td [name='stock_type']").editable({
+        value: now_stock_type,
+        name:stock_type1,
+        url:"{% url 'stock_edit' %}",
+        source: [
+        {% for i in stock_type %}
+              {value: '{{i}}', text: '{{i.type_name}}'},
+              {% endfor %}
+           ]
+    });
+
+
+    var stock_channel1=$("td [name='stock_channel']").attr("name");
+   var now_stock_channel=$("td [name='stock_channel']").val();
+    $("td [name='stock_channel']").editable({
+        value: now_stock_channel,
+        name:stock_channel1,
+        url:"{% url 'stock_edit' %}",
+        source: [
+        {% for i in stock_channel %}
+              {value: '{{i}}', text: '{{i.company}}'},
+              {% endfor %}
+           ]
+    });
+
 
 });
 </script>

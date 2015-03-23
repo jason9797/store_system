@@ -35,59 +35,79 @@ def server_required(login_url=None):
     return user_passes_test(lambda u:u.is_server(),login_url=login_url)
 
 @server_required(login_url='/login')
-def order_home(request):
+def order_add(request):
     if request.method=="POST":
         order_form=OrderForm(request.POST)
         if order_form.is_valid():
             data=order_form.cleaned_data
-            if request.GET.get("id"):
-                order=Order.objects.get(pk=request.GET.get('id'))
-                order.delivery_no=data['delivery_no']
-                order.fact_money=data['fact_money']
-                order.customer=data['customer']
-                order.issuing_person=data['issuing_person']
-                order.product=data['product']
-                order.order_state=data['state']
-                order.save()
-            else:
-                delivery_no=data['delivery_no']
-                fact_money=data['fact_money']
-                customer=data['customer']
-                issuing_person=data['issuing_person']
-                product=data['product']
-                order_state=data['state']
-                order=Order(delivery_no=delivery_no,fact_money=fact_money,customer=customer,issuing_person=issuing_person,
+            # if request.GET.get("id"):
+            #     order=Order.objects.get(pk=request.GET.get('id'))
+            #     order.delivery_no=data['delivery_no']
+            #     order.fact_money=data['fact_money']
+            #     order.customer=data['customer']
+            #     order.issuing_person=data['issuing_person']
+            #     order.product=data['product']
+            #     order.order_state=data['state']
+            #     order.save()
+            # else:
+            delivery_no=data['delivery_no']
+            fact_money=data['fact_money']
+            customer=data['customer']
+            issuing_person=data['issuing_person']
+            product=data['product']
+            order_state=data['state']
+            order=Order(delivery_no=delivery_no,fact_money=fact_money,customer=customer,issuing_person=issuing_person,
                     product=product,state=order_state)
-                order.save()
-            return HttpResponseRedirect("/order/home")
+            order.save()
+            return HttpResponseRedirect("/order/order/add")
         #else:
         #    print order_form.errors
     else:
-        if request.GET.get('id'):
-            order_form=OrderForm(model_to_dict(Order.objects.get(pk=request.GET.get('id'))))
-        else:
-            order_form=OrderForm()
+        # if request.GET.get('id'):
+        #     order_form=OrderForm(model_to_dict(Order.objects.get(pk=request.GET.get('id'))))
+        # else:
+        order_form=OrderForm()
 
-    order_data=Order.objects.all()
-    customer_form=CustomerForm()
-    issuing_person_form=Issuing_personForm()
-    product_form=ProductForm()
-    order_state_form=Order_StateForm()
+    # order_data=Order.objects.all()
+    # customer_form=CustomerForm()
+    # issuing_person_form=Issuing_personForm()
+    # product_form=ProductForm()
+    # order_state_form=Order_StateForm()
     form_list={
-               'order_data':order_data,
+               # 'order_data':order_data,
                'order_form':order_form,
-               'customer_form':customer_form,
-               'issuing_person_form':issuing_person_form,
-               'product_form':product_form,
-               'order_state_form':order_state_form,
+               # 'customer_form':customer_form,
+               # 'issuing_person_form':issuing_person_form,
+               # 'product_form':product_form,
+               # 'order_state_form':order_state_form,
         }
-    return render(request,'order_home.html',form_list)
+    return render(request,'order_add.html',form_list)
+@server_required(login_url='/login')
+def order_edit(request):
+    if request.method=="POST":
+        print request.POST
+        name=request.POST.get('name')
+        value=request.POST.get('value')
+        if name=='customer':
+            value=Customer.objects.get(name=value)
+        if name=="issuing_person":
+            value=Issuing_person.objects.get(name=value)
+        if name=='product':
+            value=Product.objects.get(name=value)
+        if name=='state':
+            value=Order_State.objects.get(name=value)
+            print value
+        info_dict={'%s'%name:value}
+        order=Order.objects.filter(pk=request.POST.get("pk"))
+        order.update(**info_dict)
+        return HttpResponse('success')
+
 @server_required(login_url='/login')
 def order_home_remove(request):
     order_id=request.GET.get("id")
     order=Order.objects.get(pk=order_id)
     order.delete()
-    return HttpResponseRedirect("/order/home")
+    return HttpResponseRedirect("/order/order/info/")
 
 @server_required(login_url='/login')
 def order_customer_add(request):
@@ -115,7 +135,7 @@ def order_customer_add(request):
                'customer_form':customer_form,
                'customer_level':level_form,
                }
-    return render(request,'order_customer.html',form_list)
+    return render(request,'order_customer_add.html',form_list)
 
 @server_required(login_url='/login')
 def order_customer_remove(request):
@@ -271,40 +291,37 @@ def order_stock_product_remove(request):
     return HttpResponseRedirect("/order/stock_product")
 
 @server_required(login_url='/login')
-def order_product(request):
+def order_product_add(request):
     if request.method=="POST":
         product_form=ProductForm(request.POST)
         if product_form.is_valid():
             data=product_form.cleaned_data
-            if request.GET.get("id"):
-                product=Product.objects.get(pk=request.GET.get('id'))
-                product.name=data['name']
-                product.price=data['price']
-                product.delivery_type=data['delivery_type']
-                #product.stock=data['stock']
-                product.save()
-            else:
-                name=data['name']
-                price=data['price']
-                delivery_type=data['delivery_type']
-                stock=data['stock']
-                product=Product(name=name,price=price,delivery_type=delivery_type,stock=stock)
-                product.save()
+            name=data['name']
+            price=data['price']
+            delivery_type=data['delivery_type']
+            product=Product(name=name,price=price,delivery_type=delivery_type)
+            product.save()
             return HttpResponseRedirect("/order/product")
 
     else:
-        if request.GET.get('id'):
-            product_form=ProductForm(model_to_dict(Product.objects.get(pk=request.GET.get('id'))))
-        else:
-            product_form=ProductForm()
-    product_data=Product.objects.all()
-    stock_form=StockForm()
+        product_form=ProductForm()
     form_list={
-               'product_data':product_data,
                'product_form':product_form,
-               'stock_form':stock_form
                }
-    return render(request,'order_product.html',form_list)
+    return render(request,'order_product_add.html',form_list)
+@server_required(login_url='/login')
+def order_product_edit(request):
+    if request.method=="POST":
+        print request.POST
+        name=request.POST.get('name')
+        if name=='price':
+            value=float(request.POST.get('value'))
+        else:
+            value=request.POST.get('value')
+        info_dict={'%s'%name:value}
+        product=Product.objects.filter(pk=request.POST.get("pk"))
+        product.update(**info_dict)
+        return HttpResponse('success')
 @server_required(login_url='/login')
 def order_product_remove(request):
     product_id=request.GET.get("id")
@@ -420,7 +437,7 @@ def my_customer(request):
             else:
                 userlist=User.objects.filter(pk=request.user.id)
             issuing_person=Issuing_person.objects.all()
-            return render(request,'customer_pagination.html',{'customer':customer,'userlist':userlist,
+            return render(request,'my_customer_pagination.html',{'customer':customer,'userlist':userlist,
                                                               'level':level,'issuing_person':issuing_person
                                               })
 
@@ -463,7 +480,7 @@ def my_customer(request):
 @server_required(login_url='/login')
 def order_customer_edit(request):
     if request.method=="POST":
-        print request.POST
+        #print request.POST
         name=request.POST.get('name')
         try:
             value=eval(request.POST.get('value[]'))
@@ -477,3 +494,220 @@ def order_customer_edit(request):
         customer=Customer.objects.filter(pk=request.POST.get("pk"))
         customer.update(**info_dict)
         return HttpResponse('success')
+@server_required(login_url='/login')
+def order_customer(request):
+    if request.method=='POST':
+        name=request.POST.get('name')
+        filter_dict={}
+        initial={}
+        if name:
+            customer=Customer.objects.filter(name__contains=name)
+            filter_dict['name']=name
+        else:
+            customer=Customer.objects.all()
+        level=request.POST.get('level')
+        if level:
+            customer=customer.filter(level=Customer_Level.objects.get(pk=level))
+            initial['level']=Customer_Level.objects.get(pk=level)
+        sex=request.POST.get('sex')
+        if sex:
+            customer=customer.filter(sex=eval(sex))
+            filter_dict['sex']=eval(sex)
+        server=request.POST.get('user')
+        if request.user.is_superuser:
+            if server:
+                customer=customer.filter(user=UserProfile.objects.get(pk=int(server)).user)
+                initial['user']=UserProfile.objects.get(pk=int(server))
+            else:
+                customer=customer.filter(user__in=UserProfile.objects.filter(role=Role.objects.get(name=u'客服')).values('user'))
+                #initial['user']=UserProfile.objects.filter(role=Role.objects.get(name=u'客服'))
+        else:
+            customer=customer.filter(user=request.user)
+            initial['user']=UserProfile.objects.get(user=request.user)
+        issuing_person=request.POST.get('issuing_person')
+        if issuing_person:
+            try:
+                customer=customer.filter(issuing_person=Issuing_person.objects.get(pk=int(issuing_person)))
+                initial['issuing_person']=Issuing_person.objects.get(pk=int(issuing_person))
+            except:
+                return HttpResponseRedirect('/order/customer')
+
+        starttime=request.POST.get('starttime')
+        if starttime:
+            customer=customer.filter(jointime__gte=starttime)
+            filter_dict['starttime']=starttime
+        endtime=request.POST.get('endtime')
+        if endtime:
+            customer=customer.filter(jointime__lte=endtime)
+            filter_dict['endtime']=endtime
+        form=CustomerForm(initial)
+        page=request.POST.get('page')
+        if page:
+            total_page=int(math.ceil(float(len(customer))/5))
+            if int(page)==1:
+                start_page=0
+                end_page=5
+            else:
+                start_page=5*(int(page)-1)
+                end_page=5*int(page)
+            customer=customer[start_page:end_page]
+            return render(request,'customer_pagination.html',{'customer':customer
+                                              })
+
+        else:
+            start_page=0
+            end_page=5
+            total_page=int(math.ceil(float(len(customer))/5))
+            customer=customer[:end_page]
+            page=1
+    else:
+        form=CustomerForm()
+        server=UserProfile.objects.filter(role=Role.objects.get(name=u'客服'))
+        form.fields['user'].queryset=UserProfile.objects.filter(role=Role.objects.get(name=u'客服'))
+        customer=[]
+        filter_dict={}
+        total_page=0
+        page=0
+    info={"server":server,'form':form,'customer':customer,'filter':filter_dict,
+        'total_page':total_page,'current_page':page}
+    return render(request,'order_customer.html',info)
+@server_required(login_url='/login')
+def order_product(request):
+    if request.method=='POST':
+        name=request.POST.get('name')
+        filter_dict={}
+        initial={}
+        if name:
+            product=Product.objects.filter(name__contains=name)
+            filter_dict['name']=name
+        else:
+            product=Product.objects.all()
+        starttime=request.POST.get('starttime')
+        if starttime:
+            product=product.filter(jointime__gte=starttime)
+            filter_dict['starttime']=starttime
+        endtime=request.POST.get('endtime')
+        if endtime:
+            product=product.filter(jointime__lte=endtime)
+            filter_dict['endtime']=endtime
+        form=ProductForm(initial)
+        page=request.POST.get('page')
+        if page:
+            total_page=int(math.ceil(float(len(product))/5))
+            if int(page)==1:
+                start_page=0
+                end_page=5
+            else:
+                start_page=5*(int(page)-1)
+                end_page=5*int(page)
+            product=product[start_page:end_page]
+            return render(request,'product_pagination.html',{'product':product
+                                              })
+
+        else:
+            start_page=0
+            end_page=5
+            total_page=int(math.ceil(float(len(product))/5))
+            product=product[:end_page]
+            page=1
+    else:
+        form=ProductForm()
+        product=[]
+        filter_dict={}
+        total_page=0
+        page=0
+    info={'form':form,'product':product,'filter':filter_dict,
+        'total_page':total_page,'current_page':page}
+    return render(request,'order_product.html',info)
+
+@server_required(login_url='/login')
+def order_info(request):
+    if request.method=='POST':
+        delivery_no=request.POST.get('delivery_no')
+        filter_dict={}
+        initial={}
+        if delivery_no:
+            order=Order.objects.filter(delivery_no__contains=delivery_no)
+            filter_dict['delivery_no']=delivery_no
+        else:
+            order=Order.objects.all()
+        fact_money=request.POST.get('fact_money')
+        if fact_money:
+            order=order.filter(fact_money=fact_money)
+            filter_dict['fact_money']=fact_money
+        customer=request.POST.get('customer')
+        if customer:
+            order=order.filter(customer=Customer.objects.get(pk=int(customer)))
+            initial['customer']=Customer.objects.get(pk=int(customer))
+
+        issuing_person=request.POST.get('issuing_person')
+        if issuing_person:
+            try:
+                order=order.filter(issuing_person=Issuing_person.objects.get(pk=int(issuing_person)))
+                initial['issuing_person']=Issuing_person.objects.get(pk=int(issuing_person))
+            except:
+                return HttpResponseRedirect('/order/order/info')
+        product=request.POST.get('product')
+        if product:
+            try:
+                order=order.filter(product=Product.objects.get(pk=int(product)))
+                initial['product']=Product.objects.get(pk=int(product))
+            except:
+                return HttpResponseRedirect('/order/order/info')
+
+        state=request.POST.get('state')
+        if state:
+            try:
+                order=order.filter(state=Order_State.objects.get(pk=int(state)))
+                initial['state']=Order_State.objects.get(pk=int(state))
+            except:
+                return HttpResponseRedirect('/order/order/info')
+
+        starttime=request.POST.get('starttime')
+        if starttime:
+            customer=order.filter(jointime__gte=starttime)
+            filter_dict['starttime']=starttime
+        endtime=request.POST.get('endtime')
+        if endtime:
+            customer=order.filter(jointime__lte=endtime)
+            filter_dict['endtime']=endtime
+        form=OrderForm(initial)
+        page=request.POST.get('page')
+        if page:
+            total_page=int(math.ceil(float(len(order))/5))
+            if int(page)==1:
+                start_page=0
+                end_page=5
+            else:
+                start_page=5*(int(page)-1)
+                end_page=5*int(page)
+            order=order[start_page:end_page]
+            state_list=Order_State.objects.all()
+            product_list=Product.objects.all()
+            customer_list=Customer.objects.all()
+            issuing_person_list=Issuing_person.objects.all()
+            return render(request,'order_pagination.html',{'order':order,'state':state_list,'product':product_list,
+                                              'customer':customer_list,'issuing_person':issuing_person_list})
+
+        else:
+            start_page=0
+            end_page=5
+            total_page=int(math.ceil(float(len(order))/5))
+            order=order[:end_page]
+            page=1
+    else:
+        form=OrderForm()
+
+        customer=[]
+        filter_dict={}
+        total_page=0
+        page=0
+        order=[]
+    state_list=Order_State.objects.all()
+    product_list=Product.objects.all()
+    customer_list=Customer.objects.all()
+    issuing_person_list=Issuing_person.objects.all()
+    info={'form':form,'filter':filter_dict,'order':order,
+        'total_page':total_page,'current_page':page,'state':state_list,'product':product_list,
+                                              'customer':customer_list,'issuing_person':issuing_person_list}
+    return render(request,'order_info.html',info)

@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+{% block order %}
+class="active"
+{% endblock %}
+{% block body %}
+<div class="container">
+    <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
+		  {% csrf_token %}
+        <div class="row">
+        <div class="col-md-3 form-group">
+            <label>快递单号:<input type="text" name="delivery_no" {% if filter.delivery_no %} value="{{ filter.delivery_no }}"{%else%}value=""{% endif %}></label>
+            </div>
+        <div class="col-md-3 form-group">
+            <label>实收金额:<input type="text" name="fact_money" {% if filter.fact_money %} value="{{ filter.fact_money }}"{%else%}value=""{% endif %}></label>
+            </label>
+            </div>
+        <div class="col-md-2 form-group">
+            <label>客户:{{ form.customer }}</label>
+            </div>
+            </div>
+        <div class="row">
+        <div class="col-md-3 form-group">
+            <label>出单人:{{ form.issuing_person }}</label>
+            </div>
+
+        <div class="col-md-3 form-group">
+            <label>产品:
+            {{ form.product }}</label>
+            </div>
+
+        <div class="col-md-2 form-group">
+            <label>状态:
+            {{ form.state }}</label>
+            </div>
+            </div>
+        <div class="row">
+        <div class="col-md-4 form-group">
+            <label>开始时间:
+                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" name="starttime" type="text" value="{{filter.starttime}}" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            <input type="hidden" id="dtp_input1" value="" /><br/></label>
+            </div>
+        <div class="col-md-4 form-group">
+            <label>结束时间:
+                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" name="endtime" type="text" value="{{ filter.endtime }}" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            <input type="hidden" id="dtp_input2" value="" /><br/></label>
+            </div>
+            </div>
+    <div class="col-md-4 form-group">
+        <label class="col-md-2 control-label">             </label>
+	    <button type="SUBMIT" class="btn btn-primary">查询</button>
+        </div>
+    			</form>
+
+
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+        <table class="table" id="table">
+        <thead>
+        <tr>
+            <th>订单号</th>
+            <th>实收金额</th>
+            <th>客户</th>
+            <th>出单人</th>
+            <th>产品</th>
+            <th>订单状态</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+            {% for i in order %}
+            <tr>
+            <td><a href="#" name="delivery_no" data-type="text" data-pk="{{ i.id }}" data-title="输入订单号">{{ i.delivery_no }}</a></td>
+            <td><a href="#" name="fact_money"  data-type="text" data-pk="{{ i.id }}" data-title="实收金额">{{ i.fact_money }}</a></td>
+            <td><a href="#" name="customer" data-type="select" data-pk="{{ i.id }}" data-title="客户">{{ i.customer }}</a></td>
+            <td><a href="#" name="issuing_person" data-type="select" data-pk="{{ i.id }}" data-title="出单人">{{ i.issuing_person }}</a></td>
+            <td><a href="#" name="product" data-type="select" data-pk="{{ i.id }}" data-title="产品">{{ i.product }}</a></td>
+            <td><a href="#" name="state" data-type="select" data-pk="{{ i.id }}" data-title="订单状态">{{ i.state }}</a></td>
+                <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+            <td><a href="{% url 'order_remove' %}?id={{ i.id }}">删除</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if customer%}
+        <ul class="pagination" id="pagination"></ul>
+        {% endif %}
+        </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+<script src="/static/js/jquery.twbsPagination.min.js"></script>
+<!--ajax——csrf验证-->
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+<!--post页码和筛选数据-->
+
+<!--<script type="text/javascript">
+$(document).ready(function(){
+  $(".next").click(function(){
+    $.post("{% url 'my_customer' %}",
+    {
+      name:$("[name='name']").val(),
+    sex:$("[name='sex']").val(),
+    level:$("[name='level']").val(),
+    user:$("[name='user']").val(),
+    issuing_person:$("[name='issuing_person']").val(),
+    starttime:$("[name='starttime']").val(),
+    endtime:$("[name='endtime']").val(),
+    page:$(this).attr('id')},
+    function(data,status){
+        var data1=data[0].fields.name;
+        alert(data1);
+    });
+  });
+});
+</script>-->
+{% if customer %}
+<script type="text/javascript">
+$('#pagination').twbsPagination({
+        totalPages: {{ total_page }},
+		startPage:{{ current_page }},
+        visiblePages: {% if total_page > 4 %}5{% else %}{{ total_page }}{% endif %},
+        onPageClick: function (event, page) {
+            $.ajax({
+            type:"POST",
+            url:"{% url 'order_info' %}",
+    data:{
+      delivery_no:$("[name='delivery_no']").val(),
+    fact_money:$("[name='fact_money']").val(),
+    customer:$("[name='customer']").val(),
+    issuing_person:$("[name='issuing_person']").val(),
+    product:$("[name='product']").val(),
+    state:$("[name='state']").val(),
+    starttime:$("[name='starttime']").val(),
+    endtime:$("[name='endtime']").val(),
+    page:page},
+    datatype:"html",
+    success:
+        function(data){
+        //$('#table').children().remove();
+        //$('#table').append(data)
+        //$('#table').empty().append(data)
+        $('#table').html(data)
+    }
+            })
+            }
+    });
+</script>
+{% endif %}
+<!--分页-->
+
+<script type="text/javascript">
+$(document).ready(function() {
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+    var delivery_no1=$("td [name='delivery_no']").attr("name");
+    $("td [name='delivery_no']").editable({
+    name:delivery_no1,
+    url:"{% url 'order_edit' %}"
+    }
+    );
+
+    var fact_money1=$("td [name='fact_money']").attr("name");
+    $("td [name='fact_money']").editable({
+        name:fact_money1,
+    url:"{% url 'order_edit' %}"
+    });
+
+   var customer1=$("td [name='customer']").attr("name");
+   var now_customer=$("td [name='customer']").val();
+    $("td [name='customer']").editable({
+        value: now_customer,
+        name:customer1,
+        url:"{% url 'order_edit' %}",
+        source: [
+        {% for i in customer %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+
+    var issuing_person=$("td [name='issuing_person']").attr("name");
+   var now_issuing_person=$("td [name='issuing_person']").val();
+    $("td [name='issuing_person']").editable({
+        value: now_issuing_person,
+        name:issuing_person,
+        url:"{% url 'order_edit' %}",
+        source: [
+        {% for i in issuing_person %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+    var product1=$("td [name='product']").attr("name");
+   var now_product=$("td [name='product']").val();
+    $("td [name='product']").editable({
+        value: now_product,
+        name:product1,
+        url:"{% url 'order_edit' %}",
+        source: [
+        {% for i in product %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+    var state1=$("td [name='state']").attr("name");
+   var now_state=$("td [name='state']").val();
+    $("td [name='state']").editable({
+        value: now_state,
+        name:state1,
+        url:"{% url 'order_edit' %}",
+        source: [
+        {% for i in state %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+});
+</script>
+{% endblock%}

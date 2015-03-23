@@ -6,9 +6,9 @@
     {% endblock %}
     <!-- 新 Bootstrap 核心 CSS 文件 -->
 
-<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 可选的Bootstrap主题文件（一般不用引入） -->
-<!--<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">-->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="/static/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="/static/css/bootstrap-editable.css">
 <link rel="stylesheet" href="/static/css/bootstrap-table.css">
@@ -120,35 +120,36 @@
        <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
        <ul id="customer" class="nav nav-list collapse secondmenu">
                             <li><a href="{% url 'my_customer' %}">我的客户</a></li>
-                            <li><a href="#">客户检索</a></li>
+                            <li><a href="{% url 'order_customer' %}">客户检索</a></li>
                             <li><a href="{% url 'order_customer_add' %}">客户添加</a></li>
                             <li><a href="#">客户导入</a></li>
+                            <li><a href="{% url 'customer_other' %}">其他设置</a></li>
                         </ul>
    </li>
    <li {% block product %}{% endblock %}>
        <a href="#product" class="nav-header collapsed" data-toggle="collapse">产品管理
        <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
        <ul id="product" class="nav nav-list collapse secondmenu">
-                            <li><a href="#">产品检索</a></li>
-                            <li><a href="#">产品新增</a></li>
-                            <li><a href="#">产品修改</a></li>
+                            <li><a href="{% url 'order_product' %}">产品信息</a></li>
+                            <li><a href="{% url 'order_product_add' %}">产品新增</a></li>
                         </ul>
    </li>
    <li {% block store %}{% endblock %}>
        <a href="#store" class="nav-header collapsed" data-toggle="collapse">库存管理
        <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
        <ul id="store" class="nav nav-list collapse secondmenu">
-                            <li><a href="#">原料检索</a></li>
-                            <li><a href="#">新增原料</a></li>
+                            <li><a href="{% url 'stock_info'%}">原料检索</a></li>
+                            <li><a href="{% url 'stock_add' %}">新增原料</a></li>
                             <li><a href="#">原料出库</a></li>
+                            <li><a href="{% url 'stock_other' %}">原料相关管理</a></li>
                         </ul>
    </li>
    <li {% block order %}{% endblock %}>
        <a href="#order" class="nav-header collapsed" data-toggle="collapse">订单管理
        <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
         <ul id="order" class="nav nav-list collapse secondmenu">
-                            <li><a href="#">订单检索</a></li>
-                            <li><a href="#">新增订单</a></li>
+                            <li><a href="{% url 'order_info' %}">订单检索</a></li>
+                            <li><a href="{% url 'order_add' %}">新增订单</a></li>
                             <li><a href="#">订单导入</a></li>
                             <li><a href="#">物流查询</a></li>
                             <li><a href="#">签收单号导入</a></li>

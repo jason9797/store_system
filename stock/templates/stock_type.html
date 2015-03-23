@@ -1,35 +1,35 @@
 {% extends 'stock_other.html' %}
 {% block stock%}
-                    <div class="container">
+<div class="container">
                         <div class="col-md-6">
-                            <strong>库存方式信息</strong>
+                     <strong>原料类型信息</strong>
                     <table class="table">
                         <thead>
                         <tr>
-                        <th>方式</th>
-                        <th>描述</th>
+                        <th>名称</th>
                         <th>操作</th>
                         </tr>
                         <thead>
                     </thead>
-                        {% for i in stock_mode_data %}
+                        {% for i in stock_type_data %}
                         <tr>
-                        <td>{{ i.method }}</td>
-                        <td>{{ i.description }}</td>
-                        <td><a href="?id={{ i.id }}">edit</a>,<a href="{% url 'stock_mode_remove' %}?id={{ i.id }}">remove</a></td>
+                        <td>{{ i.type_name }}</td>
+                        <td><a href="?id={{ i.id }}">修改</a>,<a href="{% url 'stock_type_remove' %}?id={{ i.id }}">删除</a></td>
                         </tr>
                         {% endfor %}
                         </table>
                             </div>
+                    <div class="row">
+                        <strong>原料类型增加(修改)</strong>
                         <div class="col-md-6">
-                            <strong>库存方式增加(修改)</strong>
                         <form action="" method="post">
                             {% csrf_token %}
-                        {{ stock_mode_form.errors }}
-                        <p><label>方式:</label>{{ stock_mode_form.method }}</p>
-                        <p><label>描述:</label>{{ stock_mode_form.description }}</p>
+                        {{ stock_type_form.errors }}
+                        <p><label>名称:</label>{{ stock_type_form.type_name }}</p>
                         <p><button type="submit" class="btn">确定</button></p>
                         </form>
                         </div>
                     </div>
+                </div>
+                </div>
 {% endblock %}

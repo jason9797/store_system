@@ -1,0 +1,43 @@
+{% extends 'stock_other.html' %}
+{% block stock%}
+<div class="container">
+                        <div class="col-md-6">
+                     <strong>原料渠道信息</strong>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                        <th>公司</th>
+                        <th>联系人</th>
+                        <th>手机号码</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                        </tr>
+                        <thead>
+                    </thead>
+                        {% for i in stock_channel_data %}
+                        <tr>
+                        <td>{{ i.company }}</td>
+                        <td>{{ i.person }}</td>
+                        <td>{{ i.phone_number }}</td>
+                        <td>{{ i.jointime|date:'Y-m-d H:i:s'  }}</td>
+                        <td><a href="?id={{ i.id }}">修改</a>,<a href="{% url 'stock_channel_remove' %}?id={{ i.id }}">删除</a></td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                            </div>
+                    <div class="row">
+                        <strong>原料渠道增加(修改)</strong>
+                        <div class="col-md-6">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                        {{ stock_channel_form.errors }}
+                        <p><label>公司:</label>{{ stock_channel_form.company }}</p>
+                        <p><label>联系人:</label>{{ stock_channel_form.person }}</p>
+                        <p><label>手机号码</label>{{ stock_channel_form.phone_number }}</p>
+                        <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+{% endblock %}

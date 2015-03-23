@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block product %}
+class="active"
+{% endblock %}
+{% block body %}
+<div class="container">
+<div class="col-md-6">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ product_form.errors }}
+                        <p><label>名称:</label>{{ product_form.name }}</p>
+                        <p><label>价格:</label>{{ product_form.price }}</p>
+                        <p><label>快递类型:</label>{{ product_form.delivery_type }}</p>
+                        <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+    </div>
+{% endblock %}
