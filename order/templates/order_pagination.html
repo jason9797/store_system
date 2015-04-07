@@ -1,8 +1,11 @@
 <thead>
         <tr>
             <th>订单号</th>
+            <th>快递单号</th>
             <th>实收金额</th>
             <th>客户</th>
+            <th>地址</th>
+            <th>手机号码</th>
             <th>出单人</th>
             <th>产品</th>
             <th>订单状态</th>
@@ -12,11 +15,14 @@
         </thead>
             {% for i in order %}
             <tr>
-            <td><a href="#" name="delivery_no" data-type="text" data-pk="{{ i.id }}" data-title="输入订单号">{{ i.delivery_no }}</a></td>
-            <td><a href="#" name="fact_money"  data-type="text" data-pk="{{ i.id }}" data-title="实收金额">{{ i.fact_money }}</a></td>
-            <td><a href="#" name="customer" data-type="select" data-pk="{{ i.id }}" data-title="客户">{{ i.customer }}</a></td>
-            <td><a href="#" name="issuing_person" data-type="select" data-pk="{{ i.id }}" data-title="出单人">{{ i.issuing_person }}</a></td>
-            <td><a href="#" name="product" data-type="select" data-pk="{{ i.id }}" data-title="产品">{{ i.product }}</a></td>
+                <td>{{ i.id }}</td>
+            <td>{% if i.delivery_no %}<a href="{% url 'get_order_trace' %}?delivery_no={{i.delivery_no}}" data-toggle="modal" data-target="#traceorder" class="btn btn-default">{{ i.delivery_no }}</a>{% else %}{{ i.delivery_no }}{% endif %}</td>
+            <td>{{ i.fact_money }}</td>
+            <td>{{ i.customer }}</td>
+            <td>{{ i.customer.get_contact_info.0.address}}</td>
+                <td>{{ i.customer.get_contact_info.0.phone_number}}</td>
+            <td>{{ i.issuing_person }}</td>
+            <td>{{ i.product }}</td>
             <td><a href="#" name="state" data-type="select" data-pk="{{ i.id }}" data-title="订单状态">{{ i.state }}</a></td>
                 <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
             <td><a href="{% url 'order_remove' %}?id={{ i.id }}">删除</a></td>
@@ -58,7 +64,7 @@ $(document).ready(function() {
     $("td [name='issuing_person']").editable({
         value: now_issuing_person,
         name:issuing_person,
-        url:"{% url 'order_customer_edit' %}",
+        url:"{% url 'order_edit' %}",
         source: [
         {% for i in issuing_person %}
               {value: '{{i}}', text: '{{i.name}}'},

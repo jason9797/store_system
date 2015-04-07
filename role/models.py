@@ -13,9 +13,9 @@ class UserProfile(models.Model):
     '''
     用户表
     '''
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User,blank=True,null=True,on_delete=models.SET_NULL)
     #role = models.IntegerField(choices=job_choices, default=0)
-    role = models.ForeignKey('Role')
+    role = models.ForeignKey('Role',blank=True,null=True,on_delete=models.SET_NULL)
     history = HistoricalRecords()
     class Meta:
         verbose_name='用户角色关系'

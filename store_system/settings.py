@@ -26,10 +26,11 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+INTERNAL_IPS = ('127.0.0.1',)
 # Application definition
 
 INSTALLED_APPS = (
+    #'authority',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,9 +40,12 @@ INSTALLED_APPS = (
     'stock',
     'order',
     'role',
+    'debug_toolbar',
     #'reversion',
-    'simple_history'
+    'simple_history',
 )
+
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -52,7 +56,19 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+# AUTHORITY_USE_SMART_CACHE = False
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     'django.core.context_processors.auth',
+#     'django.core.context_processors.debug',
+#     'django.core.context_processors.i18n',
+#     'django.core.context_processors.media',
+#     'django.core.context_processors.request',
+# )
+
+
 
 ROOT_URLCONF = 'store_system.urls'
 
@@ -97,3 +113,23 @@ MEDIA_URL = "/media/"
 TEMPLATE_DIRS = (
      os.path.join(BASE_DIR, "templates"),
 )
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '/Users/jason_lee/Downloads/deskop/store_system/log/debug.log',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

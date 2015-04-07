@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/jquery.datetimepicker.css">
+{% endblock %}
+{% block reporter %}
+class="active"
+{% endblock %}
+{% block reporter_active %}
+in
+{% endblock %}
+{% block body %}
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-12">
+<div id="month_chart" style="height:400px;"></div>
+    </div>
+<div class="col-md-12">
+    <div class="row">
+        <center>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+        <p><label>开始时间:</label><input id="datetimepicker1" name="starttime" value="{{starttime}}"/>
+        <label>结束时间:</label><input id="datetimepicker2" name="endtime" value="{{endtime}}"/>
+	    <button type="SUBMIT" id="button" class="btn btn-primary">查询</button>
+        </p>
+            </form>
+            </center>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div id="chart" style="height:400px;"></div>
+
+    </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script src="/static/js/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+    $('#datetimepicker1').datetimepicker({
+	lang:'ch',
+	timepicker:false,
+	step:1,
+	format:'Y-m-d',
+	formatDate:'Y-m-d',
+	minDate:'2014-01-02',
+	maxDate:'2017-01-02'});
+    $('#datetimepicker2').datetimepicker({
+	lang:'ch',
+	timepicker:false,
+	format:'Y-m-d',
+	formatDate:'Y-m-d',
+	minDate:'2014-01-02',
+	maxDate:'2017-01-02'});
+</script>
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+<!--
+<script type="text/javascript">
+    $(document).ready(function(){
+  $("#button").click(function(){
+    $.ajax({url:"",
+                type:"POST",
+                data:{starttime:$("[name='starttime']").val(),
+    endtime:$("[name='endtime']").val()},
+                success:function(data){
+        $('#chart').html(data)
+    }
+  });
+  });
+});
+
+</script>-->
+
+
+
+<script src="/static/js/dist/echarts.js"></script>
+<script type="text/javascript">
+        require.config({
+            paths: {
+                echarts: '/static/js/dist'
+            }
+        });
+        require(
+            [
+                'echarts',
+                'echarts/chart/line'
+            ],
+            function (ec) {
+                var myChart = ec.init(document.getElementById('month_chart'));
+                var option = {
+    title : {
+        text: '月订单金额图',
+        subtext: '测试'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['本月金额','上月金额']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : {% if this_month_data|length > last_month_data|length %}
+                   [{% for i in this_month_data%}'{{i}}',{% endfor %}]
+                   {% else %}
+                   [{% for i in last_month_data%}'{{i}}',{% endfor %}]
+                   {% endif %}
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLabel : {
+                formatter: '{value} 元'
+            }
+        }
+    ],
+    series : [
+        {
+            name:'本月金额',
+            type:'line',
+            data:[{% for key,value in this_month_data.items%}{% if loop.counter == this_month_data|length %}{{value}}{% else %}{{value}},{% endif %}{% endfor %}],
+            markPoint : {
+                data : [
+                    {type : 'max', name: '本月最大金额'},
+                    {type : 'min', name: '本月最小金额'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '本月平均金额'}
+                ]
+            }
+        },
+
+        {
+            name:'上月金额',
+            type:'line',
+            data:[{% for key,value in last_month_data.items%}{% if loop.counter == last_month_data|length %}{{value}}{% else %}{{value}},{% endif %}{% endfor %}],
+            markPoint : {
+                data : [
+                    {type : 'max', name: '上月最大金额'},
+                    {type : 'min', name: '上月最小金额'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '上月平均金额'}
+                ]
+            }
+        }
+    ]
+};
+                myChart.setOption(option);
+            }
+        );
+    </script>
+{% if data %}
+<script type="text/javascript">
+        require.config({
+            paths: {
+                echarts: '/static/js/dist'
+            }
+        });
+        require(
+            [
+                'echarts',
+                'echarts/chart/line'
+            ],
+            function (ec) {
+                var myChart = ec.init(document.getElementById('chart'));
+                var option = {
+    title : {
+        text: '订单金额图',
+        subtext: '测试'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['金额']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : {% if data %}
+                   [{% for i in data%}'{{i}}',{% endfor %}]
+                   {% endif %}
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLabel : {
+                formatter: '{value} 元'
+            }
+        }
+    ],
+    series : [
+        {
+            name:'金额',
+            type:'line',
+            data:[{% for key,value in data.items%}{% if loop.counter == data|length %}{{value}}{% else %}{{value}},{% endif %}{% endfor %}],
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大金额'},
+                    {type : 'min', name: '最小金额'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均金额'}
+                ]
+            }
+        }
+    ]
+};
+                myChart.setOption(option);
+            }
+        );
+    </script>
+{% endif %}
+{% endblock %}

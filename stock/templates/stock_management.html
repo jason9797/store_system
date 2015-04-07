@@ -1,53 +1,196 @@
 {% extends 'base.html' %}
-{% block stock %}
+{% block store %}
 class="active"
 {% endblock %}
 {% block body %}
+<div class="container">
+    <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
+		  {% csrf_token %}
+        <div class="row">
+        <div class="col-md-2 form-group">
+            <label>出／入库:<input type="radio" name="stock_mode" value="True" {% if filter.stock_mode == True %} checked{% endif %}/>出
+                <input type="radio" name="stock_mode" value="False" {% if filter.stock_mode == False %} checked{% endif %}/>入
 
-
-
-                <div class="container">
-                    <ol class="breadcrumb">
-  <li><a href="{% url 'stock_home' %}">原料管理</a></li>
-  <li>库存管理</li>
-  <li><a href="{% url 'stock_mode' %}">库存方式</a></li>
-  <li><a href="{% url 'stock_order_no' %}">订单号管理</a></li>
-
-</ol>
-                    <div class="container">
-                        <div class="col-md-6">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                        <th>出\入(库)</th>
-                        <th>原料</th>
-                        <th>模式</th>
-                        <th>操作</th>
-                        </tr>
-                        <thead>
-                    </thead>
-                        {% for i in stock_management_data %}
-                        <tr>
-                        <td>{{ i.stock_mode }}</td>
-                        <td>{{ i.stock }}</td>
-                        <td>{{ i.mode }}</td>
-                        <td><a href="?id={{ i.id }}">edit</a>,<a href="{% url 'stock_management_remove' %}?id={{ i.id }}">remove</a></td>
-                        </tr>
-                        {% endfor %}
-                        </table>
-                            </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            {{ stock_management_form.errors }}
-                        <p><label>出\入(库):</label>{{ stock_management_form.stock_mode }}</p>
-                        <p><label>原料:</label>{{ stock_management_form.stock }}</p>
-                        <p><label>模式:</label>{{ stock_management_form.mode }}</p>
-                        <p><button type="submit" class="btn">确定</button></p>
-                        </form>
-                        </div>
-                    </div>
+                </label>
+            </div>
+            <div class="col-md-3 form-group">
+            <label>产品:{{ form.product }}</label>
+            </div>
+            <div class="col-md-2 form-group">
+            <label>模式:{{ form.mode }}</label>
+            </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4 form-group">
+            <label>开始时间:
+                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" name="starttime" type="text" value="{{filter.starttime}}" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
+            <input type="hidden" id="dtp_input1" value="" /><br/></label>
+            </div>
+
+        <div class="col-md-4 form-group">
+            <label>结束时间:
+                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" name="endtime" type="text" value="{{ filter.endtime }}" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
+            <input type="hidden" id="dtp_input2" value="" /><br/></label>
+            </div>
+            </div>
+    <div class="col-md-4 form-group">
+        <label class="col-md-2 control-label">             </label>
+	    <button type="SUBMIT" class="btn btn-primary">查询</button>
+        </div>
+    </form>
+
+
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+        <table class="table" id="table">
+        <thead>
+        <tr>
+            <th>出／入库</th>
+            <th>产品</th>
+            <th>模式</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+            {% for i in stock_management %}
+            <tr>
+            <td><a href="#" name="stock_mode" class="{{ i.stock_mode }}"data-type="checklist" data-pk="{{ i.id }}" data-title="选择出入库">{{i.stock_mode}}</a></td>
+                <td><a href="#" name="product" data-type="select" data-pk="{{ i.id }}" data-title="产品">{{ i.product }}</a></td>
+            <td><a href="#" name="mode" data-type="select" data-pk="{{ i.id }}" data-title="模式">{{ i.mode }}</a></td>
+                <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+                <td><a href="{% url 'stock_management_remove' %}?id={{ i.id }}">删除</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if stock_management %}
+        <ul class="pagination" id="pagination"></ul>
+        {% endif %}
+        </div>
+        </div>
+    </div>
 {% endblock %}
+{% block js %}
+<script src="/static/js/jquery.twbsPagination.min.js"></script>
+<!--ajax——csrf验证-->
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+
+
+{% if stock_management %}
+<script type="text/javascript">
+$('#pagination').twbsPagination({
+        totalPages: {{ total_page }},
+		startPage:{{ current_page }},
+        visiblePages: {% if total_page > 4 %}5{% else %}{{ total_page }}{% endif %},
+        onPageClick: function (event, page) {
+            $.ajax({
+            type:"POST",
+            url:"{% url 'stock_management' %}",
+    data:{
+      stock_mode:{% if filter.stock_mode %}$("[name='stock_mode']").val(){% else %}''{% endif %},
+      product:$("[name='product']").val(),
+      mode:$("[name='mode']").val(),
+    starttime:$("[name='starttime']").val(),
+    endtime:$("[name='endtime']").val(),
+    page:page},
+    datatype:"html",
+    success:
+        function(data){
+        //$('#table').children().remove();
+        //$('#table').append(data)
+        //$('#table').empty().append(data)
+        $('#table').html(data)
+    }
+            })
+            }
+    });
+</script>
+{% endif %}
+<!--分页-->
+
+<script type="text/javascript">
+$(document).ready(function() {
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+    var stock_mode1=$("td [name='stock_mode']").attr("name");
+    var now_stock_mode=$("td [name='stock_mode']").attr("class")
+    $("td [name='stock_mode']").editable({
+        value: now_stock_mode,
+        name:stock_mode1,
+        url:"{% url 'stock_management_edit' %}",
+        source: [
+              {value: 'True', text: '出'},
+              {value: 'False', text: '入'}
+           ]
+    });
+
+
+
+    var product1=$("td [name='product']").attr("name");
+   var now_product=$("td [name='product']").val();
+    $("td [name='product']").editable({
+        value: now_product,
+        name:product1,
+        url:"{% url 'stock_management_edit' %}",
+        source: [
+        {% for i in product %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+
+    var mode1=$("td [name='mode']").attr("name");
+   var now_mode=$("td [name='mode']").val();
+    $("td [name='mode']").editable({
+        value: now_mode,
+        name:mode1,
+        url:"{% url 'stock_management_edit' %}",
+        source: [
+        {% for i in stock_mode %}
+              {value: '{{i}}', text: '{{i.method}}'},
+              {% endfor %}
+           ]
+    });
+
+
+});
+</script>
+{% endblock%}

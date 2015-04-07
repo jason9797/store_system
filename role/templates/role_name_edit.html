@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block head %}
+<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+<script type="text/javascript">window.__admin_utc_offset__ = "28800";</script>
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+<script type="text/javascript" src="/static/admin/js/actions.js"></script>
+<script type="text/javascript" src="/static/admin/js/SelectBox.js"></script>
+<script type="text/javascript" src="/static/admin/js/SelectFilter2.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css"/>
+{% endblock %}
+{% block role %}
+class="active"
+{% endblock %}
+{% block role_active %}in{% endblock %}
+{% block body %}
+<div class="row">
+<form action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+    {{ group_form.as_p }}
+    <button type="submit">确定</button>
+    </form>
+    </div>
+{% endblock %}

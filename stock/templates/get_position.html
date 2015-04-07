@@ -1,0 +1,9 @@
+<ol>
+{% for i in contact %}
+{% if i.default %}
+    <li style="color:red;">地址:{{i.address}},手机:{{i.phone_number}}</li>
+    {% else %}
+    <li>地址:{{i.address}},手机:{{i.phone_number}}</li>
+    {% endif %}
+    {% endfor %}
+    </ol>

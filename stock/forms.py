@@ -1,6 +1,7 @@
 #coding=utf-8
 from models import *
 from django import forms
+from order.models import Product
 from django.core.validators import RegexValidator
 import datetime
 # Create your models here.
@@ -37,7 +38,7 @@ class Stock_ManagementForm(forms.Form):
     库存管理
     '''
     stock_mode = forms.BooleanField(widget=forms.CheckboxInput(attrs={'value':'True'}),required=False)
-    stock = forms.ModelChoiceField(queryset=Stock.objects.all())
+    product = forms.ModelChoiceField(queryset=Product.objects.all())
     mode = forms.ModelChoiceField(queryset=Stock_Mode.objects.all())
 
 

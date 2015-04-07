@@ -48,6 +48,7 @@ class="active"
             <th>名称</th>
             <th>价格</th>
             <th>快递类型</th>
+            <th>原料信息</th>
             <th>创建时间</th>
             <th>操作</th>
         </tr>
@@ -57,7 +58,11 @@ class="active"
             <td><a href="#" name="name" data-type="text" data-pk="{{ i.id }}" data-title="输入名称">{{ i.name }}</a></td>
             <td><a href="#" name="price" class='{{ i.price }}' data-type="text" data-pk="{{ i.id }}" data-title="输入价格">{{ i.price }}</a></td>
             <td><a href="#" name="delivery_type" data-type="text" data-pk="{{ i.id }}" data-title="快递类型">{{ i.delivery_type }}</a></td>
-            <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+            <td>{% for k in i.get_stock_info %}
+                原料:{{ k.stock }},数量:{{ k.quantity }}<br>
+                {% endfor %}
+            </td>
+                <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
             <td><a href="{% url 'order_product_remove' %}?id={{ i.id }}">删除</a></td>
             </tr>
             {% endfor %}

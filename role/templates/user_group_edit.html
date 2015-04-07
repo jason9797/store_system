@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block head %}
+<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+<script type="text/javascript">window.__admin_utc_offset__ = "28800";</script>
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+<script type="text/javascript" src="/static/admin/js/actions.js"></script>
+<script type="text/javascript" src="/static/admin/js/SelectBox.js"></script>
+<script type="text/javascript" src="/static/admin/js/SelectFilter2.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css"/>
+
+{% endblock %}
+{% block role %}
+class="active"
+{% endblock %}
+{% block role_active %}in{% endblock %}
+{% block body %}
+          <form action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+         <div class="modal-header">
+            <button type="button" class="close"
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               修改{{username}}账号的角色
+            </h4>
+         </div>
+         <div class="modal-body">
+            {{ group_form.as_p }}
+
+         </div>
+         <div class="modal-footer">
+            <button type="sumbit" class="btn btn-primary">
+               提交更改
+            </button>
+             </div>
+             </form>
+
+{% endblock %}

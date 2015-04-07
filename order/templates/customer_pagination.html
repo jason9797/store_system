@@ -4,18 +4,102 @@
             <th>性别</th>
             <th>客户等级</th>
             <th>所属客服</th>
-            <th>出单人</th>
+            <th>地址</th>
+            <th>手机号码</th>
             <th>创建时间</th>
+            <th>操作</th>
         </tr>
         </thead>
-
             {% for i in customer %}
             <tr>
-            <td>{{ i.name }}</td>
-            <td>{% if i.sex %}男{% else %}女{% endif %}</td>
-            <td>{{ i.level }}</td>
+            <td>{% if i.user %}
+                <a href="#" name="name" data-type="text" data-pk="{{ i.id }}" data-title="输入名称">{{ i.name }}</a>
+                {% else %}{{i.name}}
+                {% endif %}</td>
+            <td>{% if i.user %}
+                <a href="#" name="sex" class='{{ i.sex }}' data-type="select" data-pk="{{ i.id }}" data-title="性别">
+                   {% if i.sex %}男{% else %}女{% endif %}</a>
+                {% else %}{% if i.sex %}男{% else %}女{% endif %}{% endif %}
+            </td>
+            <td>{% if i.user %}<a href="#" name="level" data-type="select" data-pk="{{ i.id }}" data-title="等级">{{ i.level }}</a>
+            {% else %}{{ i.level }}{% endif %}</td>
             <td>{{ i.user }}</td>
-            <td>{{ i.issuing_person }}</td>
-            <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+            {% if i.get_contact_info %}
+                <td>{% if i.user %}
+                    <a href="#" name="address" data-type="text" data-pk="{{ i.id }}" data-title="输入地址">
+                    {{ i.get_contact_info.0.address }}</a>
+                {% else %}
+                {{ i.get_contact_info.0.address }}{% endif %}</td>
+                <td>{% if i.user %}<a href="#" name="phone_number" data-type="text" data-pk="{{ i.id }}" data-title="输入手机">
+                    {{ i.get_contact_info.0.phone_number }}</a>{% else %}{{ i.get_contact_info.0.phone_number }}{% endif %}
+                </td>
+            {% else %}
+                <td>无</td>
+                <td>无
+                </td>
+            {% endif %}
+                <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+                <td>
+                {% if not user.is_superuser %}
+                <a href="{% url 'order_contact_add'%}?id={{i.id}}">添加联系方式</a><br>
+                    {% if not i.user %}
+                <a href="{% url 'order_customer_edit' %}?customer_id={{i.id}}">归属到自己</a>
+                    {% else %}
+                <a href="{% url 'order_add'%}?customer_id={{i.id}}">开单</a><br>
+                {% endif %}
+                {% endif %}
+                <a href="{% url 'order_customer_remove' %}?id={{i.id}}">删除</a></td>
             </tr>
             {% endfor %}
+<script type="text/javascript">
+$(document).ready(function() {
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+    var name1=$("td [name='name']").attr("name");
+    $("td [name='name']").editable({
+    name:name1,
+    url:"{% url 'order_customer_edit' %}"
+    }
+    );
+
+    var sex1=$("td [name='sex']").attr("name");
+    var now_sex=$("td [name='sex']").attr("class")
+    $("td [name='sex']").editable({
+        value: now_sex,
+        name:sex1,
+        url:"{% url 'order_customer_edit' %}",
+        source: [
+              {value: 'True', text: '男'},
+              {value: 'False', text: '女'}
+           ]
+    });
+
+   var level=$("td [name='level']").attr("name");
+   var now_level=$("td [name='level']").val();
+    $("td [name='level']").editable({
+        value: now_level,
+        name:level,
+        url:"{% url 'order_customer_edit' %}",
+        source: [
+        {% for i in level %}
+              {value: {{i}}, text: '{{i.level}}'},
+              {% endfor %}
+           ]
+    });
+
+    var address1=$("td [name='address']").attr("name");
+    $("td [name='address']").editable({
+    name:address1,
+    url:"{% url 'order_customer_edit' %}"
+    }
+    );
+
+    var phone_number1=$("td [name='phone_number']").attr("name");
+    $("td [name='phone_number']").editable({
+    name:phone_number1,
+    url:"{% url 'order_customer_edit' %}"
+    }
+    );
+
+});
+</script>

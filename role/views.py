@@ -4,55 +4,21 @@ from models import *
 from django.http import HttpResponse
 from django.contrib.auth.views import login_required
 from forms import *
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group,Permission,ContentType
 from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
 from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test,login_required
 from django.contrib.auth.forms import UserCreationForm
 from stock.models import *
 from role.models import *
 from order.models import *
-
+@login_required(login_url="/login")
 def home(request):
-    user_info=UserProfile.history.all()
-    user_role=Role.history.all()
-    issuing_person=Issuing_person.history.all()
-    stock_stock=Stock.history.all()
-    stock_type=Stock_Type.history.all()
-    stock_channel=Stock_Channel.history.all()
-    stock_management=Stock_Management.history.all()
-    stock_mode=Stock_Mode.history.all()
-    order_product=Product.history.all()
-    order_customer_level=Customer_Level.history.all()
-    order_customer=Customer.history.all()
-    order_stock_product=Stock_Product.history.all()
-    order_state=Order_State.history.all()
-    order_contact=Contact_info.history.all()
-    order_order=Order.history.all()
-    data_list=[user_info,user_role,issuing_person,
-               stock_mode,stock_stock,stock_type,stock_channel,stock_management,
-               order_order,order_contact,order_product,order_state,order_stock_product,order_customer,order_customer_level]
-    #print data_list,len(data_list)
-    # data_info={
-    #     'user_info':user_info,
-    #     'user_role':user_role,
-    #     'issuing_person':issuing_person,
-    #     'stock_stock':stock_stock,
-    #     'stock_type':stock_type,
-    #     'stock_channel':stock_channel,
-    #     'stock_management':stock_management,
-    #     'stock_mode':stock_mode,
-    #     'order_product':order_product,
-    #     'order_customer_level':order_customer_level,
-    #     'order_customer':order_customer,
-    #     'order_stock_product':order_stock_product,
-    #     'order_state':order_state,
-    #     'order_contact':order_contact,
-    #     'order_order':order_order
-    # }
-
-
-    return render(request,'home.html',{'data':data_list})
+    if request.user.is_superuser:
+        
+    return render(request,'home.html')
+def permission_deny(request):
+    return HttpResponse("<script language='javascript'>alert('没有权限');history.go(-1)</script>")
 def login_validate(request,username,password):
     rtvalue = False
     user = authenticate(username=username,password=password)
@@ -108,124 +74,162 @@ def changepassword(request,username):
         form = ChangepwdForm()
     return render(request,'change_password.html',{'form':form,'error':error})
 
-@login_required(login_url='/login')
-def role_info(request):
-    if request.method=='POST':
-        response=HttpResponse()
-        username=request.POST.get("username")
-        first_name=request.POST.get("firstname")
-        last_name=request.POST.get("lastname")
-        email=request.POST.get("email")
-        password1=request.POST.get("password1")
-        password2=request.POST.get("password2")
-        user=User.objects.get(username__exact=username)
-        user.first_name=first_name
-        user.last_name=last_name
-        user.email=email
-        if len(password1)==0 and len(password2)==0:
-            user.save()
-            response.write("<script language='javascript'>alert('信息修改完成!');window.location.href='/role';</script>")
-        elif password1!=password2:
-            response.write("<script language='javascript'>alert('两次密码不一致!');window.location.href='/role';</script>")
-        else:
-            if len(password1)<6:
-                response.write("<script language='javascript'>alert('密码长度必须大于等于6位!');window.location.href='/role';</script>")
-            else:
-                user.set_password(password1)
-                user.save()
-                response.write("<script language='javascript'>alert('信息修改完成!');window.location.href='/login';</script>")
-        return response
-    if request.user.is_superuser:
-        role_info=UserProfile.objects.all()
-        role_name=Role.objects.all()
-    else:
-        role_info=UserProfile.objects.filter(user=request.user)
-        role_name=[]
-    form=UserCreationForm()
-    return render(request,'role.html',{'role':role_info,'form':form,'role_name':role_name})
 def admin_required(login_url=None):
     return user_passes_test(lambda u:u.is_superuser,login_url=login_url)
 
 @admin_required(login_url='/login')
-def add_role(request,role):
-    if request.method=="POST":
-        form=UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            data = form.cleaned_data
-            username=data['username']
-            response=HttpResponse()
-            roleuser=UserProfile(user=User.objects.get(username=username),role=Role.objects.get(pk=role))
-            roleuser.save()
-            response.write("<script language='javascript'>alert('添加成功!');window.location.href='/role';</script>")
-            return response
-        else:
-            response=HttpResponse()
-            response.write("<script language='javascript'>alert('表单信息错误!');window.location.href='/role';</script>")
-            return response
-    #else:
-    #    return render(request,'add_role.html',{'userform':form,'role':role})
-@admin_required(login_url='/login')
-def edit_role(request,id):
-    if request.method=="POST":
+def user_info(request):
+    user=User.objects.all()
+    user_form=UserForm()
+    return render(request,'user_info.html',{'userinfo':user,'user_form':user_form})
+
+@admin_required(login_url="/login")
+def user_add(request):
+    if request.method=='POST':
         response=HttpResponse()
-        username=request.POST.get("username")
-        first_name=request.POST.get("firstname")
-        last_name=request.POST.get("lastname")
-        email=request.POST.get("email")
-        role=request.POST.get("role")
-        password1=request.POST.get("password1")
-        password2=request.POST.get("password2")
-        user=User.objects.get(username__exact=username)
-        user.first_name=first_name
-        user.last_name=last_name
-        user.email=email
-        user_role=UserProfile.objects.get(user=user)
-        user_role.role=Role.objects.get(name=role)
-        if len(password1)==0 and len(password2)==0:
+        user_form=UserForm(request.POST)
+        #print user_form
+        if user_form.is_valid():
+            data=user_form.cleaned_data
+            #print data
+            #print request.POST
+            user=user_form.save(commit=False)
+            user.username=data["username"]
+            user.first_name=data["first_name"]
+            user.email=data["email"]
+            user.set_password(data["password"])
             user.save()
-            user_role.save()
-            response.write("<script language='javascript'>alert('信息修改完成!');window.location.href='/role';</script>")
-        elif password1!=password2:
-            response.write("<script language='javascript'>alert('两次密码不一致!');window.location.href='/role';</script>")
+            groups=[request.POST.get("group")]
+            user.groups=groups
+            response.write("<script language='javascript'>alert('添加成功!');window.location.href='/user/info/';</script>")
+            return response
         else:
-            if len(password1)<6:
-                response.write("<script language='javascript'>alert('密码长度必须大于等于6位!');window.location.href='/role';</script>")
-            else:
-                user.set_password(password1)
-                user.save()
-                user_role.save()
-                response.write("<script language='javascript'>alert('信息修改完成!');window.location.href='/login';</script>")
-        return response
+            response.write("<script language='javascript'>alert('添加失败!');window.location.href='/user/info/';</script>")
+            return response
+    # else:
+    #     return render(request,'add_role.html',{'userform':form,'role':role})
+
 @admin_required(login_url='/login')
-def remove_role(request):
+def user_remove(request):
     user_id=request.GET.get("id")
     response=HttpResponse()
-    user=UserProfile.objects.get(user=User.objects.get(pk=user_id))
-    user.user.delete()
-    user.delete()
-    response.write("<script language='javascript'>alert('删除成功!');window.location.href='/role';</script>")
+    user=User.objects.get(pk=user_id)
+    if user.is_superuser:
+        response.write("<script language='javascript'>alert('管理员无法删除!');window.location.href='/user/info/';</script>")
+    else:
+        user.delete()
+        response.write("<script language='javascript'>alert('删除成功!');window.location.href='/user/info/';</script>")
     return response
+
+@admin_required(login_url='/login')
+def user_edit(request):
+    if request.method=="POST":
+        #print request.POST
+        name=request.POST.get('name')
+        if name=='password':
+            user=User.objects.get(pk=request.POST.get("pk"))
+            value=request.POST.get('value')
+            user.set_password(value)
+            user.save()
+            return HttpResponse('success')
+        else:
+            value=request.POST.get('value')
+            info_dict={'%s'%name:value}
+            user=User.objects.filter(pk=request.POST.get("pk"))
+            user.update(**info_dict)
+        return HttpResponse('success')
+
+@admin_required(login_url='/login')
+def user_group_edit(request,username):
+    if request.method=='POST':
+        group_form=UsergroupForm(request.POST)
+        response=HttpResponse()
+        if group_form.is_valid():
+            data=group_form.cleaned_data
+            groups=[request.POST.get('groups')]
+            user=User.objects.get(username=username)
+            user.groups=groups
+            user.save()
+            response.write("<script language='javascript'>alert('修改成功!');window.location.href=('/user/info/')</script>")
+            return response
+        else:
+            response.write("<script language='javascript'>alert('修改失败!请联系管理员');window.history.go(-1)</script>")
+            return response
+
+    else:
+        group_form=UsergroupForm(instance=User.objects.get(username=username))
+        #group_form.fields['groups'].initail=User.objects.get(username=username).groups.last()
+    return render(request,'user_group_edit.html',{'group_form':group_form,'username':username})
+
+# @admin_required(login_url='/login')
+# def user_permission_edit(request,username):
+#     if request.method=='POST':
+#         permission_form=UserpermissionForm(request.POST)
+#         if permission_form.is_valid():
+#             data=permission_form.cleaned_data
+#     else:
+#         permission_form=UserpermissionForm(instance=User.objects.get(username=username))
+#     return render(request,'user_permission_edit.html',{'permission_form':permission_form})
+
+@admin_required(login_url='/login')
+def role_info(request):
+    group=Group.objects.all()
+    group_form=GroupForm()
+    return render(request,'role_info.html',{'group':group,'group_form':group_form})
+
+
+
 @admin_required(login_url="/login")
 def role_name_add(request):
     if request.method=='POST':
         response=HttpResponse()
-        role=request.POST.get('name')
-        role_name=Role(name=role)
-        role_name.save()
-        response.write("<script language='javascript'>alert('添加成功!');window.location.href='/role';</script>")
-        return response
+        role_form=GroupForm(request.POST)
+        if role_form.is_valid():
+            role=role_form.save(commit=False)
+            role.name=request.POST.get('name')
+            role.save()
+            role_form.save_m2m()
+        #role_name.save()
+            response.write("<script language='javascript'>alert('添加成功!');window.location.href=('/role/info')</script>")
+            return response
+        else:
+            response.write("<script language='javascript'>alert('添加失败!');window.location.href=('/role/info')</script>")
+            return response
+    # return render(request,'add_role.html',{'role':role})
+@admin_required(login_url="/login")
+def role_name_edit(request,role_id):
+    if request.method=='POST':
+        response=HttpResponse()
+        role_form=GroupForm(request.POST)
+        name=request.POST.get('name')
+        if name:
+            role=Group.objects.get(pk=role_id)
+            role.name=name
+            permissions=request.POST.getlist('permissions')
+            role.permissions=permissions
+            role.save()
+            response.write("<script language='javascript'>alert('修改成功!');window.location.href=('/role/info/')</script>")
+            return response
+        else:
+            response.write("<script language='javascript'>alert('修改失败!名称不能为空');window.history.go(-1)</script>")
+            return response
+    else:
+        role_form=GroupForm(instance=Group.objects.get(pk=role_id))
+    #print role_form
+        #role_form.fields['permissions'].initial=Group.objects.get(pk=id).permissions.all()
+    return render(request,'role_name_edit.html',{'group_form':role_form})
 @admin_required(login_url='/login')
 def role_name_remove(request):
     role_name_id=request.GET.get('id')
     response=HttpResponse()
-    role_object=Role.objects.get(pk=role_name_id)
-    links=[rel.get_accessor_name() for rel in role_object._meta.get_all_related_objects()]
-    for link in links:
-        objects=getattr(role_object,link).all()
-        for object in objects:
-            object.user.delete()
-            object.delete()
+    role_object=Group.objects.get(pk=role_name_id)
+    # links=[rel.get_accessor_name() for rel in role_object._meta.get_all_related_objects()]
+    # for link in links:
+    #     objects=getattr(role_object,link).all()
+    #     for object in objects:
+    #         object.user.delete()
+    #         object.delete()
+    # role_object.delete()
     role_object.delete()
-    response.write("<script language='javascript'>alert('删除成功!');window.location.href='/role';</script>")
+    response.write("<script language='javascript'>alert('删除成功!');window.location.href='/role/info/';</script>")
     return response

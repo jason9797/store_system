@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block head%}
+<link href="/static/css/magicsuggest.css" rel="stylesheet">
+{% endblock %}
 {% block order %}
 class="active"
 {% endblock %}
@@ -17,6 +20,14 @@ class="active"
         <div class="col-md-2 form-group">
             <label>客户:{{ form.customer }}</label>
             </div>
+            </div>
+        <div class="row">
+            <div class="col-md-3 form-group">
+            <input id="order_phone_number" class="form-control" name="phone_number" type="text" value='' style="width:100px;" placeholder="手机号码"/>
+        </div>
+            <div class="col-md-3 form-group">
+            <input id="order_address" class="form-control" name="address" type="text" value='' style="width:100px;" placeholder="联系地址"/>
+        </div>
             </div>
         <div class="row">
         <div class="col-md-3 form-group">
@@ -68,8 +79,11 @@ class="active"
         <thead>
         <tr>
             <th>订单号</th>
+            <th>快递单号</th>
             <th>实收金额</th>
             <th>客户</th>
+            <th>地址</th>
+            <th>手机号码</th>
             <th>出单人</th>
             <th>产品</th>
             <th>订单状态</th>
@@ -79,23 +93,31 @@ class="active"
         </thead>
             {% for i in order %}
             <tr>
-            <td><a href="#" name="delivery_no" data-type="text" data-pk="{{ i.id }}" data-title="输入订单号">{{ i.delivery_no }}</a></td>
-            <td><a href="#" name="fact_money"  data-type="text" data-pk="{{ i.id }}" data-title="实收金额">{{ i.fact_money }}</a></td>
-            <td><a href="#" name="customer" data-type="select" data-pk="{{ i.id }}" data-title="客户">{{ i.customer }}</a></td>
-            <td><a href="#" name="issuing_person" data-type="select" data-pk="{{ i.id }}" data-title="出单人">{{ i.issuing_person }}</a></td>
-            <td><a href="#" name="product" data-type="select" data-pk="{{ i.id }}" data-title="产品">{{ i.product }}</a></td>
+                <td>{{ i.id }}</td>
+            <td>{% if i.delivery_no %}<a href="{% url 'get_order_trace' %}?delivery_no={{i.delivery_no}}" data-toggle="modal" data-target="#traceorder" class="btn btn-default">{{ i.delivery_no }}</a>{% else %}{{ i.delivery_no }}{% endif %}</td>
+            <td>{{ i.fact_money }}</td>
+            <td>{{ i.customer }}</td>
+            <td>{{ i.customer.get_contact_info.0.address}}</td>
+                <td>{{ i.customer.get_contact_info.0.phone_number}}</td>
+            <td>{{ i.issuing_person }}</td>
+            <td>{{ i.product }}</td>
             <td><a href="#" name="state" data-type="select" data-pk="{{ i.id }}" data-title="订单状态">{{ i.state }}</a></td>
                 <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
             <td><a href="{% url 'order_remove' %}?id={{ i.id }}">删除</a></td>
             </tr>
             {% endfor %}
         </table>
-        {% if customer%}
+        {% if order %}
         <ul class="pagination" id="pagination"></ul>
         {% endif %}
         </div>
         </div>
     </div>
+<div class="modal fade" id="traceorder" tabindex="-1" role="dialog" aria-labelledby="traceLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content"></div>
+    </div>
+</div>
 {% endblock %}
 {% block js %}
 <script src="/static/js/jquery.twbsPagination.min.js"></script>
@@ -129,6 +151,11 @@ $.ajaxSetup({
     }
 });
 </script>
+<script type="text/javascript">
+$('body').on('hidden.bs.modal', '.modal', function () {
+$(this).removeData('bs.modal');
+});
+</script>
 <!--post页码和筛选数据-->
 
 <!--<script type="text/javascript">
@@ -151,7 +178,26 @@ $(document).ready(function(){
   });
 });
 </script>-->
-{% if customer %}
+<script src="/static/js/magicsuggest.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#order_address').magicSuggest({
+		method:'get',
+        data:'{% url 'get_contact_address' %}',
+		valueField: 'address',
+        displayField: 'address'
+	});
+
+	$('#order_phone_number').magicSuggest({
+		method:'get',
+        data:'{% url 'get_contact_phone' %}',
+		valueField: 'phone_number',
+        displayField: 'phone_number'
+	});
+});
+</script>
+{% if order %}
+
 <script type="text/javascript">
 $('#pagination').twbsPagination({
         totalPages: {{ total_page }},

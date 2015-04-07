@@ -14,15 +14,28 @@ class="active"
                             {% csrf_token %}
                             {{ customer_form.errors }}
                         <p><label>姓名:</label>{{ customer_form.name }}</p>
-                        <p><label>性别:</label>{{ customer_form.sex }}<strong>男的打勾，女的去掉</strong></p>
-                        <p><label>等级:</label>{{ customer_form.level }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
-                        <p><label>出单人:</label>{{ customer_form.issuing_person }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
-                        <p><label>客服:</label>{{ customer_form.user }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
-
-
+                        <p><label>性别:</label>{{ customer_form.sex }}</p>
+                        <p><label>等级:</label>{{ customer_form.level }}</p>
+                        <p><label>省:</label><select id="sheng" name="province" ></select>
+                            <label>市:</label><select id="shi" name="city"></select>
+                            <label>县:</label><select id="xian" name="country"></select>
+                            <label>镇或街道</label><select id="xiang" name="street"></select>
+                        </p>
+                        <p><label>详细地址:</label>{{ customer_form.address }}</p>
+                        <p><label>手机号码:</label>{{ customer_form.phone_number }}</p>
                             <p><button type="submit" class="btn">确定</button></p>
                         </form>
                         </div>
                     </div>
                 </div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript" src="/static/js/address/GlobalProvinces_main.js"></script>
+<script type="text/javascript" src="/static/js/address/GlobalProvinces_extend.js"></script>
+<script type="text/javascript" src="/static/js/address/initLocation.js"></script>
+<script type="text/javascript">
+
+$(function(){initLocation({sheng_val:"",shi_val:"",xian_val:"",xiang_val:""});})
+
+</script>
 {% endblock %}

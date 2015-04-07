@@ -1,0 +1,79 @@
+
+<div id="chart" style="height:400px;"></div>
+
+<script src="/static/js/dist/echarts.js"></script>
+<script type="text/javascript">
+        require.config({
+            paths: {
+                echarts: '/static/js/dist'
+            }
+        });
+        require(
+            [
+                'echarts',
+                'echarts/chart/line'
+            ],
+            function (ec) {
+                var myChart = ec.init(document.getElementById('chart'));
+                var option = {
+    title : {
+        text: '订单金额图',
+        subtext: '测试'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['金额']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : {% if data %}
+                   [{% for i in data%}'{{i}}',{% endfor %}]
+                   {% endif %}
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLabel : {
+                formatter: '{value} 元'
+            }
+        }
+    ],
+    series : [
+        {
+            name:'金额',
+            type:'line',
+            data:[{% for key,value in data.items%}{% if loop.counter == data|length %}{{value}}{% else %}{{value}},{% endif %}{% endfor %}],
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大金额'},
+                    {type : 'min', name: '最小金额'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均金额'}
+                ]
+            }
+        }
+    ]
+};
+                myChart.setOption(option);
+            }
+        );
+    </script>

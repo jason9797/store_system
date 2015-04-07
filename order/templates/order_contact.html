@@ -1,57 +1,177 @@
 {% extends 'base.html' %}
-{% block order %}
+{% block customer %}
 class="active"
 {% endblock %}
 {% block body %}
+<div class="container">
+    <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
+		  {% csrf_token %}
+        <div class="row">
+        <div class="col-md-3 form-group">
+            <label>地址:<input type="text" name="address" {% if filter.address %} value="{{ filter.address }}"{%else%}value=""{% endif %}></label>
+            </div>
+        <div class="col-md-3 form-group">
+            <label>手机号码:<input type="text" name="phone_number" {% if filter.phone_number %} value="{{ filter.phone_number }}"{%else%}value=""{% endif %}></label>
+            </div>
+        <div class="col-md-2 form-group">
+            <label>是否默认:<input type="radio" name="default" value="True" {% if filter.default == True %} checked{% endif %}/>是
+                <input type="radio" name="default" value="False" {% if filter.default == False %} checked{% endif %}/>否
+            </label>
+            </div>
+            </div>
+        <div class="row">
+        <div class="col-md-4 form-group">
+            <label>客户:{{ form.customer }}</label>
+            </div>
+    <div class="col-md-4 form-group">
+        <label class="col-md-2 control-label">             </label>
+	    <button type="SUBMIT" class="btn btn-primary">查询</button>
+        </div>
+            </div>
+    			</form>
 
 
-
-                <div class="container">
-                    <ol class="breadcrumb">
-  <li><a href="{% url 'order_home' %}">订单管理</a></li>
-  <li class="active">联系方式管理</li>
-  <li><a href="{% url 'order_customer' %}">客户管理</a></li>
-  <li><a href="{% url 'order_customer_level' %}">客户水平管理</a></li>
-  <li><a href="{% url 'order_product' %}">产品管理</a></li>
-  <li><a href="{% url 'order_stock_product' %}">产品原料管理</a></li>
-  <li><a href="{% url 'order_state' %}">订单状态管理</a></li>
-  <li><a href="{% url 'order_issuing_person' %}">出单人管理</a></li>
-
-</ol>
-                    <div class="container">
-                        <div class="col-md-6">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                        <th>地址</th>
-                        <th>手机号码</th>
-                        <th>客户</th>
-                        <th>操作</th>
-                        </tr>
-                        <thead>
-                    </thead>
-                        {% for i in contact_data %}
-                        <tr>
-                        <td>{{ i.address }}</td>
-                        <td>{{ i.phone_number }}</td>
-                        <td>{{ i.customer }}</td>
-                        <td><a href="?id={{ i.id }}">edit</a>,<a href="{% url 'order_contact_remove' %}?id={{ i.id }}">remove</a></td>
-                        </tr>
-                        {% endfor %}
-                        </table>
-                            </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                        {{  contact_form.errors }}
-                        <p><label>地址:</label>{{ contact_form.address }}</p>
-                        <p><label>手机号码:</label>{{ contact_form.phone_number }}</p>
-                        <p><label>联系人:</label>{{ contact_form.customer }}<a href="{% url 'order_customer' %}" onclick="return showAddAnotherPopup(this)">add</a></p>
-                        <p><button type="submit" class="btn">确定</button></p>
-                        </form>
-                        </div>
-                    </div>
-                </div>
-                </div>
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+        <table class="table" id="table">
+        <thead>
+        <tr>
+            <th>地址</th>
+            <th>手机号码</th>
+            <th>是否默认(地址)</th>
+            <th>客户</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+            {% for i in contact %}
+            <tr>
+            <td><a href="#" name="address" data-type="text" data-pk="{{ i.id }}" data-title="输入地址">{{ i.address }}</a></td>
+            <td><a href="#" name="phone_number" data-type="text" data-pk="{{ i.id }}" data-title="输入手机号码">{{ i.phone_number }}</a></td>
+            <td><a href="#" name="default" class='{{ i.default }}' data-type="checklist" data-pk="{{ i.id }}" data-title="是否默认">{% if i.default %}是{% else %}否{% endif %}</a></td>
+            <td><a href="#" name="customer" data-type="select" data-pk="{{ i.id }}" data-title="选择客户">{{ i.customer }}</a></td>
+            <td><a href="{% url 'order_contact_remove' %}?id={{ i.id }}">删除</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if contact%}
+        <ul class="pagination" id="pagination"></ul>
+        {% endif %}
+        </div>
+        </div>
+    </div>
 {% endblock %}
+{% block js %}
+<script src="/static/js/jquery.twbsPagination.min.js"></script>
+<!--ajax——csrf验证-->
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+
+{% if contact %}
+<script type="text/javascript">
+$('#pagination').twbsPagination({
+        totalPages: {{ total_page }},
+		startPage:{{ current_page }},
+        visiblePages: {% if total_page > 4 %}5{% else %}{{ total_page }}{% endif %},
+        onPageClick: function (event, page) {
+            $.ajax({
+            type:"POST",
+            url:"{% url 'order_contact' %}",
+    data:{
+      address:$("[name='address']").val(),
+    default:{% if filter.default %}$("[name='default']").val(){% else %}''{% endif %},
+    phone_number:$("[name='phone_number']").val(),
+    customer:$("[name='customer']").val(),
+    page:page},
+    datatype:"html",
+    success:
+        function(data){
+        //$('#table').children().remove();
+        //$('#table').append(data)
+        //$('#table').empty().append(data)
+        $('#table').html(data)
+    }
+            })
+            }
+    });
+</script>
+{% endif %}
+<!--分页-->
+
+<script type="text/javascript">
+$(document).ready(function() {
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+    var address1=$("td [name='address']").attr("name");
+    $("td [name='address']").editable({
+    name:address1,
+    url:"{% url 'order_contact_edit' %}"
+    }
+    );
+
+    var default1=$("td [name='default']").attr("name");
+    var now_default=$("td [name='default']").attr("class")
+    $("td [name='default']").editable({
+        value: now_default,
+        name:default1,
+        url:"{% url 'order_contact_edit' %}",
+        source: [
+              {value: 'True', text: '是'},
+              {value: 'False', text: '否'}
+           ]
+    });
+
+    $.fn.editable.defaults.mode = 'popup';
+    var phone_number1=$("td [name='phone_number']").attr("name");
+    $("td [name='phone_number']").editable({
+    name:phone_number1,
+    url:"{% url 'order_contact_edit' %}"
+    }
+    );
+
+   var customer1=$("td [name='customer']").attr("name");
+   var now_customer=$("td [name='customer']").val();
+    $("td [name='customer']").editable({
+        value: now_customer,
+        name:customer1,
+        url:"{% url 'order_contact_edit' %}",
+        source: [
+        {% for i in customer %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+
+
+});
+</script>
+{% endblock%}

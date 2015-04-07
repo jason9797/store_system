@@ -24,10 +24,10 @@ class Stock_ChannelAdmin(SimpleHistoryAdmin):
     ordering = ('company','person','phone_number')
 
 class Stock_ManagementAdmin(SimpleHistoryAdmin):
-    list_filter = ('stock_mode','stock','mode')
-    list_display = ('stock_mode','stock','mode')
-    search_fields = ['stock_mode','stock','mode']
-    ordering = ('stock_mode','stock','mode')
+    list_filter = ('stock_mode','product','mode')
+    list_display = ('stock_mode','product','mode')
+    search_fields = ['stock_mode','product','mode']
+    ordering = ('stock_mode','product','mode')
 
 class Stock_ModeAdmin(SimpleHistoryAdmin):
     list_filter = ('method','description')

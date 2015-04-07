@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block order %}
+class="active"
+{% endblock %}
+{% block body %}
+<div class="container">
+                    <ol class="breadcrumb">
+  <li><a href="{% url 'order_issuing_person' %}">出单人管理</a></li>
+    <li><a href="{% url 'order_state' %}">订单状态管理</a></li>
+</ol>
+                    {%block order_other %}
+                    {% endblock %}
+    </div>
+{% endblock %}

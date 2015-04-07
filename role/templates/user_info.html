@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+{% block role %}
+class="active"
+{% endblock %}
+{% block role_active %} in {% endblock %}
+{% block body %}
+			<div class="row">
+                <div class="col-md-6"></div><div class="col-md-3"><button class="btn btn-primary btn-lg" data-toggle="modal"
+   data-target="#user_add">新增用户</button></div>
+                            {% if user.is_superuser %}
+                                            <div class="col-md-9">
+                                                <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                <th>账号</th>
+                                                <th>密码</th>
+                                                <th>名字</th>
+                                                <th>邮箱</th>
+                                                <th>角色</th>
+                                                <th>操作</th>
+                                                </tr>
+                                                </thead>
+                                                    {% for k in userinfo %}
+                                                    <tr>
+                                                        <td><a href="#" name="username" data-type="text" data-pk="{{ k.id }}" data-title="输入账号">{{ k.username }}</a></td>
+                                                        <td><a href="#" name="password" data-type="password" data-pk="{{ k.id }}" data-title="重设密码">重设密码</a></td>
+                                                        <td><a href="#" name="first_name" data-type="text" data-pk="{{ k.id }}" data-title="输入名字">{{ k.first_name }}</a></td>
+                                                        <td><a href="#" name="email" data-type="text" data-pk="{{ k.id }}" data-title="输入邮箱">{{ k.email }}</a></td>
+                                                        <td><!--<a href="{% url 'user_group_edit' k.username %}" data-toggle="modal" data-target="#GroupModal" class="btn btn-default">角色</a>-->
+                                                        <a href="{% url 'user_group_edit' k.username %}">
+                                                            {% if k.is_superuser %}管理员{% else %}{% if k.groups.all%}{% for i in k.groups.all %}
+                                                            {{ i.name }}{%endfor%}{%else%}无{%endif%}{% endif %}</a></td>
+                                                        <td><a href="{% url 'user_remove' %}?id={{ k.id }}">删除</a></td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </table>
+                                        </div>
+                                                </div>
+								{% endif %}
+						</div>
+
+<div class="modal fade" id="user_add" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+          <form action="{% url 'user_add' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+         <div class="modal-header">
+            <button type="button" class="close"
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               添加用户
+            </h4>
+         </div>
+         <div class="modal-body">
+            {{ user_form.as_p }}
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+            <button type="sumbit" class="btn btn-primary">
+               提交更改
+            </button>
+             </div>
+             </form>
+         </div>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="GroupModal" tabindex="-1" role="dialog" aria-labelledby="GroupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+
+<script type="text/javascript">
+$('body').on('hidden.bs.modal', '.modal', function () {
+$(this).removeData('bs.modal');
+});
+</script>
+
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+    var username1=$("td [name='username']").attr("name");
+    $("td [name='username']").editable({
+    name:username1,
+    url:"{% url 'user_edit' %}"
+    }
+    );
+
+
+    var password1=$("td [name='password']").attr("name");
+    $("td [name='password']").editable({
+    name:password1,
+    title:'',
+    url:"{% url 'user_edit' %}"
+    }
+    );
+
+
+
+    var first_name1=$("td [name='first_name']").attr("name");
+    $("td [name='first_name']").editable({
+    name:first_name1,
+    url:"{% url 'user_edit' %}"
+    }
+    );
+
+    var email1=$("td [name='email']").attr("name");
+    $("td [name='email']").editable({
+    name:email1,
+    url:"{% url 'user_edit' %}"
+    }
+    );
+
+});
+
+</script>
+
+{% endblock %}

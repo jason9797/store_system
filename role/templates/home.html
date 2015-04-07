@@ -18,37 +18,7 @@ class="active"
 {% endif %}
 {% endblock %}
 {% block body %}
-{% if user.is_superuser %}
-<div class="container">
-    <p>这是一个简单的主页</p>
-    {% for i in data%}
-    <div class="col-md-6">
-    <table class="table">
-        <thead>
-        <tr>
-            <td>history_id</td>
-            <td>history_type</td>
-            <td>history_object</td>
-            <td>history_date</td>
-        </tr>
-        </thead>
-        {% for h in i %}
-        <tr>
-            <td>{{ h.history_id }}</td>
-            <td>{{ h.history_type }}</td>
-            {% if history_object %}
-            <td>{{ h.history_object }}</td>
-            {% else %}
-            <td>{{ history_user }}</td>
-            {% endif %}
-            <td>{{ h.history_date }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
+<p>designing</p>
 {% endblock %}
 
 

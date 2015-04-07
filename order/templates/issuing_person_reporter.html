@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/jquery.datetimepicker.css">
+{% endblock %}
+{% block reporter %}
+class="active"
+{% endblock %}
+{% block body %}
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-12">
+<div id="month_chart" style="height:400px;"></div>
+    </div>
+<div class="col-md-12">
+    <div class="row">
+        <center>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+        <p><label>出单人:</label><select name="issuing_person">{% for i in issuing_person %}
+        <option value="{{i.name}}">{{i.name}}</option>{% endfor %}</select><label>开始时间:</label><input id="datetimepicker1" name="starttime" value="{{starttime}}"/>
+        <label>结束时间:</label><input id="datetimepicker2" name="endtime" value="{{endtime}}"/>
+	    <button type="SUBMIT" id="button" class="btn btn-primary">查询</button>
+        </p>
+            </form>
+            </center>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div id="chart" style="height:400px;"></div>
+
+    </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script src="/static/js/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+    $('#datetimepicker1').datetimepicker({
+	lang:'ch',
+	timepicker:false,
+	format:'Y-m-d',
+	formatDate:'Y-m-d',
+	minDate:'2014-01-02',
+	maxDate:'2017-01-02'});
+    $('#datetimepicker2').datetimepicker({
+	lang:'ch',
+	timepicker:false,
+	format:'Y-m-d',
+	formatDate:'Y-m-d',
+	minDate:'2014-01-02',
+	maxDate:'2017-01-02'});
+</script>
+
+<script src="/static/js/dist/echarts.js"></script>
+<script type="text/javascript">
+        require.config({
+            paths: {
+                echarts: '/static/js/dist'
+            }
+        });
+        require(
+            [
+                'echarts',
+                'echarts/chart/line'
+            ],
+            function (ec) {
+                var myChart = ec.init(document.getElementById('month_chart'));
+                var option = {
+    title : {
+        text: '本月出单业绩图',
+        subtext: '总体情况'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:[{% for i in alldata%} '{{i}}',{% endfor %}]
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data :
+                   [{% for i in alldata.values.0 %}'{{i}}',{% endfor %}]
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLabel : {
+                formatter: '{value} 元'
+            }
+        }
+    ],
+    series : [
+    {% for k,v in alldata.items  %}
+        {
+            name:'{{ k }}',
+            type:'line',
+            data:[{% for key,value in v.items%}{% if loop.counter == v|length %}{{value}}{% else %}{{value}},{% endif %}{% endfor %}],
+            markPoint : {
+                data : [
+                    {type : 'max', name: '本月最大金额'},
+                    {type : 'min', name: '本月最小金额'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '本月平均金额'}
+                ]
+            }
+        }{% if loop.counter != alldata|length %},{% endif %}
+        {% endfor %}
+
+    ]
+};
+                myChart.setOption(option);
+            }
+        );
+    </script>
+{% if data %}
+<script type="text/javascript">
+        require.config({
+            paths: {
+                echarts: '/static/js/dist'
+            }
+        });
+        require(
+            [
+                'echarts',
+                'echarts/chart/line'
+            ],
+            function (ec) {
+                var myChart = ec.init(document.getElementById('chart'));
+                var option = {
+    title : {
+        text: '订单金额图',
+        subtext: '测试'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['金额']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : {% if data %}
+                   [{% for i in data%}'{{i}}',{% endfor %}]
+                   {% endif %}
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLabel : {
+                formatter: '{value} 元'
+            }
+        }
+    ],
+    series : [
+        {
+            name:'金额',
+            type:'line',
+            data:[{% for key,value in data.items%}{% if loop.counter == data|length %}{{value}}{% else %}{{value}},{% endif %}{% endfor %}],
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大金额'},
+                    {type : 'min', name: '最小金额'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均金额'}
+                ]
+            }
+        }
+    ]
+};
+                myChart.setOption(option);
+            }
+        );
+    </script>
+{% endif %}
+{% endblock %}

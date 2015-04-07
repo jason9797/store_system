@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator
 import datetime
 # Create your models here.
 from simple_history.models import HistoricalRecords
+
 class Stock(models.Model):
     '''
     原料表
@@ -13,8 +14,8 @@ class Stock(models.Model):
     detail = models.CharField(verbose_name='名称',max_length=100)
     price = models.DecimalField(verbose_name='单价',max_digits=6, decimal_places=2)
     quantity = models.IntegerField(verbose_name='数量')
-    stock_type = models.ForeignKey('Stock_Type',verbose_name='类别')
-    stock_channel = models.ForeignKey('Stock_Channel',verbose_name='进货渠道')
+    stock_type = models.ForeignKey('Stock_Type',verbose_name='类别',blank=True,null=True,on_delete=models.SET_NULL)
+    stock_channel = models.ForeignKey('Stock_Channel',verbose_name='进货渠道',blank=True,null=True,on_delete=models.SET_NULL)
     jointime = models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
     history = HistoricalRecords()
     class Meta:
@@ -57,8 +58,9 @@ class Stock_Management(models.Model):
     库存管理
     '''
     stock_mode = models.BooleanField(verbose_name='出/入库',default=True)
-    stock = models.ForeignKey(Stock,verbose_name='原料')
-    mode = models.ForeignKey('Stock_Mode',verbose_name='出入方式')
+    #stock = models.ForeignKey(Stock,verbose_name='原料')
+    product=models.ForeignKey('order.Product',verbose_name='产品',blank=True,null=True,on_delete=models.SET_NULL)
+    mode = models.ForeignKey('Stock_Mode',verbose_name='出入方式',blank=True,null=True,on_delete=models.SET_NULL)
     jointime =models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
     history = HistoricalRecords()
     class Meta:

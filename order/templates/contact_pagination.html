@@ -1,0 +1,66 @@
+<thead>
+        <tr>
+            <th>地址</th>
+            <th>手机号码</th>
+            <th>是否默认(地址)</th>
+            <th>客户</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+            {% for i in contact %}
+            <tr>
+            <td><a href="#" name="address" data-type="text" data-pk="{{ i.id }}" data-title="输入地址">{{ i.address }}</a></td>
+            <td><a href="#" name="phone_number" data-type="text" data-pk="{{ i.id }}" data-title="输入手机号码">{{ i.phone_number }}</a></td>
+            <td><a href="#" name="default" class='{{ i.default }}' data-type="checklist" data-pk="{{ i.id }}" data-title="是否默认">{% if i.default %}是{% else %}否{% endif %}</a></td>
+            <td><a href="#" name="customer" data-type="select" data-pk="{{ i.id }}" data-title="选择客户">{{ i.customer }}</a></td>
+            <td><a href="{% url 'order_contact_remove' %}?id={{ i.id }}">删除</a></td>
+            </tr>
+            {% endfor %}
+<script type="text/javascript">
+$(document).ready(function() {
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+    var address1=$("td [name='address']").attr("name");
+    $("td [name='address']").editable({
+    name:address1,
+    url:"{% url 'order_contact_edit' %}"
+    }
+    );
+
+    var default1=$("td [name='default']").attr("name");
+    var now_default=$("td [name='default']").attr("class")
+    $("td [name='default']").editable({
+        value: now_default,
+        name:default1,
+        url:"{% url 'order_contact_edit' %}",
+        source: [
+              {value: 'True', text: '是'},
+              {value: 'False', text: '否'}
+           ]
+    });
+
+    $.fn.editable.defaults.mode = 'popup';
+    var phone_number1=$("td [name='phone_number']").attr("name");
+    $("td [name='phone_number']").editable({
+    name:phone_number1,
+    url:"{% url 'order_contact_edit' %}"
+    }
+    );
+
+   var customer1=$("td [name='customer']").attr("name");
+   var now_customer=$("td [name='customer']").val();
+    $("td [name='customer']").editable({
+        value: now_customer,
+        name:customer1,
+        url:"{% url 'order_contact_edit' %}",
+        source: [
+        {% for i in customer %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+
+
+});
+</script>

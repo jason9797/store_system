@@ -1,0 +1,17 @@
+select * from ((SELECT a.pid AS `分类编号`,b.`name` AS `分类名称`,a.object_id AS `项目编号`,a.object_name AS `项目名称`,a.mobile AS `号码`,a.call_status AS `呼叫状态`,a.call_start_time AS `呼叫时间`,a.wait_time AS `听IVR时长`,a.billsec AS `坐席通话时长`,a.aa AS `计费时长`,a.ivr_key AS `按键`
+FROM(SELECT c.pid,t.object_id,t.object_name,t.mobile,t.call_status,t.call_start_time,t.wait_time,t.billsec,t.wait_time + t.billsec AS aa,t.ivr_key
+FROM stdout_task t,stdout_object c
+WHERE(t.call_status = 'half' OR t.call_status = 'success')AND t.object_id = c.id) a,stdout_object b WHERE b.id = a.pid ORDER BY a.mobile ASC)
+UNION ALL(SELECT a.pid AS `分类编号`,b.`name` AS `分类名称`,a.object_id AS `项目编号`,a.object_name AS `项目名称`,a.mobile AS `号码`,a.call_status AS `呼叫状态`,a.call_start_time AS `呼叫时间`,a.wait_time AS `听IVR时长`,a.billsec AS `坐席通话时长`,a.aa AS `计费时长`,a.ivr_key AS `按键`
+FROM(SELECT c.pid,t.object_id,t.object_name,t.mobile,t.call_status,t.call_start_time,t.wait_time,t.billsec,t.wait_time + t.billsec AS aa,t.ivr_key FROM stdout_task_2014_1 t,stdout_object c
+WHERE(t.call_status = 'half' OR t.call_status = 'success')AND t.object_id = c.id) a,stdout_object b WHERE b.id = a.pid ORDER BY a.mobile ASC)
+UNION ALL(SELECT a.pid AS `分类编号`,b.`name` AS `分类名称`,a.object_id AS `项目编号`,a.object_name AS `项目名称`,a.mobile AS `号码`,a.call_status AS `呼叫状态`,a.call_start_time AS `呼叫时间`,a.wait_time AS `听IVR时长`,a.billsec AS `坐席通话时长`,a.aa AS `计费时长`,a.ivr_key AS `按键`
+FROM(SELECT c.pid,t.object_id,t.object_name,t.mobile,t.call_status,t.call_start_time,t.wait_time,t.billsec,t.wait_time + t.billsec AS aa,t.ivr_key FROM stdout_task_2014_2 t,stdout_object c
+WHERE(t.call_status = 'half' OR t.call_status = 'success')AND t.object_id = c.id) a,stdout_object b WHERE b.id = a.pid ORDER BY a.mobile ASC)
+UNION ALL(SELECT a.pid AS `分类编号`,b.`name` AS `分类名称`,a.object_id AS `项目编号`,a.object_name AS `项目名称`,a.mobile AS `号码`,a.call_status AS `呼叫状态`,a.call_start_time AS `呼叫时间`,a.wait_time AS `听IVR时长`,a.billsec AS `坐席通话时长`,a.aa AS `计费时长`,a.ivr_key AS `按键`
+FROM(SELECT c.pid,t.object_id,t.object_name,t.mobile,t.call_status,t.call_start_time,t.wait_time,t.billsec,t.wait_time + t.billsec AS aa,t.ivr_key FROM stdout_task_2014_3 t,stdout_object c
+WHERE(t.call_status = 'half' OR t.call_status = 'success')AND t.object_id = c.id) a,stdout_object b WHERE b.id = a.pid ORDER BY a.mobile ASC)
+UNION ALL(SELECT a.pid AS `分类编号`,b.`name` AS `分类名称`,a.object_id AS `项目编号`,a.object_name AS `项目名称`,a.mobile AS `号码`,a.call_status AS `呼叫状态`,a.call_start_time AS `呼叫时间`,a.wait_time AS `听IVR时长`,a.billsec AS `坐席通话时长`,a.aa AS `计费时长`,a.ivr_key AS `按键`
+FROM(SELECT c.pid,t.object_id,t.object_name,t.mobile,t.call_status,t.call_start_time,t.wait_time,t.billsec,t.wait_time + t.billsec AS aa,t.ivr_key FROMstdout_task_2013_4 t,stdout_object c WHERE
+(t.call_status = 'half' OR t.call_status = 'success')AND t.object_id = c.id) a,stdout_object b WHERE b.id = a.pid ORDER BY a.mobile ASC)) f 
+WHERE f.`号码`=any(select g.mobile from stdout_task g where g.object_id='209')ORDER BY f.`号码`,f.`呼叫时间`DESC ;

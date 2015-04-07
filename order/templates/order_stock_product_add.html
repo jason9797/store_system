@@ -1,0 +1,16 @@
+{% extends 'stock_other.html' %}
+{% block stock %}
+
+<div class="col-md-6">
+                            <strong>产品原料关系增加</strong>
+                        <form action="" method="post">
+                            {{ stock_product_form.errors }}
+                            {% csrf_token %}
+                        <p><label>数量:</label>{{ stock_product_form.quantity }}</p>
+                        <p><label>是否运费:</label>{{ stock_product_form.delivery_bill }}</p>
+                        <p><label>产品:</label>{{ stock_product_form.product }}<a href="#" data-toggle="modal" data-target="#add_order_customer">add</a></p>
+                        <p><label>原料:</label>{{ stock_product_form.stock }}<a href="#" data-toggle="modal" data-target="#add_order_issuing_person">add</a></p>
+                        <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+{% endblock %}
