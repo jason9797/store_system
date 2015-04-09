@@ -1,0 +1,54 @@
+<div class="modal-header">
+        <button type="button" class="close"
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+        <h4 class="modal-title" id="myModalLabel">
+               {{ customer.name }}的地址与开单记录
+            </h4>
+        </div>
+    <div class="modal-body">
+    <p><label>角色</label>{{ group_form.name }}</p>
+	<table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>地址</th>
+            <th>手机号码</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        {% for i in contact_info %}
+
+        <tr {% if i.default %} style="color:red;"{% endif %}>
+            <td>{{ i.address }}</td>
+            <td>{{ i.phone_number }}</td>
+            <td><a href="{% url 'order_contact_edit' %}?customer_id={{ customer.id }}&contact_id={{ i.id }}">设为默认</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>订单号</th>
+            <th>快递单号</th>
+            <th>产品</th>
+            <th>出单人</th>
+            <th>订单状态</th>
+            <th>备注</th>
+            <th>创建时间</th>
+        </tr>
+        </thead>
+        {% for i in order_info %}
+        <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.delivery_no }}</td>
+            <td>{{ i.product }}</td>
+            <td>{{ i.issuing_person }}</td>
+            <td>{{ i.state }}</td>
+            <td>{{ i.remark }}</td>
+            <th>{{ i.jointime|date:'Y-m-d h:i:s'}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+        </div>

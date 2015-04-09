@@ -2,11 +2,12 @@
 {% block order %}
 class="active"
 {% endblock %}
+{% block order_active %}in{% endblock %}
 {% block body %}
-<div class="container">
-
-                    <div class="row">
-                        <div class="col-md-8">
+                    <div class="row bg-box-shadow padding-10 panel panel-default">
+							<div class="panel-heading margin-5">
+								<h3 class="panel-title">订单导入</h3>
+							</div>
                             <div class="alert alert-warning"><strong>仅支持txt,csv,xlx,xlsx</strong></div>
                             <div class="alert alert-warning">第一列客户名称,第二列性别(男或女，不填默认女),第三列地址，第四列电话号码，
                             第五列出单人(填写出单人的名字，必须已有的出单人,否则为空)，第六列产品(填写产品名称，需查看当前的已有产品名称)</div>
@@ -14,11 +15,9 @@ class="active"
                             {% csrf_token %}
                             {{ form.errors }}
                         {{ form.as_p }}
-                            <p><button type="submit" class="btn">确定</button></p>
+                            <p><button type="submit" class="btn btn-primary bottom-size">确定</button></p>
                         </form>
-                        </div>
                     </div>
-                </div>
 
 
 

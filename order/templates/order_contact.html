@@ -2,40 +2,42 @@
 {% block customer %}
 class="active"
 {% endblock %}
+{% block customer_active %}in{% endblock %}
 {% block body %}
-<div class="container">
+<div class="row bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+    	<h3 class="panel-title">联系方式管理</h3>
+	</div>
     <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
 		  {% csrf_token %}
         <div class="row">
-        <div class="col-md-3 form-group">
+        <!--<div class="col-md-4 form-group">
             <label>地址:<input type="text" name="address" {% if filter.address %} value="{{ filter.address }}"{%else%}value=""{% endif %}></label>
-            </div>
-        <div class="col-md-3 form-group">
+            </div>-->
+        <div class="col-md-4 form-group">
             <label>手机号码:<input type="text" name="phone_number" {% if filter.phone_number %} value="{{ filter.phone_number }}"{%else%}value=""{% endif %}></label>
             </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-4 form-group">
             <label>是否默认:<input type="radio" name="default" value="True" {% if filter.default == True %} checked{% endif %}/>是
                 <input type="radio" name="default" value="False" {% if filter.default == False %} checked{% endif %}/>否
             </label>
             </div>
-            </div>
+            <!--</div>
         <div class="row">
         <div class="col-md-4 form-group">
             <label>客户:{{ form.customer }}</label>
-            </div>
+            </div>-->
     <div class="col-md-4 form-group">
-        <label class="col-md-2 control-label">             </label>
-	    <button type="SUBMIT" class="btn btn-primary">查询</button>
+	    <button type="SUBMIT" class="btn btn-primary bottom-size">查询</button>
         </div>
             </div>
     			</form>
 
 
     </div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-        <table class="table" id="table">
+
+    <div class="row bg-box-shadow padding-5">
+        <table class="table table-bordered" id="table">
         <thead>
         <tr>
             <th>地址</th>
@@ -50,8 +52,8 @@ class="active"
             <td><a href="#" name="address" data-type="text" data-pk="{{ i.id }}" data-title="输入地址">{{ i.address }}</a></td>
             <td><a href="#" name="phone_number" data-type="text" data-pk="{{ i.id }}" data-title="输入手机号码">{{ i.phone_number }}</a></td>
             <td><a href="#" name="default" class='{{ i.default }}' data-type="checklist" data-pk="{{ i.id }}" data-title="是否默认">{% if i.default %}是{% else %}否{% endif %}</a></td>
-            <td><a href="#" name="customer" data-type="select" data-pk="{{ i.id }}" data-title="选择客户">{{ i.customer }}</a></td>
-            <td><a href="{% url 'order_contact_remove' %}?id={{ i.id }}">删除</a></td>
+            <td><!--<a href="#" name="customer" data-type="select" data-pk="{{ i.id }}" data-title="选择客户">-->{{ i.customer }}<!--</a>--></td>
+            <td><a href="{% url 'order_contact_remove' %}?id={{ i.id }}" onclick= "return confirm('确定删除?');">删除</a></td>
             </tr>
             {% endfor %}
         </table>
@@ -59,8 +61,8 @@ class="active"
         <ul class="pagination" id="pagination"></ul>
         {% endif %}
         </div>
-        </div>
-    </div>
+
+
 {% endblock %}
 {% block js %}
 <script src="/static/js/jquery.twbsPagination.min.js"></script>
@@ -133,7 +135,11 @@ $(document).ready(function() {
     var address1=$("td [name='address']").attr("name");
     $("td [name='address']").editable({
     name:address1,
-    url:"{% url 'order_contact_edit' %}"
+    url:"{% url 'order_contact_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的地址不能为空';
+}
     }
     );
 
@@ -153,7 +159,11 @@ $(document).ready(function() {
     var phone_number1=$("td [name='phone_number']").attr("name");
     $("td [name='phone_number']").editable({
     name:phone_number1,
-    url:"{% url 'order_contact_edit' %}"
+    url:"{% url 'order_contact_edit' %}",
+	validate: function(value) {
+  if($.trim(value).length>"15"||isNaN(value)||$.trim(value).length<"1") 
+    return '请输入正确的手机号码';
+}
     }
     );
 

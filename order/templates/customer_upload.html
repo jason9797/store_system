@@ -2,22 +2,21 @@
 {% block customer %}
 class="active"
 {% endblock %}
+{% block customer_active %}in{% endblock %}
 {% block body %}
-<div class="container">
-
-                    <div class="row">
-                        <div class="col-md-8">
+                    <div class="row bg-box-shadow padding-10 panel panel-default">
+							<div class="panel-heading margin-5">
+								<h3 class="panel-title">客户导入</h3>
+							</div>
                             <div class="alert alert-warning"><strong>仅支持txt,csv,xlx,xlsx</strong></div>
                             <div class="alert alert-warning">第一列客户名称,第二列性别(男或女，不填默认女),第三列地址，第四列电话号码</div>
                         <form action="" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form.errors }}
                         {{ form.as_p }}
-                            <p><button type="submit" class="btn">确定</button></p>
+                            <p><button type="submit" class="btn btn-primary bottom-size">确定</button></p>
                         </form>
-                        </div>
                     </div>
-                </div>
 
 
 

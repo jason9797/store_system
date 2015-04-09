@@ -79,6 +79,7 @@ class OrderForm(forms.Form):
     delivery_no = forms.CharField(max_length=30,initial='',required=False)
     fact_money = forms.DecimalField(max_digits=4, decimal_places=2,initial=0,required=False)
     customer = forms.ModelChoiceField(queryset=Customer.objects.all())
+    remark = forms.CharField(max_length=30,initial='',required=False)
     issuing_person = forms.ModelChoiceField(queryset=Issuing_person.objects.all())
     product = forms.ModelChoiceField(queryset=Product.objects.all())
     state = forms.ModelChoiceField(queryset=Order_State.objects.all())
@@ -86,6 +87,7 @@ class OrderForm(forms.Form):
         super(OrderForm,self).__init__(*args,**kwargs)
         self.fields['delivery_no'].required=False
         self.fields['fact_money'].required=False
+        self.fields['remark'].required=False
         self.fields['state'].required=False
 class CustomerFileForm(forms.ModelForm):
     class Meta:

@@ -127,7 +127,11 @@ $(document).ready(function() {
     var username1=$("td [name='username']").attr("name");
     $("td [name='username']").editable({
     name:username1,
-    url:"{% url 'user_edit' %}"
+    url:"{% url 'user_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的账号不能为空';
+}
     }
     );
 
@@ -136,7 +140,11 @@ $(document).ready(function() {
     $("td [name='password']").editable({
     name:password1,
     title:'',
-    url:"{% url 'user_edit' %}"
+    url:"{% url 'user_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的密码不能为空';
+}
     }
     );
 
@@ -145,14 +153,23 @@ $(document).ready(function() {
     var first_name1=$("td [name='first_name']").attr("name");
     $("td [name='first_name']").editable({
     name:first_name1,
-    url:"{% url 'user_edit' %}"
+    url:"{% url 'user_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的名字不能为空';
+}
     }
     );
 
     var email1=$("td [name='email']").attr("name");
     $("td [name='email']").editable({
     name:email1,
-    url:"{% url 'user_edit' %}"
+    url:"{% url 'user_edit' %}"/*,
+	validate: function(value) {
+	//var pemail=/^\w+((-\w+)|(\.\w+))*\@{1}\w+\.{1}\w{2,4}(\.{0,1}\w{2}){0,1}/ig,
+  if($.trim(value).search(pemail)==-1) 
+    return '输入的邮箱不能为空';
+}*/
     }
     );
 

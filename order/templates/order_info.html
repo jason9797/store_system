@@ -5,45 +5,54 @@
 {% block order %}
 class="active"
 {% endblock %}
+{% block order_active %}in{% endblock %}
 {% block body %}
-<div class="container">
-    <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
+<div class="row bg-box-shadow padding-10 panel panel-default">
+<div class="panel-heading margin-5">
+    	<h3 class="panel-title">订单检索</h3>
+	</div>
+    <form action="" class="form-inline margin-15-div" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
 		  {% csrf_token %}
         <div class="row">
-        <div class="col-md-3 form-group">
+        <div class="col-md-4 form-group">
             <label>快递单号:<input type="text" name="delivery_no" {% if filter.delivery_no %} value="{{ filter.delivery_no }}"{%else%}value=""{% endif %}></label>
             </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-4 form-group">
             <label>实收金额:<input type="text" name="fact_money" {% if filter.fact_money %} value="{{ filter.fact_money }}"{%else%}value=""{% endif %}></label>
             </label>
             </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-4 form-group">
             <label>客户:{{ form.customer }}</label>
             </div>
-            </div>
-        <div class="row">
-            <div class="col-md-3 form-group">
-            <input id="order_phone_number" class="form-control" name="phone_number" type="text" value='' style="width:100px;" placeholder="手机号码"/>
         </div>
-            <div class="col-md-3 form-group">
-            <input id="order_address" class="form-control" name="address" type="text" value='' style="width:100px;" placeholder="联系地址"/>
-        </div>
-            </div>
-        <div class="row">
-        <div class="col-md-3 form-group">
-            <label>出单人:{{ form.issuing_person }}</label>
-            </div>
-
-        <div class="col-md-3 form-group">
+		
+		<div class="row">
+        <div class="col-md-4 form-group">
             <label>产品:
             {{ form.product }}</label>
             </div>
 
-        <div class="col-md-2 form-group">
+        <div class="col-md-4 form-group">
             <label>状态:
             {{ form.state }}</label>
             </div>
+		<div class="col-md-4 form-group">
+            <label>出单人:{{ form.issuing_person }}</label>
             </div>
+            </div>
+		
+        <div class="row">
+            <div class="col-md-4 form-group">
+            <input id="order_phone_number" class="form-control" name="phone_number" type="text" value='' style="width:300px;" placeholder="手机号码"/>
+        </div>
+            <div class="col-md-4 form-group">
+            <input id="order_address" class="form-control" name="address" type="text" value='' style="width:300px;" placeholder="联系地址"/>
+        </div>
+		 
+            </div>
+			
+			
+        
         <div class="row">
         <div class="col-md-4 form-group">
             <label>开始时间:
@@ -63,19 +72,17 @@ class="active"
                 </div>
             <input type="hidden" id="dtp_input2" value="" /><br/></label>
             </div>
-            </div>
-    <div class="col-md-4 form-group">
-        <label class="col-md-2 control-label">             </label>
-	    <button type="SUBMIT" class="btn btn-primary">查询</button>
+			    <div class="col-md-4 form-group">
+	    <button type="SUBMIT" class="btn btn-primary bottom-size">查询</button>
         </div>
+            </div>
+
     			</form>
 
 
     </div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-        <table class="table" id="table">
+    <div class="row bg-box-shadow padding-5">
+        <table class="table table-bordered" id="table">
         <thead>
         <tr>
             <th>订单号</th>
@@ -112,8 +119,6 @@ class="active"
         {% if order %}
         <ul class="pagination" id="pagination"></ul>
         {% endif %}
-        </div>
-        </div>
     </div>
 <div class="modal fade" id="traceorder" tabindex="-1" role="dialog" aria-labelledby="traceLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -254,7 +259,11 @@ $(document).ready(function() {
     var remark1=$("td [name='remark']").attr("name");
     $("td [name='remark']").editable({
         name:remark1,
-    url:"{% url 'order_edit' %}"
+    url:"{% url 'order_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的备注不能为空';
+}
     });
 
    var customer1=$("td [name='customer']").attr("name");

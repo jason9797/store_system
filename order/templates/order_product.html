@@ -2,47 +2,46 @@
 {% block product %}
 class="active"
 {% endblock %}
+{% block product_active %}in{% endblock %}
 {% block body %}
-<div class="container">
+<div class="row bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+    	<h3 class="panel-title">产品信息</h3>
+	</div>
     <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
 		  {% csrf_token %}
         <div class="row">
-        <div class="col-md-3 form-group">
+        <div class="col-md-4 form-group">
             <label>名称:<input type="text" name="name" {% if filter.name %} value="{{ filter.name }}"{%else%}value=""{% endif %}></label>
             </div>
         <div class="col-md-4 form-group">
             <label>开始时间:
-                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2">
                     <input class="form-control" size="16" name="starttime" type="text" value="{{filter.starttime}}" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             <input type="hidden" id="dtp_input1" value="" /><br/></label>
             </div>
-            </div>
-        <div class="row">
-        <div class="col-md-4 form-group">
+			<div class="col-md-4 form-group">
             <label>结束时间:
-                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2">
                     <input class="form-control" size="16" name="endtime" type="text" value="{{ filter.endtime }}" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             <input type="hidden" id="dtp_input2" value="" /><br/></label>
             </div>
-    <div class="col-md-4 form-group">
-        <label class="col-md-2 control-label">             </label>
-	    <button type="SUBMIT" class="btn btn-primary">查询</button>
-        </div>
+            </div>
+        <div class="col-md-12 text-align-center">
+			<button type="SUBMIT" class="btn btn-primary bottom-size">查询</button>
             </div>
     </form>
 
 
     </div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-        <table class="table" id="table">
+    <div class="row bg-box-shadow padding-5">
+        <table class="table table-bordered" id="table">
         <thead>
         <tr>
             <th>名称</th>
@@ -65,8 +64,6 @@ class="active"
         {% if product %}
         <ul class="pagination" id="pagination"></ul>
         {% endif %}
-        </div>
-        </div>
     </div>
 {% endblock %}
 {% block js %}
@@ -140,21 +137,33 @@ $(document).ready(function() {
     var name1=$("td [name='name']").attr("name");
     $("td [name='name']").editable({
     name:name1,
-    url:"{% url 'order_product_edit' %}"
+    url:"{% url 'order_product_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的名称不能为空';
+}
     }
     );
 
     var price1=$("td [name='price']").attr("name");
     $("td [name='price']").editable({
     name:price1,
-    url:"{% url 'order_product_edit' %}"
+    url:"{% url 'order_product_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的价格不能为空';
+}
     }
     );
 
     var detail1=$("td [name='detail']").attr("name");
     $("td [name='detail']").editable({
     name:detail1,
-    url:"{% url 'order_product_edit' %}"
+    url:"{% url 'order_product_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的备注不能为空';
+}
     }
     );
 

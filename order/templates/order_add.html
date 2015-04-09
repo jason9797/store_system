@@ -2,13 +2,15 @@
 {% block order %}
 class="active"
 {% endblock %}
+{% block order_active %}in{% endblock %}
 {% block body %}
 
 
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-5">
+                    <div class="row bg-box-shadow padding-10 panel panel-default">
+						<div class="panel-heading margin-5">
+							<h3 class="panel-title">新增订单</h3>
+						</div>
                         <form action="" method="post">
                             {% csrf_token %}
                         {{ order_form.errors }}
@@ -17,13 +19,10 @@ class="active"
                         <p><label>联系人:</label>{{ order_form.customer }}<button type="button" id="position" onclick="getposition()">查看当前收货地址</button></p>
                         <p><label>出单人:</label>{{ order_form.issuing_person }}</p>
                         <p><label>产品:</label>{{ order_form.product }}</p>
+                        <p><label>备注:</label>{{ order_form.remark}}</p>
                         <!--<p><label>订单状态:</label>{{ order_form.state }}</p>-->
-                        <p><button type="submit" class="btn">确定</button></p>
+                        <p class="text-align-center"><button type="submit" class="btn btn-primary bottom-size">确定</button></p>
                         </form>
-                        </div>
-                        <div class="col-md-3" id="position_info">
-                            </div>
-                    </div>
                     </div>
 
 {% endblock %}

@@ -213,11 +213,17 @@ def role_name_edit(request,role_id):
         response=HttpResponse()
         role_form=GroupForm(request.POST)
         name=request.POST.get('name')
+        #print request.POST
         if name:
             role=Group.objects.get(pk=role_id)
             role.name=name
-            permissions=request.POST.getlist('permissions')
-            role.permissions=permissions
+            # permissions=request.POST.getlist('permissions')
+            # role.permissions=permissions
+            permissions=request.POST.get("authchecked1")
+            if permissions:
+                permission_array=permissions.split(',')
+                permission_list=[int(i) for i in permission_array if i.isdigit()]
+                role.permissions=permission_list
             role.save()
             response.write("<script language='javascript'>alert('修改成功!');window.location.href=('/role/info/')</script>")
             return response
@@ -226,9 +232,13 @@ def role_name_edit(request,role_id):
             return response
     else:
         role_form=GroupForm(instance=Group.objects.get(pk=role_id))
+        permission_list=[i[0] for i in Group.objects.get(pk=role_id).permissions.values_list('id')]
+        data_json=get_user_permission(permission_list)
+        role=Group.objects.get(pk=role_id)
+        #print data_json
     #print role_form
         #role_form.fields['permissions'].initial=Group.objects.get(pk=id).permissions.all()
-    return render(request,'role_name_edit.html',{'group_form':role_form})
+    return render(request,'role_name_edit.html',{'role':role,'group_form':role_form,'data_json':data_json})
 @admin_required(login_url='/login')
 def role_name_remove(request):
     role_name_id=request.GET.get('id')
@@ -265,6 +275,46 @@ def get_all_permissions():
                     data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can change ',u'修改')})
                 else:
                     data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can delete ',u'删除')})
+            data_json['children'].append(data_dict)
+            data_dict={}
+    data_json=json.dumps(data_json)
+    #return HttpResponse(str(data_json))
+    return data_json
+def get_user_permission(permission_list):
+    permission_choices=[u'原料',u'产品',u'客户水平',u'客户',u'订单状态',u'联系方式',u'订单',u'出单人',u'角色',u'客户导入',u'订单导入']
+    data_json={'text':u'权限','children':[],'state':{"opened":'true'}}
+    for i in permission_choices:
+        if i ==u'原料':
+            permission=Permission.objects.filter(content_type=ContentType.objects.get(name=i))
+            for k in permission:
+                if 'Can change' in k.name:
+                    if k.id in permission_list:
+                        data_dict={'id':str(k.id),'text':u'仓管(填写单号)','state':{"opened":'true','selected':'true'}}
+                    else:
+                        data_dict={'id':str(k.id),'text':u'仓管(填写单号)'}
+            data_json['children'].append(data_dict)
+        else:
+            data_dict={'text':i,'children':[]}
+            permission=Permission.objects.filter(content_type=ContentType.objects.get(name=i))
+            for k in permission:
+                if 'Can add' in k.name:
+                    if k.id in permission_list:
+                        data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can add ',u'添加'),
+                                                      'state':{'opened':'true','selected':'true'}})
+                    else:
+                        data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can add ',u'添加')})
+                elif 'Can change' in k.name:
+                    if k.id in permission_list:
+                        data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can change ',u'修改'),
+                                                      'state':{'opened':'true','selected':'true'}})
+                    else:
+                        data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can change ',u'修改')})
+                else:
+                    if k.id in permission_list:
+                        data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can delete ',u'删除'),
+                                                      'state':{'opened':'true','selected':'true'}})
+                    else:
+                        data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can delete ',u'删除')})
             data_json['children'].append(data_dict)
             data_dict={}
     data_json=json.dumps(data_json)

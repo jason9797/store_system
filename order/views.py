@@ -51,10 +51,10 @@ def order_add(request):
             customer=data['customer']
             issuing_person=data['issuing_person']
             product=data['product']
-            #remark=data['remark']
+            remark=data['remark']
             #order_state=data['state']
             order=Order(delivery_no='',fact_money=0,customer=customer,issuing_person=issuing_person,
-                    product=product,state=Order_State.objects.get(name='未发货'))
+                    product=product,state=Order_State.objects.get(name='未发货'),remark=remark)
             order.save()
             js_data="<script language='javascript'>var r=confirm('添加成功,确定继续添加,取消返回到订单列表!');if (r==true){  window.location.href='/order/order/add/?customer_id=%s'}else{window.location.href='/order/my_order/'}</script>"%customer.id
             return HttpResponse(js_data)
@@ -275,6 +275,14 @@ def order_contact_edit(request):
         contact=Contact_info.objects.filter(pk=request.POST.get("pk"))
         contact.update(**info_dict)
         return HttpResponse('success')
+    if request.GET.get("customer_id"):
+        customer_id=request.GET.get("customer_id")
+        contact_id=request.GET.get("contact_id")
+        Contact_info.objects.filter(customer=Customer.objects.get(pk=customer_id)).update(default=False)
+        contact_info=Contact_info.objects.get(pk=contact_id)
+        contact_info.default=True
+        contact_info.save()
+        return HttpResponseRedirect("/order/customer")
 
 @permission_required('order.change_contact_info',login_url='/permission/deny')
 def order_contact(request):
@@ -298,7 +306,8 @@ def order_contact(request):
             filter_dict['default']=eval(default)
         phone_number=request.POST.get('phone_number')
         if phone_number:
-            contact=contact.filter(phone_number__contains=phone_number)
+            #contact=contact.filter(phone_number__contains=phone_number)
+            contact=contact.filter(phone_number=phone_number)
             filter_dict['phone_number']=phone_number
         customer=request.POST.get('Customer')
         if customer:
@@ -751,6 +760,7 @@ def order_customer(request):
         if user_null:
             customer=customer.filter(user__isnull=True)
             initial['usernull']=True
+            filter_dict['usernull']=True
             #print customer.query.__str__()
         else:
             if request.user.is_superuser:
@@ -783,7 +793,7 @@ def order_customer(request):
         form=CustomerForm(initial)
         page=request.POST.get('page')
         if page:
-            print len(customer)
+            #print len(customer)
             total_page=int(math.ceil(float(len(customer))/20))
             if int(page)==1:
                 start_page=0
@@ -977,10 +987,11 @@ def get_position(request):
     contact=Contact_info.objects.filter(customer=Customer.objects.get(pk=customer_id))
     return render(request,'get_position.html',{'contact':contact})
 
-
+@login_required(login_url="/login")
 def order_other(request):
     return render(request,'order_other.html')
 
+@login_required(login_url="/login")
 def order_trace(request):
     delivery_no=request.GET.get('delivery_no')
     try:
@@ -989,6 +1000,7 @@ def order_trace(request):
         return render(request,'order_trace.html',{'trace':trace_info})
     except:
         return HttpResponse("没有订单信息，请查看订单号是否正确")
+@login_required(login_url="/login")
 def get_order_info(num):
 
     order=urllib.urlopen("http://www.kuaidi100.com/autonumber/auto?num=%s"%num)
@@ -997,6 +1009,8 @@ def get_order_info(num):
     #print order_type
     return order_type
 
+
+@login_required(login_url="/login")
 def get_order_trace_info(num,Type):
 
     order=urllib.urlopen("http://www.kuaidi100.com/query?type=%s&postid=%s"%(Type,num))
@@ -1005,6 +1019,7 @@ def get_order_trace_info(num,Type):
     info=sorted(info,key=lambda k:k['time'],reverse=False)
     return info
 
+@login_required(login_url="/login")
 def my_order_info(request):
     user=request.user
     if user.is_superuser:
@@ -1013,3 +1028,9 @@ def my_order_info(request):
         Q(name=_("已发货未签收"))|Q(name=_("未发货"))))).order_by("-jointime")
     return render(request,"my_order.html",{"order":order_info})
 
+@login_required(login_url="/login")
+def get_customer_info(request,customer_id):
+    customer=Customer.objects.get(pk=customer_id)
+    contact_info=Contact_info.objects.filter(customer=customer)
+    order_info=Order.objects.filter(customer=customer).order_by("-jointime")
+    return render(request,'get_customer_info.html',{"customer":customer,"contact_info":contact_info,"order_info":order_info})

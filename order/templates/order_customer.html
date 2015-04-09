@@ -5,8 +5,14 @@
 {% block customer %}
 class="active"
 {% endblock %}
+{% block customer_active %}
+in
+{% endblock %}
 {% block body %}
-<div class="container">
+<div class="row bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+        <h3 class="panel-title">客户检索</h3>
+        </div>
     <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
 		  {% csrf_token %}
         <div class="row">
@@ -14,35 +20,37 @@ class="active"
             <label>名称:<input type="text" name="name" {% if filter.name %} value="{{ filter.name }}"{%else%}value=""{% endif %}></label>
             </div>
         <div class="col-md-3 form-group">
-            <label>性别:<input type="radio" name="sex" value="True" {% if filter.sex == True %} checked{% endif %}/>男
-                <input type="radio" name="sex" value="False" {% if filter.sex == False %} checked{% endif %}/>女
+            <label>性别:<select name="sex">
+                <option value="">不限</option>
+                <option value="True" {% if filter.sex == True %} selected{% endif %}/>男</option>
+                <option value="False" {% if filter.sex == False %} selected{% endif %}/>女</option>
+            </select>
             </label>
             </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-3 form-group">
             <label>客户等级:{{ form.level }}</label>
             </div>
+		<div class="col-md-3 form-group">
+            <label>公海:{{ form.usernull}}</label>
+        </div>		
             </div>
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <label class="col-md-3 control-label">手机号码:</label>
-                <div class="col-md-3">
-            <input id="phone_number" class="form-control" size=20  name="phone_number" type="text" value=''  placeholder="手机号码"/>
+        <div class="row padding12">
+            <div class="col-md-4 form-group">
+                <label>手机号码:</label>
+            <input id="phone_number" class="form-control" name="phone_number" type="text" value='' style="width:200px;" placeholder="手机号码"/>
         </div>
-                </div>
-            <div class="col-md-6 form-group">
-            <input id="address" class="form-control" name="address" type="text" value=''  placeholder="联系地址"/>
+            <div class="col-md-4 form-group">
+                <label>地址:</label>
+            <input id="address" class="form-control" name="address" type="text" value='' style="width:200px;" placeholder="联系地址"/>
         </div>
-            </div>
-        <div class="row">
-            {% if user.is_superuser %}
-        <div class="col-md-2 form-group">
+		{% if user.is_superuser %}
+        <div class="col-md-4 form-group">
             <label>所属客服:{{ form.user }}</label>
             </div>
             {% endif %}
-        <div class="col-md-2 form-group">
-            <label>公海:{{ form.usernull}}</label>
-        </div>
-        <div class="col-md-4 form-group">
+            </div>
+        <div class="row">
+		<div class="col-md-5 form-group">
             <label>开始时间:
                 <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
                     <input class="form-control" size="16" name="starttime" type="text" value="{{filter.starttime}}" readonly>
@@ -51,9 +59,7 @@ class="active"
                 </div>
             <input type="hidden" id="dtp_input1" value="" /><br/></label>
             </div>
-            </div>
-        <div class="row">
-        <div class="col-md-4 form-group">
+        <div class="col-md-5 form-group">
             <label>结束时间:
                 <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
                     <input class="form-control" size="16" name="endtime" type="text" value="{{ filter.endtime }}" readonly>
@@ -62,18 +68,15 @@ class="active"
                 </div>
             <input type="hidden" id="dtp_input2" value="" /><br/></label>
             </div>
-    <div class="col-md-4 form-group">
-        <label class="col-md-2 control-label">             </label>
-	    <button type="SUBMIT" class="btn btn-primary">查询</button>
+    <div class="col-md-2 form-group">
+	    <button type="SUBMIT" class="btn btn-primary bottom-size">查询</button>
         </div>
             </div>
     			</form>
 
 
     </div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
+<div class="row bg-box-shadow padding-5">
         <table class="table table-bordered" id="table">
         <thead>
         <tr>
@@ -89,10 +92,13 @@ class="active"
         </thead>
             {% for i in customer %}
             <tr>
-            <td>{% if i.user %}
+            <td>
+                {% if i.user %}
                 <a href="#" name="name" data-type="text" data-pk="{{ i.id }}" data-title="输入名称">{{ i.name }}</a>
                 {% else %}{{i.name}}
-                {% endif %}</td>
+                {% endif %}
+                <a href="{% url 'get_customer_info' i.id %}" class="btn btn-success btn-xs" data-toggle="modal" data-target="#get_customer_info">查看客户信息</a>
+            </td>
             <td>{% if i.user %}
                 <a href="#" name="sex" class='{{ i.sex }}' data-type="select" data-pk="{{ i.id }}" data-title="性别">
                    {% if i.sex %}男{% else %}女{% endif %}</a>
@@ -125,18 +131,28 @@ class="active"
                 <a href="{% url 'order_add'%}?customer_id={{i.id}}">开单</a><br>
                 {% endif %}
                 {% endif %}
-                <a href="{% url 'order_customer_remove' %}?id={{i.id}}" onclick= "return confirm('确定删除?');">删除</a></td>
+                <a href="{% url 'order_customer_remove' %}?id={{i.id}}" id="addicon" onclick= "return confirm('确定删除?');" ><i class="glyphicon glyphicon-trash"></i>删除</a></td>
             </tr>
             {% endfor %}
         </table>
         {% if customer%}
         <ul class="pagination" id="pagination"></ul>
         {% endif %}
-        </div>
-        </div>
+    </div>
+<div class="modal fade" id="get_customer_info" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+          </div>
+       </div>
     </div>
 {% endblock %}
 {% block js %}
+<script type="text/javascript">
+$('body').on('hidden.bs.modal', '.modal', function () {
+$(this).removeData('bs.modal');
+});
+</script>
 <script src="/static/js/jquery.twbsPagination.min.js"></script>
 <script src="/static/js/magicsuggest.js"></script>
 	<script type="text/javascript">
@@ -204,10 +220,9 @@ $('#pagination').twbsPagination({
     address:$("[name='address[]']").val(),
     phone_number:$("[name='phone_number[]']").val(),
     user:$("[name='user']").val(),
-    usernull:$("[name='usernull']").val(),
     starttime:$("[name='starttime']").val(),
     endtime:$("[name='endtime']").val(),
-
+	usernull:{% if filter.usernull %}'on'{% else %}''{% endif %},
     page:page},
     datatype:"html",
     success:
@@ -230,7 +245,11 @@ $(document).ready(function() {
     var name1=$("td [name='name']").attr("name");
     $("td [name='name']").editable({
     name:name1,
-    url:"{% url 'order_customer_edit' %}"
+    url:"{% url 'order_customer_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的姓名不能为空';
+}
     }
     );
 
@@ -262,14 +281,22 @@ $(document).ready(function() {
     var address1=$("td [name='address']").attr("name");
     $("td [name='address']").editable({
     name:address1,
-    url:"{% url 'order_customer_edit' %}"
+    url:"{% url 'order_customer_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的地址不能为空';
+}
     }
     );
 
     var phone_number1=$("td [name='phone_number']").attr("name");
     $("td [name='phone_number']").editable({
     name:phone_number1,
-    url:"{% url 'order_customer_edit' %}"
+    url:"{% url 'order_customer_edit' %}",
+	validate: function(value) {
+  if($.trim(value).length>"15"||isNaN(value)||$.trim(value).length<"1") 
+    return '请输入正确的手机号码';
+}
     }
     );
 

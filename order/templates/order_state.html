@@ -1,12 +1,7 @@
 {% extends 'order_other.html' %}
 
 {% block order_other %}
-
-
-
-                <div class="container">
-                    <div class="container">
-                        <div class="col-md-6">
+                        <div class="col-md-9">
                     <table class="table">
                         <thead>
                         <tr>
@@ -23,15 +18,11 @@
                         {% endfor %}
                         </table>
                             </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                         <form action="" method="post">
                             {% csrf_token %}
                         <p><label>名称:</label>{{ state_form.name }}</p>
-                        <p><button type="submit" class="btn">确定</button></p>
+                        <p><button type="submit" class="btn btn-primary bottom-size ">确定</button></p>
                         </form>
                         </div>
-                    </div>
-                </div>
-                </div>
 {% endblock %}

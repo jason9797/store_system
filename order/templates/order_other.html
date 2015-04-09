@@ -2,8 +2,9 @@
 {% block order %}
 class="active"
 {% endblock %}
+{% block order_active %}in{% endblock %}
 {% block body %}
-<div class="container">
+<div class="row bg-box-shadow padding-10 panel panel-default">
                     <ol class="breadcrumb">
   <li><a href="{% url 'order_issuing_person' %}">出单人管理</a></li>
     <li><a href="{% url 'order_state' %}">订单状态管理</a></li>

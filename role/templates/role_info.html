@@ -26,7 +26,7 @@ class="active"
                                                     {% for k in group %}
                                                     <tr>
                                                         <td>{{k.name}}</td>
-                                                        <td><a href="{% url 'role_name_edit' k.id %}">修改</a></td>
+                                                        <td><a href="{% url 'role_name_edit' k.id %}" data-toggle="modal" data-target="#role_add">修改</a></td>
                                                         <td><a href="{% url 'role_name_remove' %}?id={{ k.id }}">删除</a></td>
                                                     </tr>
                                                     {% endfor %}
@@ -52,7 +52,7 @@ class="active"
             </h4>
          </div>
          <div class="modal-body">
-            <p><label>角色</label>{{ group_form.name }}</p>
+            <p><label>角色名称:</label>{{ group_form.name }}</p>
 			<div id="authtree"></div>
 
             <input type="hidden" name="authchecked" id="authchecked" value="">
@@ -67,10 +67,24 @@ class="active"
          </div>
       </div><!-- /.modal-content -->
 </div><!-- /.modal -->
+
+<div class="modal fade" id="role_eidt" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+          </div>
+       </div>
+    </div>
+
 {% endblock %}
 {% block js %}
-<script type="text/javascript" src="/static/js/jstree.min.js"></script>
 
+<script type="text/javascript" src="/static/js/jstree.min.js"></script>
+<script type="text/javascript">
+$('body').on('hidden.bs.modal', '.modal', function () {
+$(this).removeData('bs.modal');
+});
+</script>
 <script type="text/javascript">
 $('#authtree').jstree({
     "checkbox": {
@@ -78,6 +92,7 @@ $('#authtree').jstree({
                    "visible" : true,
                    "three_state": true,
                    "whole_node" : true,
+				    "tie_selection":true,
               },
 			  "plugins": ["checkbox"],
 			  'core':{

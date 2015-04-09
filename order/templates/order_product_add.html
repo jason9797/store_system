@@ -2,18 +2,20 @@
 {% block product %}
 class="active"
 {% endblock %}
+{% block product_active %}in{% endblock %}
 {% block body %}
-<div class="container">
-<div class="col-md-6">
+<div class="row bg-box-shadow padding-10 panel panel-default">
+<div class="panel-heading margin-5">
+    	<h3 class="panel-title">产品新增</h3>
+	</div>
                         <form action="" method="post">
                             {% csrf_token %}
                             {{ product_form.errors }}
                         <p><label>名称:</label>{{ product_form.name }}</p>
                         <p><label>价格:</label>{{ product_form.price }}</p>
                         <p><label>快递类型:</label>{{ product_form.delivery_type }}</p>
-                        <p><label>备注:{{ product_form.detail}}</label></p>
-                        <p><button type="submit" class="btn">确定</button></p>
+						<p><label>备注:{{ product_form.detail}}</label></p>
+                        <p class="text-align-center"><button type="submit" class="btn btn-primary bottom-size">确定</button></p>
                         </form>
-                        </div>
     </div>
 {% endblock %}
