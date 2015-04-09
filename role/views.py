@@ -12,10 +12,13 @@ from django.contrib.auth.forms import UserCreationForm
 from stock.models import *
 from role.models import *
 from order.models import *
+import json
+
+
 @login_required(login_url="/login")
 def home(request):
-    if request.user.is_superuser:
-        
+    #if request.user.is_superuser:
+
     return render(request,'home.html')
 def permission_deny(request):
     return HttpResponse("<script language='javascript'>alert('没有权限');history.go(-1)</script>")
@@ -175,7 +178,8 @@ def user_group_edit(request,username):
 def role_info(request):
     group=Group.objects.all()
     group_form=GroupForm()
-    return render(request,'role_info.html',{'group':group,'group_form':group_form})
+    data_json=get_all_permissions()
+    return render(request,'role_info.html',{'group':group,'group_form':group_form,'data_json':data_json})
 
 
 
@@ -184,11 +188,18 @@ def role_name_add(request):
     if request.method=='POST':
         response=HttpResponse()
         role_form=GroupForm(request.POST)
+        #print request.POST
         if role_form.is_valid():
             role=role_form.save(commit=False)
             role.name=request.POST.get('name')
             role.save()
-            role_form.save_m2m()
+            permissions=request.POST.get("authchecked")
+            if permissions:
+                permission_array=permissions.split(',')
+                permission_list=[int(i) for i in permission_array if i.isdigit()]
+                role.permissions=permission_list
+                role.save()
+            #role_form.save_m2m()
         #role_name.save()
             response.write("<script language='javascript'>alert('添加成功!');window.location.href=('/role/info')</script>")
             return response
@@ -233,3 +244,29 @@ def role_name_remove(request):
     role_object.delete()
     response.write("<script language='javascript'>alert('删除成功!');window.location.href='/role/info/';</script>")
     return response
+
+def get_all_permissions():
+    permission_choices=[u'原料',u'产品',u'客户水平',u'客户',u'订单状态',u'联系方式',u'订单',u'出单人',u'角色',u'客户导入',u'订单导入']
+    data_json={'text':u'权限','children':[]}
+    for i in permission_choices:
+        if i ==u'原料':
+            permission=Permission.objects.filter(content_type=ContentType.objects.get(name=i))
+            for k in permission:
+                if 'Can change' in k.name:
+                    data_dict={'id':str(k.id),'text':u'仓管(填写单号)'}
+            data_json['children'].append(data_dict)
+        else:
+            data_dict={'text':i,'children':[]}
+            permission=Permission.objects.filter(content_type=ContentType.objects.get(name=i))
+            for k in permission:
+                if 'Can add' in k.name:
+                    data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can add ',u'添加')})
+                elif 'Can change' in k.name:
+                    data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can change ',u'修改')})
+                else:
+                    data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can delete ',u'删除')})
+            data_json['children'].append(data_dict)
+            data_dict={}
+    data_json=json.dumps(data_json)
+    #return HttpResponse(str(data_json))
+    return data_json

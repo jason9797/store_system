@@ -17,4 +17,5 @@ urlpatterns=patterns('',
         #url(r'^(?P<username>\w+)/permission/edit/$',user_permission_edit,name="user_permission_edit"),
         url(r'^(?P<username>\w+)/group/edit/$',user_group_edit,name="user_group_edit"),
 	    #url(r'^changepassword/(?P<username>\w+)/$',changepassword,name='changepassword'),
+        url(r'^get/permissions/$',get_all_permissions,name="get_permissions"),
 )

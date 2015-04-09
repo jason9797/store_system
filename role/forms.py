@@ -6,6 +6,7 @@ from django.contrib.auth.models import Permission,ContentType
 from django.contrib.auth.models import User,Group
 from django.utils.translation import gettext as _
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.db.models import Q
 job_choices = (
     (1, _("service")),
     (2, _("Storekeeper")),
@@ -19,7 +20,7 @@ class UserForm(forms.ModelForm):
     # permissions=forms.ModelMultipleChoiceField(label=_('权限'),queryset=Permission.objects.filter(
     #     content_type__in=ContentType.objects.filter(id__range=[7,18])),
     #     widget=FilteredSelectMultiple("verbose name",is_stacked=False))
-    group=forms.ModelChoiceField(label=_('组'),queryset=Group.objects.all()
+    group=forms.ModelChoiceField(label=_('角色'),queryset=Group.objects.all()
         )
     password = forms.CharField(label=_("Password"),
         widget=forms.PasswordInput)
@@ -46,8 +47,9 @@ class UsergroupForm(forms.ModelForm):
         # self.groups=forms.ModelChoiceField(label=_('组'),queryset=Group.objects.all(),
         # widget=forms.RadioSelect(),required=False)
 class GroupForm(forms.ModelForm):
+    permission_choices=[u'原料',u'产品',u'客户水平',u'客户',u'订单状态',u'联系方式',u'订单',u'出单人',u'角色',u'客户导入',u'订单导入']
     permissions=forms.ModelMultipleChoiceField(label=_('权限'),queryset=Permission.objects.filter(
-        content_type__in=ContentType.objects.filter(id__range=[7,18])),
+        content_type__in=ContentType.objects.filter(name__in=permission_choices)),
         widget=FilteredSelectMultiple("verbose name",is_stacked=False))
     class Meta:
         model=Group

@@ -87,6 +87,7 @@ class="active"
             <th>出单人</th>
             <th>产品</th>
             <th>订单状态</th>
+            <th>备注</th>
             <th>创建时间</th>
             <th>操作</th>
         </tr>
@@ -102,6 +103,7 @@ class="active"
             <td>{{ i.issuing_person }}</td>
             <td>{{ i.product }}</td>
             <td><a href="#" name="state" data-type="select" data-pk="{{ i.id }}" data-title="订单状态">{{ i.state }}</a></td>
+            <td><a href="#" name="remark" data-type="text" data-pk="{{ i.id }}" data-title="输入备注">{{ i.remark }}</a></td>
                 <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
             <td><a href="{% url 'order_remove' %}?id={{ i.id }}">删除</a></td>
             </tr>
@@ -246,6 +248,12 @@ $(document).ready(function() {
     var fact_money1=$("td [name='fact_money']").attr("name");
     $("td [name='fact_money']").editable({
         name:fact_money1,
+    url:"{% url 'order_edit' %}"
+    });
+
+    var remark1=$("td [name='remark']").attr("name");
+    $("td [name='remark']").editable({
+        name:remark1,
     url:"{% url 'order_edit' %}"
     });
 

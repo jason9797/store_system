@@ -63,7 +63,7 @@
 
         /*定义二级菜单样式*/
         .secondmenu a {
-            font-size: 10px;
+            font-size: 14px;
             color: #4A515B;
             text-align: center;
         }
@@ -80,6 +80,20 @@
             padding-left: 50px;
             color: #fff;
         }
+		.text-align-right{ text-align:right;}
+		.bg-box-shadow{box-shadow: 4px 4px 5px #888888;
+-moz-box-shadow: 4px 4px 5px #888888;
+-webkit-box-shadow: 4px 4px 5px #888888;
+margin-bottom: 10px;
+background: #f8f8f8;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+		.nav>li>a:hover{ color:blue;}
+		.padding-10{padding:10px;}
+		.padding12{ padding:12px 0;}
+		.bgg{ background:red;}
     </style>
     {% block head %}
     {% endblock %}
@@ -88,10 +102,10 @@
 
 <body>
 <div class="navbar navbar-default" role="navigation">
-   <div class="navbar-header">
+   <div class="navbar-header col-md-6 col-xs-6">
       <a class="navbar-brand" href="#">订单管理系统</a>
    </div>
-   <div>
+   <div class="colmd-6 col-xs-6 text-align-right">
        {% if user.is_active %}
        <p class="navbar-text navbar-right" style="margin-right:20px;">{{ user }}
          <a href="/logout" class="navbar-link">logout</a>
@@ -101,11 +115,11 @@
        {% endblock %}
    </div>
 </div>
-<div class="container-fluid" style="overflow:hidden;">
+<div class="container-fluid">
 <div class="row">
     {% if user.is_active %}
-<div class="col-md-3 col-md-offset-1">
-<ul id="main-nav" class="nav nav-tabs nav-stacked">
+<div class="col-md-2" style="margin-left:-9px;">
+<ul id="main-nav" class="nav nav-tabs nav-stacked bg-box-shadow">
    <li {% block home %}{% endblock %}>
        <a href="#home" class="nav-header collapsed" data-toggle="collapse">
                             主页
@@ -135,7 +149,7 @@
                             <li><a href="{% url 'order_product_add' %}">产品新增</a></li>
                         </ul>
    </li>
-   <li {% block store %}{% endblock %}>
+  <!-- <li {% block store %}{% endblock %}>
        <a href="#store" class="nav-header collapsed" data-toggle="collapse">库存管理
        <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
        <ul id="store" class="nav nav-list collapse secondmenu {% block store_active %}{% endblock %}">
@@ -144,7 +158,7 @@
                             <li><a href="{% url 'stock_management' %}">原料出库</a></li>
                             <li><a href="{% url 'stock_other' %}">原料相关管理</a></li>
                         </ul>
-   </li>
+   </li>-->
    <li {% block order %}{% endblock %}>
        <a href="#order" class="nav-header collapsed" data-toggle="collapse">订单管理
        <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
@@ -182,7 +196,7 @@
 </ul>
 </div>
     {% endif %}
-<div class="col-md-8">
+<div class="col-md-10">
 {% block body %}
 {% endblock %}
 </div>

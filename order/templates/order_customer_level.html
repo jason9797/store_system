@@ -13,13 +13,14 @@
                         {% for i in customer_level_data %}
                         <tr>
                         <td>{% if i.level == 1 %}vip(初始等级,必须保留一个){% else %}{% if i.level == 2 %}vvip{% else %}vvvip{% endif %}{% endif %}</td>
-                        <td><a href="?id={{ i.id }}">edit</a>,<a href="{% url 'order_customer_level_remove'%}?id={{ i.id }}">remove</a></td>
+                        <td><a href="?id={{ i.id }}">编辑</a>,<a href="{% url 'order_customer_level_remove'%}?id={{ i.id }}">删除</a></td>
                         </tr>
                         {% endfor %}
                         </table>
                             </div>
                     <div class="row">
                         <div class="col-md-6">
+
                         <form action="" method="post">
                             {% csrf_token %}
                             {{ customer_level_form.errors }}

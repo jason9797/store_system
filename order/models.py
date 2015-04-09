@@ -16,6 +16,7 @@ class Product(models.Model):
     name = models.CharField(verbose_name='名称',max_length=100)
     price = models.DecimalField(verbose_name='价钱',max_digits=6, decimal_places=2)
     delivery_type = models.CharField(verbose_name='快递类型',max_length=100,blank=True)
+    detail = models.CharField(verbose_name='备注',max_length=255,blank=True,null=True)
     stock = models.ManyToManyField(Stock,through="Stock_Product")
     jointime =models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
     history = HistoricalRecords()
@@ -87,6 +88,7 @@ class Order_State(models.Model):
     订单状态
     '''
     name = models.CharField(verbose_name='名称',max_length=50)
+    level = models.IntegerField(verbose_name="级别",blank=True,null=True)
     history = HistoricalRecords()
     class Meta:
         verbose_name='订单状态'
@@ -120,6 +122,7 @@ class Order(models.Model):
     issuing_person = models.ForeignKey(Issuing_person,blank=True,null=True,on_delete=models.SET_NULL)
     product = models.ForeignKey(Product,blank=True,null=True,on_delete=models.SET_NULL)
     state = models.ForeignKey(Order_State,blank=True,null=True,on_delete=models.SET_NULL)
+    remark = models.CharField(verbose_name="备注",null=True,max_length=255,blank=True)
     jointime =models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
     history = HistoricalRecords()
     class Meta:

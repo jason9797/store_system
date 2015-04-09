@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block order %}
+class="active"
+{% endblock %}
+{% block body %}
+
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                        {{ order_form.errors }}
+                        <!--<p><label>快递单号:</label>{{ order_form.delivery_no }}</p>
+                        <p><label>实收金额:</label>{{ order_form.fact_money }}</p>-->
+                        <p><label>联系人:</label>{{ order_form.customer }}<button type="button" id="position" onclick="getposition()">查看当前收货地址</button></p>
+                        <p><label>出单人:</label>{{ order_form.issuing_person }}</p>
+                        <p><label>产品:</label>{{ order_form.product }}</p>
+                        <!--<p><label>订单状态:</label>{{ order_form.state }}</p>-->
+                        <p><button type="submit" class="btn">确定</button></p>
+                        </form>
+                        </div>
+                        <div class="col-md-3" id="position_info">
+                            </div>
+                    </div>
+                    </div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+
+function getposition()
+{
+var customer=$("#id_customer").val();
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("position_info").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","{% url 'get_position' %}?customer="+customer,true);
+xmlhttp.send();
+}
+
+</script>
+{% endblock %}
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->

@@ -1,0 +1,181 @@
+{% extends 'stock_other.html' %}
+{% block stock %}
+<div class="container">
+    <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
+		  {% csrf_token %}
+        <div class="row">
+        <div class="col-md-3 form-group">
+            <label>数量:<input type="text" name="quantity" {% if filter.quantity %} value="{{ filter.quantity }}"{%else%}value=""{% endif %}></label>
+            </div>
+        <div class="col-md-2 form-group">
+            <label>是否运费:<input type="radio" name="delivery_bill" value="True" {% if filter.delivery_bill == True %} checked{% endif %}/>是
+                <input type="radio" name="delivery_bill" value="False" {% if filter.delivery_bill == False %} checked{% endif %}/>否
+            </label>
+            </div>
+            <div class="col-md-3 form-group">
+            <label>产品:{{ form.product }}</label>
+            </div>
+            </div>
+        <div class="row">
+        <div class="col-md-4 form-group">
+            <label>原料:{{ form.stock }}</label>
+            </div>
+    <div class="col-md-4 form-group">
+        <label class="col-md-2 control-label">             </label>
+	    <button type="SUBMIT" class="btn btn-primary">查询</button>
+        </div>
+            </div>
+    			</form>
+
+
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+        <table class="table" id="table">
+        <thead>
+        <tr>
+            <th>数量</th>
+            <th>是否运费</th>
+            <th>产品</th>
+            <th>原料</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+            {% for i in stock_product %}
+            <tr>
+            <td><a href="#" name="quantity" data-type="text" data-pk="{{ i.id }}" data-title="输入数量">{{ i.quantity }}</a></td>
+            <td><a href="#" name="delivery_bill" class='{{ i.delivery_bill }}' data-type="checklist" data-pk="{{ i.id }}" data-title="是否运费">{% if i.delivery_bill %}是{% else %}否{% endif %}</a></td>
+            <td><a href="#" name="product" data-type="select" data-pk="{{ i.id }}" data-title="选择产品">{{ i.product }}</a></td>
+            <td><a href="#" name="stock" data-type="select" data-pk="{{ i.id }}" data-title="选择原料">{{ i.stock }}</a></td>
+            <td><a href="{% url 'order_stock_product_remove' %}?id={{ i.id }}">删除</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if stock_product %}
+        <ul class="pagination" id="pagination"></ul>
+        {% endif %}
+        </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+<script src="/static/js/jquery.twbsPagination.min.js"></script>
+<!--ajax——csrf验证-->
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+
+{% if stock_product %}
+<script type="text/javascript">
+$('#pagination').twbsPagination({
+        totalPages: {{ total_page }},
+		startPage:{{ current_page }},
+        visiblePages: {% if total_page > 4 %}5{% else %}{{ total_page }}{% endif %},
+        onPageClick: function (event, page) {
+            $.ajax({
+            type:"POST",
+            url:"{% url 'order_stock_product' %}",
+    data:{
+      quantity:$("[name='quantity']").val(),
+    delivery_bill:{% if filter.delivery_bill %}$("[name='delivery_bill']").val(){% else %}''{% endif %},
+    product:$("[name='product']").val(),
+    stock:$("[name='stock']").val(),
+    page:page},
+    datatype:"html",
+    success:
+        function(data){
+        //$('#table').children().remove();
+        //$('#table').append(data)
+        //$('#table').empty().append(data)
+        $('#table').html(data)
+    }
+            })
+            }
+    });
+</script>
+{% endif %}
+<!--分页-->
+
+<script type="text/javascript">
+$(document).ready(function() {
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+    var quantity1=$("td [name='quantity']").attr("name");
+    $("td [name='quantity']").editable({
+    name:quantity1,
+    url:"{% url 'order_stock_product_edit' %}"
+    }
+    );
+
+    var delivery_bill1=$("td [name='delivery_bill']").attr("name");
+    var now_delivery_bill=$("td [name='delivery_bill']").attr("class")
+    $("td [name='delivery_bill']").editable({
+        value: now_delivery_bill,
+        name:delivery_bill1,
+        url:"{% url 'order_stock_product_edit' %}",
+        source: [
+              {value: 'True', text: '是'},
+              {value: 'False', text: '否'}
+           ]
+    });
+
+
+   var product1=$("td [name='product']").attr("name");
+   var now_product=$("td [name='product']").val();
+    $("td [name='product']").editable({
+        value: now_product,
+        name:product1,
+        url:"{% url 'order_stock_product_edit' %}",
+        source: [
+        {% for i in product %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+
+    var stock1=$("td [name='stock']").attr("name");
+   var now_stock=$("td [name='stock']").val();
+    $("td [name='stock']").editable({
+        value: now_stock,
+        name:stock1,
+        url:"{% url 'order_stock_product_edit' %}",
+        source: [
+        {% for i in stock %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ]
+    });
+
+
+
+});
+</script>
+{% endblock%}

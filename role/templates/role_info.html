@@ -1,16 +1,8 @@
 {% extends 'base.html' %}
 {% block head %}
-<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
-<script type="text/javascript">window.__admin_utc_offset__ = "28800";</script>
-<script type="text/javascript" src="/admin/jsi18n/"></script>
-<script type="text/javascript" src="/static/admin/js/core.js"></script>
-<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
-<script type="text/javascript" src="/static/admin/js/jquery.js"></script>
-<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
-<script type="text/javascript" src="/static/admin/js/actions.js"></script>
-<script type="text/javascript" src="/static/admin/js/SelectBox.js"></script>
-<script type="text/javascript" src="/static/admin/js/SelectFilter2.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/style.min.css"/>
+
 {% endblock %}
 {% block role %}
 class="active"
@@ -48,7 +40,7 @@ class="active"
    aria-labelledby="myModalLabel" aria-hidden="true">
    <div class="modal-dialog">
       <div class="modal-content">
-          <form action="{% url 'role_name_add' %}" method="post" enctype="multipart/form-data">
+          <form action="{% url 'role_name_add' %}" name="role_form" method="post" onsubmit="submit_authchecked()">
               {% csrf_token %}
          <div class="modal-header">
             <button type="button" class="close"
@@ -60,19 +52,48 @@ class="active"
             </h4>
          </div>
          <div class="modal-body">
-            {{ group_form.as_p }}
+            <p><label>角色</label>{{ group_form.name }}</p>
+			<div id="authtree"></div>
 
+            <input type="hidden" name="authchecked" id="authchecked" value="">
          </div>
          <div class="modal-footer">
             <button type="button" class="btn btn-default"
                data-dismiss="modal">关闭
             </button>
-            <button type="sumbit" class="btn btn-primary">
-               提交更改
-            </button>
+            <button type="sumbit" name="authsumbit" class="btn btn-default">确定</button>
              </div>
              </form>
          </div>
       </div><!-- /.modal-content -->
 </div><!-- /.modal -->
+{% endblock %}
+{% block js %}
+<script type="text/javascript" src="/static/js/jstree.min.js"></script>
+
+<script type="text/javascript">
+$('#authtree').jstree({
+    "checkbox": {
+                  "keep_selected_style": false,
+                   "visible" : true,
+                   "three_state": true,
+                   "whole_node" : true,
+              },
+			  "plugins": ["checkbox"],
+			  'core':{
+			  'data':[{{data_json|safe}}]
+			  }		  
+});
+
+function get_authchecked()
+{
+        id_array=$('#authtree').jstree(true).get_checked(null,true);
+        return id_array;
+}
+
+function submit_authchecked()
+{
+        $('#authchecked').attr("value", get_authchecked());
+}
+</script>
 {% endblock %}

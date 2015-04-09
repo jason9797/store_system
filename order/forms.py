@@ -13,6 +13,7 @@ class ProductForm(forms.Form):
     name = forms.CharField(label='名称',max_length=100)
     price = forms.DecimalField(label='价钱',max_digits=6, decimal_places=2)
     delivery_type = forms.CharField(label='快递类型',max_length=100)
+    detail = forms.CharField(label='备注',max_length=100)
     #stock = forms.ModelMultipleChoiceField(queryset=Stock.objects.all())
 
 
@@ -33,9 +34,10 @@ class CustomerForm(forms.Form):
     客户信息
     '''
     name = forms.CharField(max_length=100)
-    sex = forms.BooleanField(initial=True,required=False,widget=forms.RadioSelect(choices=[(True,_('男')),(False,_('女'))]))
+    sex = forms.BooleanField(initial=True,required=False,widget=forms.RadioSelect(choices=[(True,_('男')),(False,_('女'))],attrs={"class":"nav navbar-nav"}))
     level = forms.ModelChoiceField(queryset=Customer_Level.objects.all())
     user = forms.ModelChoiceField(queryset=User.objects.filter(is_superuser=False))
+    usernull = forms.BooleanField(initial=False,required=False)
     # issuing_person=forms.ModelChoiceField(queryset=Issuing_person.objects.all())
     address = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'class':'form-group'}))
     phone_number = forms.RegexField(regex=r'^\+?1?\d{9,15}$',

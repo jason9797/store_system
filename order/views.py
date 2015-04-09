@@ -2,6 +2,7 @@
 from django.shortcuts import render
 import urllib,urllib2
 from collections import OrderedDict
+from django.http import Http404
 import ast
 from django.contrib.auth.models import User,Group
 from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
@@ -50,11 +51,13 @@ def order_add(request):
             customer=data['customer']
             issuing_person=data['issuing_person']
             product=data['product']
+            #remark=data['remark']
             #order_state=data['state']
             order=Order(delivery_no='',fact_money=0,customer=customer,issuing_person=issuing_person,
                     product=product,state=Order_State.objects.get(name='未发货'))
             order.save()
-            return HttpResponseRedirect("/order/order/")
+            js_data="<script language='javascript'>var r=confirm('添加成功,确定继续添加,取消返回到订单列表!');if (r==true){  window.location.href='/order/order/add/?customer_id=%s'}else{window.location.href='/order/my_order/'}</script>"%customer.id
+            return HttpResponse(js_data)
         #else:
         #    print order_form.errors
     else:
@@ -95,7 +98,11 @@ def order_edit(request):
             value=Product.objects.get(name=value)
         if name=='state':
             value=Order_State.objects.get(name=value)
-            print value
+            if not request.user.is_superuser:
+                cur_order_state=Order.objects.get(pk=request.POST.get("pk")).state
+                if value.level<cur_order_state.level:
+                    raise Http404
+            #print value
         info_dict={'%s'%name:value}
         order=Order.objects.filter(pk=request.POST.get("pk"))
         order.update(**info_dict)
@@ -140,7 +147,8 @@ def order_customer_add(request):
             phone_number=data['phone_number']
             contact=Contact_info(address=address,phone_number=phone_number,customer=customer,default=True)
             contact.save()
-            return HttpResponseRedirect("/order/customer")
+            js_data="<script language='javascript'>var r=confirm('添加成功,确定继续添加,取消返回到客户列表!');if (r==true){  window.location.href='/order/customer/add'}else{window.location.href='/order/customer/'}</script>"
+            return HttpResponse(js_data)
     else:
         #if request.GET.get("id"):
         #    customer_form=CustomerForm(model_to_dict(Customer.objects.get(pk=request.GET.get("id"))))
@@ -496,9 +504,12 @@ def order_product_add(request):
             name=data['name']
             price=data['price']
             delivery_type=data['delivery_type']
-            product=Product(name=name,price=price,delivery_type=delivery_type)
+            detail=data['detail']
+            product=Product(name=name,price=price,delivery_type=delivery_type,detail=detail)
             product.save()
-            return HttpResponseRedirect("/order/product")
+            js_data="<script language='javascript'>var r=confirm('添加成功,确定继续添加,取消返回到产品列表!');if (r==true){  window.location.href='/order/product/add/'}else{window.location.href='/order/product/'}</script>"
+            return HttpResponse(js_data)
+            #return HttpResponseRedirect("/order/product")
 
     else:
         product_form=ProductForm()
@@ -714,7 +725,7 @@ def order_customer(request):
         address=request.POST.get('address[]')
         if address:
             customer=Customer.objects.filter(pk__in=Contact_info.objects.filter(
-                address__contains=address).values_list('customer'))
+                Q(address__contains=address)&Q(default=True)).values_list('customer'))
         else:
             customer=Customer.objects.all()
         phone_number=request.POST.get("phone_number[]")
@@ -734,18 +745,25 @@ def order_customer(request):
         if sex:
             customer=customer.filter(sex=eval(sex))
             filter_dict['sex']=eval(sex)
+        user_null=request.POST.get("usernull")
+        print user_null
         server=request.POST.get('user')
-        if request.user.is_superuser:
-            if server:
-                customer=customer.filter(user=User.objects.get(pk=int(server)))
-                initial['user']=User.objects.get(pk=int(server))
-            # else:
-            #     customer=customer.filter(user__in=User.objects.filter(is_superuser=False))
-                # customer=customer.filter(user__in=UserProfile.objects.filter(role=Role.objects.get(name=u'客服')).values('user'))
-                #initial['user']=UserProfile.objects.filter(role=Role.objects.get(name=u'客服'))
+        if user_null:
+            customer=customer.filter(user__isnull=True)
+            initial['usernull']=True
+            #print customer.query.__str__()
         else:
-            customer=customer.filter(Q(user=request.user)|Q(user__isnull=True))
-            initial['user']=request.user
+            if request.user.is_superuser:
+                if server:
+                    customer=customer.filter(user=User.objects.get(pk=int(server)))
+                    initial['user']=User.objects.get(pk=int(server))
+                # else:
+                #     customer=customer.filter(user__in=User.objects.filter(is_superuser=False))
+                    # customer=customer.filter(user__in=UserProfile.objects.filter(role=Role.objects.get(name=u'客服')).values('user'))
+                    #initial['user']=UserProfile.objects.filter(role=Role.objects.get(name=u'客服'))
+            else:
+                customer=customer.filter(Q(user=request.user)|Q(user__isnull=True))
+                initial['user']=request.user
         # issuing_person=request.POST.get('issuing_person')
         # if issuing_person:
         #     try:
@@ -765,6 +783,7 @@ def order_customer(request):
         form=CustomerForm(initial)
         page=request.POST.get('page')
         if page:
+            print len(customer)
             total_page=int(math.ceil(float(len(customer))/20))
             if int(page)==1:
                 start_page=0
@@ -774,6 +793,7 @@ def order_customer(request):
                 end_page=20*int(page)
             customer=customer.order_by('-jointime')[start_page:end_page]
             level=Customer_Level.objects.all()
+            #print customer.query.__str__()
             return render(request,'customer_pagination.html',{'customer':customer,'level':level
                                               })
 
@@ -856,7 +876,7 @@ def order_info(request):
         address=request.POST.get('address[]')
         if address:
             order=Order.objects.filter(customer__in=Customer.objects.filter(pk__in=Contact_info.objects.filter(
-                address__contains=address).values_list('customer')))
+                Q(address__contains=address)&Q(default=True)).values_list('customer')))
         else:
             order=Order.objects.all()
         phone_number=request.POST.get("phone_number[]")
@@ -992,3 +1012,4 @@ def my_order_info(request):
     order_info=Order.objects.filter(Q(customer__in=Customer.objects.filter(user=user))&Q(state__in=Order_State.objects.filter(
         Q(name=_("已发货未签收"))|Q(name=_("未发货"))))).order_by("-jointime")
     return render(request,"my_order.html",{"order":order_info})
+
