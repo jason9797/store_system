@@ -42,7 +42,7 @@ urlpatterns=patterns('',
             url(r'^get/contact/phone/$',get_contact_phone,name="get_contact_phone"),
             url(r'^order/trace/$',order_trace,name="get_order_trace"),
             url(r'^my_order/$',my_order_info,name="my_order_info"),
-            url(r'^get/customer/info/(?P<customer_id>\d+)/$',get_customer_info,name="get_customer_info")
+            url(r'^get/customer/info/$',get_customer_info,name="get_customer_info")
         #url(r'^role/edit/(?P<id>\d+)$',edit_role,name="edit_role"),
         #url(r'^role/remove$',remove_role,name="remove_role"),
 )

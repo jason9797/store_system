@@ -97,7 +97,7 @@ in
                 <a href="#" name="name" data-type="text" data-pk="{{ i.id }}" data-title="输入名称">{{ i.name }}</a>
                 {% else %}{{i.name}}
                 {% endif %}
-                <a href="{% url 'get_customer_info' i.id %}" class="btn btn-success btn-xs" data-toggle="modal" data-target="#get_customer_info">查看客户信息</a>
+                <a href="{% url 'get_customer_info' %}?customer_id={{i.id}}" class="btn btn-success btn-xs" data-toggle="modal" data-target="#get_customer_info">查看客户信息</a>
             </td>
             <td>{% if i.user %}
                 <a href="#" name="sex" class='{{ i.sex }}' data-type="select" data-pk="{{ i.id }}" data-title="性别">
@@ -131,7 +131,7 @@ in
                 <a href="{% url 'order_add'%}?customer_id={{i.id}}">开单</a><br>
                 {% endif %}
                 {% endif %}
-                <a href="{% url 'order_customer_remove' %}?id={{i.id}}" id="addicon" onclick= "return confirm('确定删除?');" ><i class="glyphicon glyphicon-trash"></i>删除</a></td>
+                    <a href="{% url 'order_customer_remove' %}?id={{i.id}}" id="addicon" onclick= "return confirm('确定删除?');" ><i class="glyphicon glyphicon-trash"></i>删除</a></td>
             </tr>
             {% endfor %}
         </table>

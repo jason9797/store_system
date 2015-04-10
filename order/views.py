@@ -995,12 +995,14 @@ def order_other(request):
 def order_trace(request):
     delivery_no=request.GET.get('delivery_no')
     try:
+
         order_type=get_order_info(delivery_no)[0]
         trace_info=get_order_trace_info(delivery_no,order_type)
+        print trace_info
         return render(request,'order_trace.html',{'trace':trace_info})
     except:
         return HttpResponse("没有订单信息，请查看订单号是否正确")
-@login_required(login_url="/login")
+
 def get_order_info(num):
 
     order=urllib.urlopen("http://www.kuaidi100.com/autonumber/auto?num=%s"%num)
@@ -1010,7 +1012,6 @@ def get_order_info(num):
     return order_type
 
 
-@login_required(login_url="/login")
 def get_order_trace_info(num,Type):
 
     order=urllib.urlopen("http://www.kuaidi100.com/query?type=%s&postid=%s"%(Type,num))
@@ -1029,7 +1030,8 @@ def my_order_info(request):
     return render(request,"my_order.html",{"order":order_info})
 
 @login_required(login_url="/login")
-def get_customer_info(request,customer_id):
+def get_customer_info(request):
+    customer_id=request.GET.get("customer_id")
     customer=Customer.objects.get(pk=customer_id)
     contact_info=Contact_info.objects.filter(customer=customer)
     order_info=Order.objects.filter(customer=customer).order_by("-jointime")

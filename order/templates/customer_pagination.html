@@ -16,7 +16,7 @@
                 <a href="#" name="name" data-type="text" data-pk="{{ i.id }}" data-title="输入名称">{{ i.name }}</a>
                 {% else %}{{i.name}}
                 {% endif %}
-             <a href="{% url 'get_customer_info' i.id %}" class="btn btn-success btn-xs" data-toggle="modal" data-target="#get_customer_info">查看客户信息</a>
+             <a href="{% url 'get_customer_info' %}?customer_id={{ i.id }}" class="btn btn-success btn-xs" data-toggle="modal" data-target="#get_customer_info">查看客户信息</a>
             </td>
             <td>{% if i.user %}
                 <a href="#" name="sex" class='{{ i.sex }}' data-type="select" data-pk="{{ i.id }}" data-title="性别">
@@ -50,7 +50,7 @@
                 <a href="{% url 'order_add'%}?customer_id={{i.id}}">开单</a><br>
                 {% endif %}
                 {% endif %}
-                <a href="{% url 'order_customer_remove' %}?id={{i.id}}">删除</a></td>
+                 <a href="{% url 'order_customer_remove' %}?id={{i.id}}" id="addicon" onclick= "return confirm('确定删除?');" ><i class="glyphicon glyphicon-trash"></i>删除</a></td>
             </tr>
             {% endfor %}
 <script type="text/javascript">
@@ -60,7 +60,11 @@ $(document).ready(function() {
     var name1=$("td [name='name']").attr("name");
     $("td [name='name']").editable({
     name:name1,
-    url:"{% url 'order_customer_edit' %}"
+    url:"{% url 'order_customer_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '')
+    return '输入的姓名不能为空';
+}
     }
     );
 
@@ -92,14 +96,22 @@ $(document).ready(function() {
     var address1=$("td [name='address']").attr("name");
     $("td [name='address']").editable({
     name:address1,
-    url:"{% url 'order_customer_edit' %}"
+    url:"{% url 'order_customer_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '')
+    return '输入的地址不能为空';
+}
     }
     );
 
     var phone_number1=$("td [name='phone_number']").attr("name");
     $("td [name='phone_number']").editable({
     name:phone_number1,
-    url:"{% url 'order_customer_edit' %}"
+    url:"{% url 'order_customer_edit' %}",
+	validate: function(value) {
+  if($.trim(value).length>"15"||isNaN(value)||$.trim(value).length<"1")
+    return '请输入正确的手机号码';
+}
     }
     );
 
