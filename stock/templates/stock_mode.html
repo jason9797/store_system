@@ -1,8 +1,10 @@
-{% extends 'stock_other.html' %}
+﻿{% extends 'stock_other.html' %}
 {% block stock%}
-                    <div class="container">
-                        <div class="col-md-6">
-                            <strong>库存方式信息</strong>
+                        <div class="col-md-8 box-shadow-style panel-default">
+                           
+				<div class="panel-heading">
+        <h3 class="panel-title">库存方式信息</h3>
+        </div>
                     <table class="table">
                         <thead>
                         <tr>
@@ -21,15 +23,19 @@
                         {% endfor %}
                         </table>
                             </div>
-                        <div class="col-md-6">
-                            <strong>库存方式增加(修改)</strong>
-                        <form action="" method="post">
+                        <div class="col-md-4">
+			<div class="box-shadow-style panel-default col-md-12">
+                            
+				<div class="panel-heading">
+        <h3 class="panel-title">库存方式增加(修改)</h3>
+        </div>
+                        <form action="" method="post" class="margin-top">
                             {% csrf_token %}
                         {{ stock_mode_form.errors }}
                         <p><label>方式:</label>{{ stock_mode_form.method }}</p>
                         <p><label>描述:</label>{{ stock_mode_form.description }}</p>
-                        <p><button type="submit" class="btn">确定</button></p>
+                        <p><button type="submit" class="btn btn-primary">确定</button></p>
                         </form>
-                        </div>
+                       </div>
                     </div>
 {% endblock %}

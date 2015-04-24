@@ -7,6 +7,7 @@ from django.contrib.auth.models import User,Group
 from django.utils.translation import gettext as _
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.db.models import Q
+from models import *
 job_choices = (
     (1, _("service")),
     (2, _("Storekeeper")),
@@ -20,6 +21,7 @@ class UserForm(forms.ModelForm):
     # permissions=forms.ModelMultipleChoiceField(label=_('权限'),queryset=Permission.objects.filter(
     #     content_type__in=ContentType.objects.filter(id__range=[7,18])),
     #     widget=FilteredSelectMultiple("verbose name",is_stacked=False))
+    username=forms.CharField(label=_('用户名'),max_length=20)
     group=forms.ModelChoiceField(label=_('角色'),queryset=Group.objects.all()
         )
     password = forms.CharField(label=_("Password"),
@@ -88,3 +90,19 @@ class ChangepwdForm(forms.Form):
     old_pwd = forms.CharField(label='旧密码',widget=forms.PasswordInput)
     new_pwd = forms.CharField(label='新密码',widget=forms.PasswordInput)
     new_pwd2= forms.CharField(label='再输一次',widget=forms.PasswordInput)
+
+
+class Server_goalForm(forms.Form):
+    user=forms.ModelChoiceField(label=_('客服'),queryset=User.objects.filter(is_superuser=False))
+    goal_quantity=forms.IntegerField(label=_('目标出单量'),required=False,initial=0)
+    goal_money=forms.DecimalField(label=_('目标销售额'),max_digits=7, decimal_places=2,initial=0)
+    default = forms.BooleanField(initial=False,required=False,
+        widget=forms.RadioSelect(choices=[(True,_('目标销售量')),(False,_('目标出单量'))],attrs={"class":"nav navbar-nav"}))
+
+class Server_cutForm(forms.Form):
+    server=forms.ModelChoiceField(label=_('客服'),queryset=User.objects.filter(is_superuser=False))
+    cut_percentage=forms.DecimalField(label=_("提成系数"),max_digits=2, decimal_places=2,required=False)
+
+class Issuing_person_cutForm(forms.Form):
+    issuing_person=forms.ModelChoiceField(label=_('出单人'),queryset=Issuing_person.objects.all())
+    cut_percentage=forms.DecimalField(label=_("提成系数"),max_digits=2, decimal_places=2,required=False)

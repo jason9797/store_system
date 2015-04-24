@@ -2,13 +2,15 @@
 {% block stock %}
 class="active"
 {% endblock %}
+{% block order_active %}in{% endblock %}
 {% block body %}
 
 
 
-                    <div class="container">
-                        <div class="col-md-8">
-                            <p>未填订单号</p>
+                    <div class="row bg-box-shadow padding-10 panel panel-default">
+					<div class="panel-heading margin-5">
+						<h3 class="panel-title">未填订单号</h3>
+					</div>
                             <table data-toggle="table"
        data-query-params="queryParams"
 	   data-page-list="[10, 20, 50, 100, 200]"
@@ -22,6 +24,7 @@ class="active"
                         <th>客户</th>
                         <th>地址</th>
                         <th>手机号码</th>
+                        <th>出单人</th>
                         <th>产品</th>
                         <th>状态</th>
                         <th>添加时间</th>
@@ -37,13 +40,12 @@ class="active"
                         <td>{{ i.customer }}</td>
                         <td>{{ i.customer.get_contact_info.0.address}}</td>
                         <td>{{ i.customer.get_contact_info.0.phone_number}}</td>
+                        <td>{{ i.issuing_person }}</td>
                         <td>{{ i.product }}</td>
                         <td>{{ i.state }}</td>
                         <td>{{ i.jointime|date:'Y-m-d H:i:s'}}</td>
                         </tr>
                         {% endfor %}
                         </table>
-                            </div>
-                </div>
                 </div>
 {% endblock %}

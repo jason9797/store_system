@@ -21,10 +21,10 @@ SECRET_KEY = '#ktu%6p9wllfd3jcc9$q@@d-an8+zzp_xzp+_1xkdq6-tapg6&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+#DEBUG=False
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = ('127.0.0.1',)
 # Application definition
@@ -43,7 +43,28 @@ INSTALLED_APPS = (
     'debug_toolbar',
     #'reversion',
     'simple_history',
+    'notifications',
+    #"pinax.notifications",
+    #"pinax_theme_bootstrap",
+    #"bootstrapform",
+    #'django_messages',
 )
+###cache
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
+DJANGO_REDIS_IGNORE_EXCEPTIONS = True
+###cache
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
@@ -68,11 +89,31 @@ MIDDLEWARE_CLASSES = (
 #     'django.core.context_processors.request',
 # )
 
+####celery-redis-conf
+# BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
 
 
+
+
+####
 ROOT_URLCONF = 'store_system.urls'
 
 WSGI_APPLICATION = 'store_system.wsgi.application'
+
+TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
+"django.core.context_processors.debug",
+"django.core.context_processors.i18n",
+"django.core.context_processors.media",
+"django.core.context_processors.static",
+"django.core.context_processors.tz",
+#"django.contrib.messages.context_processors.messages",
+#"django.core.context_processors.request",
+#"pinax_theme_bootstrap.context_processors.theme",
+#'django_messages.context_processors.inbox',
+)
 
 
 # Database

@@ -1,4 +1,12 @@
-<thead>
+<link rel="stylesheet" href="/static/css/bootstrap-table.css">
+<table class="table table-bordered" id="table"
+                data-toggle="table"
+       data-query-params="queryParams"
+	   data-page-list="20"
+       data-search="true"
+       data-order="true"
+       data-height="500">
+        <thead>
         <tr>
             <th>地址</th>
             <th>手机号码</th>
@@ -12,10 +20,13 @@
             <td><a href="#" name="address" data-type="text" data-pk="{{ i.id }}" data-title="输入地址">{{ i.address }}</a></td>
             <td><a href="#" name="phone_number" data-type="text" data-pk="{{ i.id }}" data-title="输入手机号码">{{ i.phone_number }}</a></td>
             <td><a href="#" name="default" class='{{ i.default }}' data-type="checklist" data-pk="{{ i.id }}" data-title="是否默认">{% if i.default %}是{% else %}否{% endif %}</a></td>
-            <td><a href="#" name="customer" data-type="select" data-pk="{{ i.id }}" data-title="选择客户">{{ i.customer }}</a></td>
-            <td><a href="{% url 'order_contact_remove' %}?id={{ i.id }}">删除</a></td>
+            <td><!--<a href="#" name="customer" data-type="select" data-pk="{{ i.id }}" data-title="选择客户">-->{{ i.customer }}<!--</a>--></td>
+            <td><a href="{% url 'order_contact_remove' %}?id={{ i.id }}"  onclick= "return confirm('确定删除?');">
+			<i class="glyphicon glyphicon-trash"></i>删除</a></td>
             </tr>
             {% endfor %}
+        </table>
+<script type="text/javascript" src="/static/js/bootstrap-table.js" charset="UTF-8"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     //toggle `popup` / `inline` mode

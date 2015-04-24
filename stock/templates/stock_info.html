@@ -1,17 +1,28 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% block store %}
 class="active"
 {% endblock %}
+{% block store_active %}in{% endblock %}
 {% block body %}
-<div class="container">
+<div class="row">
+	<div class="col-md-12 panel panel-default" style="moz-box-shadow: 4px 4px 5px #888888;
+-webkit-box-shadow: 4px 4px 5px #888888;
+box-shadow: 4px 4px 5px #888888;
+background: #f8f8f8;
+-moz-border-radius: 9px;
+-webkit-border-radius: 9px;
+border-radius: 9px;
+}"><div class="panel-heading">
+        <h3 class="panel-title">原料检索</h3>
+        </div>
     <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
 		  {% csrf_token %}
         <div class="row">
-        <div class="col-md-3 form-group">
-            <label>名称:<input type="text" name="name" {% if filter.name %} value="{{ filter.name }}"{%else%}value=""{% endif %}></label>
+        <div class="col-md-12 form-group" style="margin: 10px 0;">
+            <label style="width:100%"><span class="col-md-5" style="text-align:right">名称:</span><input type="text" name="name" {% if filter.name %} value="{{ filter.name }}"{%else%}value=""{% endif %}></label>
             </div>
-        <div class="col-md-4 form-group">
-            <label>开始时间:
+        <div class="col-md-12 form-group">
+            <label style="width:100%;"><span class="col-md-5" style="text-align:right;">开始时间:</span>
                 <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
                     <input class="form-control" size="16" name="starttime" type="text" value="{{filter.starttime}}" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
@@ -21,8 +32,8 @@ class="active"
             </div>
             </div>
         <div class="row">
-        <div class="col-md-4 form-group">
-            <label>结束时间:
+        <div class="col-md-12 form-group" style="margin: 10px 0;">
+            <label style="width:100%;"><span class="col-md-5" style="text-align:right;">结束时间:</span>
                 <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
                     <input class="form-control" size="16" name="endtime" type="text" value="{{ filter.endtime }}" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
@@ -30,18 +41,23 @@ class="active"
                 </div>
             <input type="hidden" id="dtp_input2" value="" /><br/></label>
             </div>
-    <div class="col-md-4 form-group">
+    <div class="col-md-11 form-group" style="text-align:center">
         <label class="col-md-2 control-label">             </label>
-	    <button type="SUBMIT" class="btn btn-primary">查询</button>
+	    <button type="SUBMIT" class="btn btn-primary" style="padding: 6px 39px;">查询</button>
         </div>
             </div>
     </form>
 
-
+	</div>
     </div>
-<div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12" style="moz-box-shadow: 4px 4px 5px #888888;
+-webkit-box-shadow: 4px 4px 5px #888888;
+box-shadow: 4px 4px 5px #888888;
+background: #f8f8f8;
+-moz-border-radius: 9px;
+-webkit-border-radius: 9px;
+border-radius: 9px;">
         <table class="table" id="table">
         <thead>
         <tr>
@@ -71,7 +87,6 @@ class="active"
         {% if stock %}
         <ul class="pagination" id="pagination"></ul>
         {% endif %}
-        </div>
         </div>
     </div>
 {% endblock %}
@@ -146,28 +161,44 @@ $(document).ready(function() {
     var name1=$("td [name='name']").attr("name");
     $("td [name='name']").editable({
     name:name1,
-    url:"{% url 'stock_edit' %}"
+    url:"{% url 'stock_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的名称不能为空';
+}
     }
     );
 
     var detail1=$("td [name='detail']").attr("name");
     $("td [name='detail']").editable({
     name:detail1,
-    url:"{% url 'stock_edit' %}"
+    url:"{% url 'stock_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的描述不能为空';
+}
     }
     );
 
     var price1=$("td [name='price']").attr("name");
     $("td [name='price']").editable({
     name:price1,
-    url:"{% url 'stock_edit' %}"
+    url:"{% url 'stock_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的价格不能为空';
+}
     }
     );
 
     var quantity1=$("td [name='quantity']").attr("name");
     $("td [name='quantity']").editable({
     name:quantity1,
-    url:"{% url 'stock_edit' %}"
+    url:"{% url 'stock_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的数量不能为空';
+}
     }
     );
 
@@ -181,7 +212,11 @@ $(document).ready(function() {
         {% for i in stock_type %}
               {value: '{{i}}', text: '{{i.type_name}}'},
               {% endfor %}
-           ]
+           ],
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的原料类型不能为空';
+}
     });
 
 
@@ -195,7 +230,11 @@ $(document).ready(function() {
         {% for i in stock_channel %}
               {value: '{{i}}', text: '{{i.company}}'},
               {% endfor %}
-           ]
+           ],
+	validate: function(value) {
+  if($.trim(value) == '') 
+    return '输入的原料渠道不能为空';
+}
     });
 
 

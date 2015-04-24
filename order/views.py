@@ -56,7 +56,10 @@ def order_add(request):
             order=Order(delivery_no='',fact_money=0,customer=customer,issuing_person=issuing_person,
                     product=product,state=Order_State.objects.get(name='未发货'),remark=remark)
             order.save()
-            js_data="<script language='javascript'>var r=confirm('添加成功,确定继续添加,取消返回到订单列表!');if (r==true){  window.location.href='/order/order/add/?customer_id=%s'}else{window.location.href='/order/my_order/'}</script>"%customer.id
+            if request.user.is_superuser:
+                js_data="<script language='javascript'>var r=confirm('添加成功,确定继续添加,取消返回到订单列表!');if (r==true){  window.location.href='/order/order/add/?customer_id=%s'}else{window.location.href='/order/order/'}</script>"%customer.id
+            else:
+                js_data="<script language='javascript'>var r=confirm('添加成功,确定继续添加,取消返回到订单列表!');if (r==true){  window.location.href='/order/order/add/?customer_id=%s'}else{window.location.href='/order/my_order/'}</script>"%customer.id
             return HttpResponse(js_data)
         #else:
         #    print order_form.errors
@@ -87,7 +90,7 @@ def order_add(request):
 @permission_required('order.change_order',login_url='/permission/deny')
 def order_edit(request):
     if request.method=="POST":
-        print request.POST
+        #print request.POST
         name=request.POST.get('name')
         value=request.POST.get('value')
         if name=='customer':
@@ -98,10 +101,13 @@ def order_edit(request):
             value=Product.objects.get(name=value)
         if name=='state':
             value=Order_State.objects.get(name=value)
+            cur_order_state=Order.objects.get(pk=request.POST.get("pk")).state
             if not request.user.is_superuser:
-                cur_order_state=Order.objects.get(pk=request.POST.get("pk")).state
                 if value.level<cur_order_state.level:
-                    raise Http404
+                    #raise Http404
+                    return HttpResponse("修改失败,必须按顺序操作",status=404)
+            if cur_order_state.level==1 and value.level>1:
+                return HttpResponse("请联系仓管或管理员填写订单号,自动修改状态",status=400)
             #print value
         info_dict={'%s'%name:value}
         order=Order.objects.filter(pk=request.POST.get("pk"))
@@ -118,10 +124,10 @@ def order_home_remove(request):
     order_id=request.GET.get("id")
     order=Order.objects.get(pk=order_id)
     if order.state !=Order_State.objects.get(name=_("未发货")):
-        return HttpResponse("<script language='javascript'>alert('订单已发货或结束，无法删除!');window.history.go(-1);</script>")
+        return HttpResponse("<script language='javascript'>alert('订单已发货或结束，无法删除!');window.history.go(-1);</script>",status=400)
     else:
         order.delete()
-    return HttpResponseRedirect("/order/order/")
+    return HttpResponse("<script language='javascript'>alert('删除成功!');window.location.href=document.referrer;</script>")
 
 @permission_required('order.add_customer',login_url='/permission/deny')
 def order_customer_add(request):
@@ -149,6 +155,7 @@ def order_customer_add(request):
             contact.save()
             js_data="<script language='javascript'>var r=confirm('添加成功,确定继续添加,取消返回到客户列表!');if (r==true){  window.location.href='/order/customer/add'}else{window.location.href='/order/customer/'}</script>"
             return HttpResponse(js_data)
+
     else:
         #if request.GET.get("id"):
         #    customer_form=CustomerForm(model_to_dict(Customer.objects.get(pk=request.GET.get("id"))))
@@ -164,7 +171,7 @@ def order_customer_add(request):
                }
     return render(request,'order_customer_add.html',form_list)
 
-@permission_required('customer.delete_customer',login_url='/permission/deny')
+@permission_required('order.delete_customer',login_url='/permission/deny')
 def order_customer_remove(request):
     customer_id=request.GET.get("id")
     customer=Customer.objects.get(pk=customer_id)
@@ -174,26 +181,24 @@ def order_customer_remove(request):
 @permission_required('order.change_customer',login_url='/permission/deny')
 def customer_other(request):
     return render(request,'customer_other.html')
+
 @permission_required('order.change_customer_level',login_url='/permission/deny')
 def order_customer_level(request):
-    if request.method=="POST":
-        customer_level_form=Customer_LevelForm(request.POST)
-        if customer_level_form.is_valid():
-            data=customer_level_form.cleaned_data
-            if request.GET.get("id"):
-                customer_level=Customer_Level.objects.get(pk=request.GET.get('id'))
-                customer_level.level=data['level']
-                customer_level.save()
-            else:
-                level=data['level']
-                customer_level=Customer_Level(level=level)
-                customer_level.save()
-            return HttpResponseRedirect("/order/customer_level")
-    else:
-        if request.GET.get("id"):
-            customer_level_form=Customer_LevelForm(model_to_dict(Customer_Level.objects.get(pk=request.GET.get("id"))))
-        else:
-            customer_level_form=Customer_LevelForm()
+    # if request.method=="POST":
+    #     customer_level_form=Customer_LevelForm(request.POST)
+    #     if customer_level_form.is_valid():
+    #         data=customer_level_form.cleaned_data
+    #         if request.GET.get("id"):
+    #             customer_level=Customer_Level.objects.get(pk=request.GET.get('id'))
+    #             customer_level.level=data['level']
+    #             customer_level.save()
+    #         return HttpResponseRedirect("/order/customer_level")
+    # else:
+    #     if request.GET.get("id"):
+    #         customer_level_form=Customer_LevelForm(model_to_dict(Customer_Level.objects.get(pk=request.GET.get("id"))))
+    #     else:
+    #         customer_level_form=Customer_LevelForm()
+    customer_level_form=Customer_LevelForm()
     customer_level_data=Customer_Level.objects.all()
     form_list={
                'customer_level_data':customer_level_data,
@@ -201,12 +206,46 @@ def order_customer_level(request):
                }
     return render(request,'order_customer_level.html',form_list)
 
+@permission_required('order.add_customer_level',login_url='/permission/deny')
+def order_customer_level_add(request):
+    if request.method=="POST":
+        customer_level_form=Customer_LevelForm(request.POST)
+        if customer_level_form.is_valid():
+            data=customer_level_form.cleaned_data
+            level=data['level']
+            name=data['name']
+            customer_level=Customer_Level(level=level,name=name)
+            customer_level.save()
+            return HttpResponseRedirect("/order/customer_level")
+    else:
+        customer_level_form=Customer_LevelForm()
+        print dir(customer_level_form.errors)
+    return render(request,'order_customer_level_add.html',{'form':customer_level_form})
+
+@permission_required('order.change_customer_level',login_url='/permission/deny')
+def order_customer_level_edit(request):
+    if request.method=="POST":
+        #print request.POST
+        name=request.POST.get('name')
+        value=request.POST.get('value')
+        info_dict={'%s'%name:value}
+        customer_level=Customer_Level.objects.filter(pk=request.POST.get("pk"))
+        customer_level1=Customer_Level.objects.filter(level=1)
+        if len(customer_level1)==1:
+            return HttpResponse("只能存留一个基本等级",status=400)
+        customer_level.update(**info_dict)
+        return HttpResponse('success')
+
 @permission_required('order.delete_customer_level',login_url='/permission/deny')
 def order_customer_level_remove(request):
     level_id=request.GET.get("id")
     level=Customer_Level.objects.get(pk=level_id)
     if level.level==1:
-        pass
+        level_list=Customer_Level.objects.filter(level=1)
+        if len(level_list)==1:
+            return HttpResponse("<script language='javascript'>alert('等级为1不能删除');window.location.href=document.referrer;</script>")
+        else:
+            level.delete()
     else:
         level.delete()
     return HttpResponseRedirect("/order/customer_level")
@@ -349,36 +388,40 @@ def order_contact(request):
 
 
 
-@permission_required('order.change_order_state',login_url='/permission/deny')
+@permission_required('order.add_order_state',login_url='/permission/deny')
 def order_state(request):
     if request.method=="POST":
         state_form=Order_StateForm(request.POST)
         if state_form.is_valid():
             data=state_form.cleaned_data
-            if request.GET.get("id"):
-                state=Order_State.objects.get(pk=request.GET.get('id'))
-                state.name=data['name']
-                state.save()
-            else:
-                name=data['name']
-                state=Order_State(name=name)
-                state.save()
-            return HttpResponseRedirect("/order/state")
+            name=data['name']
+            state=Order_State(name=name,level=3)
+            state.save()
+            return HttpResponse("<script language='javascript'>alert('添加成功');window.location.href=document.referrer;</script>")
     else:
-        if request.GET.get('id'):
-            state_form=Order_StateForm(model_to_dict(Order_State.objects.get(pk=request.GET.get('id'))))
-        else:
-            state_form=Order_StateForm()
+        state_form=Order_StateForm()
     state_data=Order_State.objects.all()
     form_list={
                'state_data':state_data,
                'state_form':state_form
                }
     return render(request,'order_state.html',form_list)
+@permission_required('order.change_order_state',login_url='/permission/deny')
+def order_state_edit(request):
+    if request.method=="POST":
+        #print request.POST
+        name=request.POST.get('name')
+        value=request.POST.get('value')
+        info_dict={'%s'%name:value}
+        order_state=Order_State.objects.filter(pk=int(request.POST.get("pk")))
+        order_state.update(**info_dict)
+        return HttpResponse("success")
 @permission_required('order.delete_order_state',login_url='/permission/deny')
 def order_state_remove(request):
     state_id=request.GET.get("id")
     state=Order_State.objects.get(pk=state_id)
+    if state.level<3:
+        return HttpResponse("<script language='javascript'>alert('无法删除默认订单状态');window.location.href=document.referrer;</script>")
     state.delete()
     return HttpResponseRedirect("/order/state")
 
@@ -519,7 +562,6 @@ def order_product_add(request):
             js_data="<script language='javascript'>var r=confirm('添加成功,确定继续添加,取消返回到产品列表!');if (r==true){  window.location.href='/order/product/add/'}else{window.location.href='/order/product/'}</script>"
             return HttpResponse(js_data)
             #return HttpResponseRedirect("/order/product")
-
     else:
         product_form=ProductForm()
     form_list={
@@ -546,32 +588,34 @@ def order_product_remove(request):
     product.delete()
     return HttpResponseRedirect("/order/product")
 
-@permission_required('order.change_issuing_person',login_url='/permission/deny')
+@permission_required('order.add_issuing_person',login_url='/permission/deny')
 def order_issuing_person(request):
     if request.method=="POST":
         issuing_person_form=Issuing_personForm(request.POST)
         if issuing_person_form.is_valid():
             data=issuing_person_form.cleaned_data
-            if request.GET.get("id"):
-                issuing_person=Issuing_person.objects.get(pk=request.GET.get('id'))
-                issuing_person.name=data['name']
-                issuing_person.save()
-            else:
-                name=data['name']
-                person=Issuing_person(name=name)
-                person.save()
-            return HttpResponseRedirect("/order/issuing_person")
+            name=data['name']
+            person=Issuing_person(name=name)
+            person.save()
+            return HttpResponse("<script language='javascript'>alert('添加成功');window.location.href=document.referrer;</script>")
     else:
-        if request.GET.get('id'):
-            issuing_person_form=Issuing_personForm(model_to_dict(Issuing_person.objects.get(pk=request.GET.get('id'))))
-        else:
-            issuing_person_form=Issuing_personForm()
+        issuing_person_form=Issuing_personForm()
     issuing_person_data=Issuing_person.objects.all()
     form_list={
                'issuing_person_data':issuing_person_data,
                'issuing_person_form':issuing_person_form
                }
     return render(request,'order_issuing_person.html',form_list)
+@permission_required("order.change_issuing_person",login_url='/permission/deny')
+def order_issuing_person_edit(request):
+    if request.method=="POST":
+        #print request.POST
+        name=request.POST.get('name')
+        value=request.POST.get('value')
+        info_dict={'%s'%name:value}
+        issuing_person=Issuing_person.objects.filter(pk=int(request.POST.get("pk")))
+        issuing_person.update(**info_dict)
+        return HttpResponse("success")
 @permission_required('order.delete_issuing_person',login_url='/permission/deny')
 def order_issuing_person_remove(request):
     person_id=request.GET.get("id")
@@ -712,7 +756,12 @@ def order_customer_edit(request):
         if name=='user':
             value=User.objects.get(username=value)
         if name=="level":
-            value=Customer_Level.objects.get(level=value)
+            try:
+                value=Customer_Level.objects.get(name=value)
+            except:
+                value=Customer_Level.objects.filter(name=value)[0]
+        if not value:
+            raise Http404
         info_dict={'%s'%name:value}
         customer=Customer.objects.filter(pk=request.POST.get("pk"))
         customer.update(**info_dict)
@@ -725,22 +774,27 @@ def order_customer_edit(request):
             customer=Customer.objects.get(pk=request.GET.get("customer_id"))
             customer.user=request.user
             customer.save()
-            return HttpResponse("<script language='javascript'>alert('归属成功');history.go(-1)</script>")
+            return HttpResponse("<script language='javascript'>alert('归属成功');window.location.href=document.referrer;</script>")
 @permission_required('order.change_customer',login_url='/permission/deny')
 def order_customer(request):
     if request.method=='POST':
         filter_dict={}
         initial={}
-        address=request.POST.get('address[]')
+        #address=request.POST.get('address[]')
+        address=request.POST.get('address')
         if address:
+            filter_dict['address']=address
             customer=Customer.objects.filter(pk__in=Contact_info.objects.filter(
                 Q(address__contains=address)&Q(default=True)).values_list('customer'))
         else:
             customer=Customer.objects.all()
-        phone_number=request.POST.get("phone_number[]")
+        #phone_number=request.POST.get("phone_number[]")
+        phone_number=request.POST.get("phone_number")
         if phone_number:
+            filter_dict['phone_number']=phone_number
             customer=customer.filter(pk__in=Contact_info.objects.filter(
-                phone_number__contains=phone_number).values_list('customer'))
+                phone_number=phone_number).values_list('customer'))
+
         #print customer.query.__str__()
         name=request.POST.get('name')
         if name:
@@ -755,7 +809,7 @@ def order_customer(request):
             customer=customer.filter(sex=eval(sex))
             filter_dict['sex']=eval(sex)
         user_null=request.POST.get("usernull")
-        print user_null
+        #print user_null
         server=request.POST.get('user')
         if user_null:
             customer=customer.filter(user__isnull=True)
@@ -767,12 +821,16 @@ def order_customer(request):
                 if server:
                     customer=customer.filter(user=User.objects.get(pk=int(server)))
                     initial['user']=User.objects.get(pk=int(server))
+                else:
+                    customer=customer.filter(user__isnull=False)
+                    initial['usernull']=False
+                    filter_dict['usernull']=False
                 # else:
                 #     customer=customer.filter(user__in=User.objects.filter(is_superuser=False))
                     # customer=customer.filter(user__in=UserProfile.objects.filter(role=Role.objects.get(name=u'客服')).values('user'))
                     #initial['user']=UserProfile.objects.filter(role=Role.objects.get(name=u'客服'))
             else:
-                customer=customer.filter(Q(user=request.user)|Q(user__isnull=True))
+                customer=customer.filter(Q(user=request.user)&Q(user__isnull=False))
                 initial['user']=request.user
         # issuing_person=request.POST.get('issuing_person')
         # if issuing_person:
@@ -784,12 +842,21 @@ def order_customer(request):
 
         starttime=request.POST.get('starttime')
         if starttime:
-            customer=customer.filter(jointime__gte=starttime)
             filter_dict['starttime']=starttime
+            filter_dict['starthour']=request.POST.get("start_hour")
+            filter_dict['startminute']=request.POST.get("start_minute")
+            starttime=starttime+' %s:%s:00'%(request.POST.get("start_hour"),request.POST.get("start_minute"))
+            #print starttime
+            customer=customer.filter(jointime__gte=starttime)
+            #filter_dict['starttime']=starttime
         endtime=request.POST.get('endtime')
         if endtime:
-            customer=customer.filter(jointime__lte=endtime)
             filter_dict['endtime']=endtime
+            filter_dict['endhour']=request.POST.get("end_hour")
+            filter_dict['endminute']=request.POST.get("end_minute")
+            endtime=endtime+' %s:%s:00'%(request.POST.get("end_hour"),request.POST.get("end_minute"))
+            customer=customer.filter(jointime__lte=endtime)
+            #filter_dict['endtime']=endtime
         form=CustomerForm(initial)
         page=request.POST.get('page')
         if page:
@@ -824,9 +891,11 @@ def order_customer(request):
         filter_dict={}
         total_page=0
         page=0
+    hour_list=["0"+str(i) if i<10 else str(i) for i in range(24)]
+    minute_list=["0"+str(i) if i<10 else str(i) for i in range(0,60,5)]
     level=Customer_Level.objects.all()
     info={"server":server,'form':form,'customer':customer,'level':level,'filter':filter_dict,
-        'total_page':total_page,'current_page':page}
+        'total_page':total_page,'current_page':page,"hour_list":hour_list,"minute_list":minute_list}
     return render(request,'order_customer.html',info)
 # @permission_required(login_url='/permission/deny')
 @permission_required('order.change_product',login_url='/permission/deny')
@@ -883,19 +952,21 @@ def order_info(request):
     if request.method=='POST':
         filter_dict={}
         initial={}
-        address=request.POST.get('address[]')
+        address=request.POST.get('address')
         if address:
             order=Order.objects.filter(customer__in=Customer.objects.filter(pk__in=Contact_info.objects.filter(
                 Q(address__contains=address)&Q(default=True)).values_list('customer')))
+            filter_dict['address']=address
         else:
             order=Order.objects.all()
-        phone_number=request.POST.get("phone_number[]")
+        phone_number=request.POST.get("phone_number")
         if phone_number:
             order=order.filter(customer__in=Customer.objects.filter(pk__in=Contact_info.objects.filter(
-                phone_number__contains=phone_number).values_list('customer')))
+                Q(phone_number=phone_number)&Q(default=True)).values_list('customer')))
+            filter_dict['phone_number']=phone_number
         delivery_no=request.POST.get('delivery_no')
         if delivery_no:
-            order=order.filter(delivery_no__contains=delivery_no)
+            order=order.filter(delivery_no=delivery_no)
             filter_dict['delivery_no']=delivery_no
         # else:
             # order=Order.objects.all()
@@ -903,23 +974,26 @@ def order_info(request):
         if fact_money:
             order=order.filter(fact_money=fact_money)
             filter_dict['fact_money']=fact_money
-        customer=request.POST.get('customer')
+        customer=request.POST.get('customer[]')
         if customer:
-            order=order.filter(customer=Customer.objects.get(pk=int(customer)))
-            initial['customer']=Customer.objects.get(pk=int(customer))
+            order=order.filter(customer=Customer.objects.filter(name=customer))
+            #initial['customer']=Customer.objects.get(pk=int(customer))
+            filter_dict['customer']=customer
 
-        issuing_person=request.POST.get('issuing_person')
+        issuing_person=request.POST.get('issuing_person[]')
         if issuing_person:
             try:
-                order=order.filter(issuing_person=Issuing_person.objects.get(pk=int(issuing_person)))
-                initial['issuing_person']=Issuing_person.objects.get(pk=int(issuing_person))
+                order=order.filter(issuing_person=Issuing_person.objects.get(name=issuing_person))
+                #initial['issuing_person']=Issuing_person.objects.get(pk=int(issuing_person))
+                filter_dict['issuing_person']=issuing_person
             except:
                 return HttpResponseRedirect('/order/order/info')
-        product=request.POST.get('product')
+        product=request.POST.get('product[]')
         if product:
             try:
-                order=order.filter(product=Product.objects.get(pk=int(product)))
-                initial['product']=Product.objects.get(pk=int(product))
+                order=order.filter(product=Product.objects.filter(name=product))
+                filter_dict['product']=product
+                #initial['product']=Product.objects.get(pk=int(product))
             except:
                 return HttpResponseRedirect('/order/order/info')
 
@@ -933,12 +1007,18 @@ def order_info(request):
 
         starttime=request.POST.get('starttime')
         if starttime:
-            order=order.filter(jointime__gte=starttime)
             filter_dict['starttime']=starttime
+            filter_dict['starthour']=request.POST.get("start_hour")
+            filter_dict['startminute']=request.POST.get("start_minute")
+            order=order.filter(jointime__gte=starttime)
+            #filter_dict['starttime']=starttime
         endtime=request.POST.get('endtime')
         if endtime:
-            order=order.filter(jointime__lte=endtime)
             filter_dict['endtime']=endtime
+            filter_dict['endhour']=request.POST.get("end_hour")
+            filter_dict['endminute']=request.POST.get("end_minute")
+            order=order.filter(jointime__lte=endtime)
+            #filter_dict['endtime']=endtime
         form=OrderForm(initial)
         page=request.POST.get('page')
         if page:
@@ -975,9 +1055,12 @@ def order_info(request):
     product_list=Product.objects.all()
     customer_list=Customer.objects.all()
     issuing_person_list=Issuing_person.objects.all()
+    hour_list=["0"+str(i) if i<10 else str(i) for i in range(24)]
+    minute_list=["0"+str(i) if i<10 else str(i) for i in range(0,60,5)]
     info={'form':form,'filter':filter_dict,'order':order,
         'total_page':total_page,'current_page':page,'state':state_list,'product':product_list,
-                                              'customer':customer_list,'issuing_person':issuing_person_list}
+                                              'customer':customer_list,'issuing_person':issuing_person_list,
+        "hour_list":hour_list,"minute_list":minute_list}
     return render(request,'order_info.html',info)
 
 
@@ -998,7 +1081,7 @@ def order_trace(request):
 
         order_type=get_order_info(delivery_no)[0]
         trace_info=get_order_trace_info(delivery_no,order_type)
-        print trace_info
+        #print trace_info
         return render(request,'order_trace.html',{'trace':trace_info})
     except:
         return HttpResponse("没有订单信息，请查看订单号是否正确")
@@ -1024,10 +1107,12 @@ def get_order_trace_info(num,Type):
 def my_order_info(request):
     user=request.user
     if user.is_superuser:
-        return HttpResponse("<script language='javascript'>alert('请用客服账号查看');history.go(-1)</script>")
+        return HttpResponse("<script language='javascript'>alert('请用客服账号查看');window.location.href=document.referrer;</script>")
     order_info=Order.objects.filter(Q(customer__in=Customer.objects.filter(user=user))&Q(state__in=Order_State.objects.filter(
         Q(name=_("已发货未签收"))|Q(name=_("未发货"))))).order_by("-jointime")
-    return render(request,"my_order.html",{"order":order_info})
+    state_list=Order_State.objects.all()
+
+    return render(request,"my_order.html",{"order":order_info,'state':state_list})
 
 @login_required(login_url="/login")
 def get_customer_info(request):

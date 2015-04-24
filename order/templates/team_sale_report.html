@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block reporter %}
+class="active"
+{% endblock %}
+{% block reporter_active %}in{% endblock %}
+{% block body %}
+<div class="row bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+    	<h3 class="panel-title">团队销售业绩报表</h3>
+	</div>
+    <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
+		  {% csrf_token %}
+        <div class="row">
+        <div class="col-md-4 form-group">
+            <label>组别:<select name="group_name">
+                <option value="" selected>---请选择---</option>
+                {% for i in groups %}
+                <option value="{{i.0}}">{{i.0}}</option>
+                {% endfor %}
+            </select></label>
+            </div>
+        <div class="col-md-4 form-group">
+            <label>开始时间:
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" name="starttime" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            <input type="hidden" id="dtp_input1" value="" /><br/></label>
+            </div>
+			<div class="col-md-4 form-group">
+            <label>结束时间:
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" name="endtime" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            <input type="hidden" id="dtp_input2" value="" /><br/></label>
+            </div>
+        <div class="col-md-4">
+			<button type="SUBMIT" class="btn btn-primary bottom-size">查询</button>
+            </div>
+        <div class="col-md-4">
+            <button type="button" class="btn btn-default bottom-size" onClick ="tableExport('table','test_excel','xls');">导出</button>
+        </div>
+            </div>
+    </form>
+
+
+    </div>
+    <div class="row bg-box-shadow padding-5">
+        <table class="table table-bordered" id="table">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>组别</th>
+            <th>全组下单个数</th>
+            <th>全组已发货个数</th>
+            <th>全组未发货个数</th>
+            <th>全组已签收个数</th>
+            <th>全组问题件数(丢失以及转移)</th>
+        </tr>
+        </thead>
+            {% for i in order %}
+            <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{ i.group}}</td>
+            <td>{{ i.order_quantity }}</td>
+            <td>{{ i.check_success}}</td>
+            <td>{{ i.check_failed}}</td>
+            <td>{{ i.order_success}}</td>
+            <td>{{ i.order_question}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript" src="/static/js/Blob.js"></script>
+	<script type="text/javascript" src="/static/js/FileSaver.js"></script>
+	<script type="text/javascript" src="/static/js/tableExport.js"></script>
+<!--ajax——csrf验证-->
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+
+{% endblock%}

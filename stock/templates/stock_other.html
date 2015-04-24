@@ -1,9 +1,10 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% block store %}
 class="active"
 {% endblock %}
+{% block store_active %}in{% endblock %}
 {% block body %}
-<div class="container">
+<div class="row">
                     <ol class="breadcrumb">
   <li><a href="{% url 'stock_type' %}">原料类型管理</a></li>
   <li><a href="{% url 'stock_channel' %}">原料渠道管理</a></li>

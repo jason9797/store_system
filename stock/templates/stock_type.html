@@ -1,8 +1,11 @@
-{% extends 'stock_other.html' %}
+﻿{% extends 'stock_other.html' %}
 {% block stock%}
-<div class="container">
-                        <div class="col-md-6">
-                     <strong>原料类型信息</strong>
+
+                        <div class="col-md-8 box-shadow-style panel-default">
+                    
+<div class="panel-heading">
+        <h3 class="panel-title">原料类型信息</h3>
+        </div>
                     <table class="table">
                         <thead>
                         <tr>
@@ -19,17 +22,21 @@
                         {% endfor %}
                         </table>
                             </div>
-                    <div class="row">
-                        <strong>原料类型增加(修改)</strong>
-                        <div class="col-md-6">
-                        <form action="" method="post">
+                    
+                    
+                        
+			<div class="col-md-4">
+			<form action="" method="post" class="box-shadow-style panel-default col-md-12" style="pading:15px;">
                             {% csrf_token %}
+                        <div class="panel-heading">
+        <h3 class="panel-title">原料类型增加(修改)</h3>
+        </div>
                         {{ stock_type_form.errors }}
-                        <p><label>名称:</label>{{ stock_type_form.type_name }}</p>
-                        <p><button type="submit" class="btn">确定</button></p>
+                        <p style="margin-top:17px;"><label>名称:</label>{{ stock_type_form.type_name }}</p>
+                        <p><button type="submit" class="btn btn-primary">确定</button></p>
                         </form>
-                        </div>
+                       
                     </div>
-                </div>
+               
                 </div>
 {% endblock %}

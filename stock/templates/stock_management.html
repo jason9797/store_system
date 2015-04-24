@@ -1,28 +1,39 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% block store %}
 class="active"
 {% endblock %}
+{% block store_active %}in{% endblock %}
 {% block body %}
-<div class="container">
+<div class="row">
+	<div class="col-md-12 panel panel-default" style="moz-box-shadow: 4px 4px 5px #888888;
+-webkit-box-shadow: 4px 4px 5px #888888;
+box-shadow: 4px 4px 5px #888888;
+background: #f8f8f8;
+-moz-border-radius: 9px;
+-webkit-border-radius: 9px;
+border-radius: 9px;">
+<div class="panel-heading">
+        <h3 class="panel-title">原料出库</h3>
+        </div>
     <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
 		  {% csrf_token %}
-        <div class="row">
-        <div class="col-md-2 form-group">
-            <label>出／入库:<input type="radio" name="stock_mode" value="True" {% if filter.stock_mode == True %} checked{% endif %}/>出
+        <div class="row" style="margin: 16px 0;">
+        <div class="col-md-12 form-group">
+            <label style="width:100%"><span style="text-align:right" class="col-md-5">出／入库:</span><input type="radio" name="stock_mode" value="True" {% if filter.stock_mode == True %} checked{% endif %}/>出
                 <input type="radio" name="stock_mode" value="False" {% if filter.stock_mode == False %} checked{% endif %}/>入
 
                 </label>
             </div>
-            <div class="col-md-3 form-group">
-            <label>产品:{{ form.product }}</label>
+            <div class="col-md-12 form-group" style="margin: 16px 0;">
+            <label style="width:100%"><span style="text-align:right" class="col-md-5">产品:</span>{{ form.product }}</label>
             </div>
-            <div class="col-md-2 form-group">
-            <label>模式:{{ form.mode }}</label>
+            <div class="col-md-12 form-group">
+            <label style="width:100%"><span style="text-align:right" class="col-md-5">模式:</span>{{ form.mode }}</label>
             </div>
             </div>
         <div class="row">
-                <div class="col-md-4 form-group">
-            <label>开始时间:
+                <div class="col-md-12 form-group">
+            <label style="width:100%"><span style="text-align:right" class="col-md-5">开始时间:</span>
                 <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
                     <input class="form-control" size="16" name="starttime" type="text" value="{{filter.starttime}}" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
@@ -31,8 +42,8 @@ class="active"
             <input type="hidden" id="dtp_input1" value="" /><br/></label>
             </div>
 
-        <div class="col-md-4 form-group">
-            <label>结束时间:
+        <div class="col-md-12 form-group" style="margin: 16px 0;">
+            <label style="width:100%"><span style="text-align:right" class="col-md-5">结束时间:</span>
                 <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
                     <input class="form-control" size="16" name="endtime" type="text" value="{{ filter.endtime }}" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
@@ -41,17 +52,22 @@ class="active"
             <input type="hidden" id="dtp_input2" value="" /><br/></label>
             </div>
             </div>
-    <div class="col-md-4 form-group">
+    <div class="col-md-10 form-group" style="text-align:center; margin-bottom:16px">
         <label class="col-md-2 control-label">             </label>
-	    <button type="SUBMIT" class="btn btn-primary">查询</button>
+	    <button type="SUBMIT" class="btn btn-primary" style="padding: 6px 39px;">查询</button>
         </div>
     </form>
-
+	</div>
 
     </div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
+    <div class="row" style="moz-box-shadow: 4px 4px 5px #888888;
+-webkit-box-shadow: 4px 4px 5px #888888;
+box-shadow: 4px 4px 5px #888888;
+background: #f8f8f8;
+-moz-border-radius: 9px;
+-webkit-border-radius: 9px;
+border-radius: 9px;">
+        <div class="col-md-12">
         <table class="table" id="table">
         <thead>
         <tr>
@@ -76,7 +92,7 @@ class="active"
         <ul class="pagination" id="pagination"></ul>
         {% endif %}
         </div>
-        </div>
+
     </div>
 {% endblock %}
 {% block js %}
