@@ -1,0 +1,9 @@
+.profile .select_ui{-webkit-border-radius:2px;border-radius:2px;border:1px solid #ccc;font-size:12px;outline:0;border-radius:5px;-moz-border-radius:5px;}
+.profile .select_ui{background:#f2f2f2;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+border:1px solid #ccc;display:inline-block;white-space:nowrap;position:relative;text-align:left;line-height:1.5;height:auto;width:auto;float:none;margin:0;}
+.select_ui .select_text_ui{border-right:1px solid #e5e5e5;padding:5px 9px;margin-right:26px;overflow:visible;background:#fff;display:block;border-radius:5px 0 0 5px;-moz-border-radius:5px 0 0 5px;}
+.select_ui select{-moz-box-sizing:content-box;-ms-box-sizing:content-box;box-sizing:content-box;filter:alpha(opacity=0);position:absolute;background:#fff;min-width:100%;
+border:inherit;color:inherit;font:inherit;padding:1px;margin:-1px;height:100%;opacity:0;border:0;bottom:0;left:0;top:0;}
+.profile .select_arrow{border-color:#b7b7b7 transparent;border-top-color:inherit;border-width:5px 5px 0;border-style:solid;position:absolute;margin-top:-2px;
+overflow:hidden;right:7px;height:0;width:0;top:50%;
+.profile .select_focus_ui{border-color:#AFAAAA}

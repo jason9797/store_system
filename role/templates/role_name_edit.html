@@ -1,6 +1,7 @@
 <head>
 <link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css"/>
 <link rel="stylesheet" type="text/css" href="/static/css/style.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap-switch/3.3.2/css/bootstrap2/bootstrap-switch.min.css">
 </head>
 <form action="{% url 'role_name_edit' role.id %}" method="post" name="role_form1" onsubmit="submit_authchecked1()">
               {% csrf_token %}
@@ -14,7 +15,9 @@
             </h4>
         </div>
     <div class="modal-body">
-    <p><label>角色</label>{{ group_form.name }}</p>
+    <p><label>角色: </label>{{ group_form.name }}</p>
+        <input type="checkbox" name="my-checkbox1" data-size="mini" data-off-text="折叠" data-on-text="展开" checked="false">
+
 			<div id="authtree1"></div>
     <input type="hidden" name="authchecked1" id="authchecked1" value="">
     </div>
@@ -22,23 +25,50 @@
             <button type="button" class="btn btn-default"
                data-dismiss="modal">关闭
             </button>
-    <button type="submit" class="btn btn-success">确定</button>
+    <button type="submit" class="btn btn-primary">确定</button>
         </div>
     </form>
 <script type="text/javascript" src="/static/js/jstree.min.js"></script>
-
+<script src="http://cdn.bootcss.com/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
 <script type="text/javascript">
+    $('.modal-body input').prop('required',true);
+
+</script>
+<script type="text/javascript">
+
+$('#authtree1')
+  // listen for event
+  .on('ready.jstree', function (e, data) {
+      var instance = $('#authtree1').jstree(true);
+    instance.close_all();
+  })
+
 $('#authtree1').jstree({
     "checkbox": {
                   "keep_selected_style": false,
                    "visible" : true,
                    "three_state": true,
                    "whole_node" : true,
+
               },
 			  "plugins": ["checkbox"],
 			  'core':{
 			  'data':[{{data_json|safe}}]
 			  }
+});
+
+$("[name='my-checkbox1']").bootstrapSwitch('state',false
+);
+
+$("[name='my-checkbox1']").on('switchChange.bootstrapSwitch', function (event, state) {
+    if (state==true){
+    var instance = $('#authtree1').jstree(true);
+    instance.open_all();
+    }
+    else{
+    var instance = $('#authtree1').jstree(true);
+    instance.close_all();
+    }
 });
 
 function get_authchecked1()

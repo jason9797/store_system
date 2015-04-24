@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% block home %}
+class="active"
+{% endblock %}
+{% block action_active %}in{% endblock %}
+{% block body %}
+<div class="row bg-box-shadow padding-10 panel panel-default">
+
+	<div class="panel-heading margin-5">
+
+        <h3 class="panel-title">目标管理</h3>
+
+     </div>
+	<div style="text-align:right; margin-bottom:10px;" id="addicon">
+	<button class="btn btn-primary btn-lg" data-toggle="modal"
+	   data-target="#user_add"><i class="glyphicon glyphicon-plus-sign"></i>设定新目标</button>
+	</div>
+	<div>
+	<table data-toggle="table"
+		   data-query-params="queryParams"
+		   data-page-list="[10, 20, 50, 100, 200]"
+		   data-pagination="true"
+		   data-search="true"
+		   data-height="500">
+			<thead>
+			<th>客服名称</th>
+			<th>目标出单量</th>
+			<th>目标销售额</th>
+			<th>当前设置目标类型</th>
+			<th>操作</th>
+			</thead>
+		{% for i in goals %}
+		<tr>
+			<td><a href="#" name="user" data-type="select" data-pk="{{ i.id }}" data-title="客服">{{ i.user.first_name}}</a></td>
+			<td><a href="#" name="goal_quantity" data-type="text" data-pk="{{ i.id }}" data-title="输入目标出单量">{{ i.goal_quantity}}</a></td>
+			<td><a href="#" name="goal_money" data-type="text" data-pk="{{ i.id }}" data-title="输入目标销售额">{{ i.goal_money}}</a></td>
+			<td><a href="#" name="goal_chosen" data-type="select" data-pk="{{ i.id }}" data-title="选择目标类型">{% if i.goal_chosen == 0 %}目标出单量{% else %}目标销售额{% endif %}</a></td>
+			<td><a href="{% url 'goal_info_remove' %}?id={{ i.id }}" onclick= "return confirm('确定删除?');"><i class="glyphicon glyphicon-trash"></i>删除</a></td>
+		</tr>
+		{% endfor %}
+		</table>
+	</div>
+</div>
+<div class="modal fade" id="user_add" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+          <form action="{% url 'goal_info_add' %}" data-toggle="validator" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+         <div class="modal-header">
+            <button type="button" class="close"
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               添加客服目标
+            </h4>
+         </div>
+         <div class="modal-body add-nav">
+            <p><label class="col-md-3 text-align-right">客服帐号:</label>{{ goal_form.user }}</p>
+             <p><label class="col-md-3 text-align-right">目标出单量:</label>{{ goal_form.goal_quantity }}</p>
+             <p><label class="col-md-3 text-align-right">目标销售额:</label>{{ goal_form.goal_money }}</p>
+             <p><label class="col-md-3 text-align-right">选定目标类型:</label>{{ goal_form.default }}</p>
+         </div>
+         <div class="modal-footer" style="margin-top:15px;">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+            <button type="sumbit" class="btn btn-primary">
+               确定
+            </button>
+             </div>
+             </form>
+         </div>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+<script type="text/javascript">
+    $('.modal-body input').prop('required',true);
+
+</script>
+<script type="text/javascript">
+$('body').on('hidden.bs.modal', '.modal', function () {
+$(this).removeData('bs.modal');
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $.fn.editable.defaults.mode = 'popup';
+    var user1=$("td [name='user']").attr("name");
+    $("td [name='user']").editable({
+    name:user1,
+    url:"{% url 'goal_info_edit' %}",
+    source: [
+        {% for i in user_list %}
+              {value: '{{i.first_name}}', text: '{{i.first_name}}'},
+              {% endfor %}
+           ],
+	validate: function(value) {
+  if($.trim(value) == '')
+    return '选择的客服不能为空';}
+    }
+    );
+    
+    var goal_quantity1=$("td [name='goal_quantity']").attr("name");
+    $("td [name='goal_quantity']").editable({
+    name:goal_quantity1,
+    url:"{% url 'goal_info_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == ''||isNaN(value))
+    return '输入正确的目标出单量';}
+    }
+    );
+    
+    var goal_money1=$("td [name='goal_money']").attr("name");
+    $("td [name='goal_money']").editable({
+    name:goal_money1,
+    url:"{% url 'goal_info_edit' %}",
+	validate: function(value) {
+  if($.trim(value) == ''||isNaN(value))
+    return '输入正确的目标销售额';}
+    }
+    );
+    
+    var goal_chosen1=$("td [name='goal_chosen']").attr("name");
+    $("td [name='goal_chosen']").editable({
+    name:goal_chosen1,
+    url:"{% url 'goal_info_edit' %}",
+    source:[
+    {value:'False',text:'目标出单量'},
+    {value:'True',text:'目标销售额'}
+    ],
+
+	validate: function(value) {
+  if($.trim(value) == ''||isNaN(value))
+    return '输入正确的目标销售额';}
+    }
+    );
+    
+})
+$(".add-nav").find("li").css({"list-style":"none","float":"left"});
+</script>
+{% endblock %}

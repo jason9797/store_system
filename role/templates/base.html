@@ -5,13 +5,15 @@
     {% block title %}
     {% endblock %}
     <!-- 新 Bootstrap 核心 CSS 文件 -->
-
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
+{% load notifications_tags %}
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <!-- 可选的Bootstrap主题文件（一般不用引入） -->
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="/static/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="/static/css/bootstrap-editable.css">
 <link rel="stylesheet" href="/static/css/bootstrap-table.css">
+<link rel="stylesheet" href="/static/css/jumei_usercenter.min.css">
+<link rel="stylesheet" href="http://cdn.bootcss.com/sco.js/1.1.0/css/sco.message.css">
       <style>
         #main-nav {
             margin-left: 1px;
@@ -92,14 +94,24 @@ border-radius: 5px;
 }
 		.nav>li>a:hover{ color:blue;}
 		.padding-10{padding:10px; padding-top:0;}
-		.padding12{ padding:12px 0;}
+		.padding12{ padding: 3px 0 6px;}
 		.bgg{ background:red;}
-		#addicon i{ margin-right:7px;}
+		.addicon i{ margin-right:7px;}
 		.padding-5{padding:5px;}
 		.margin-5{ margin-bottom:5px;}
-		.margin-15-div>div{ margin-top:15px;}
+		.margin-15-div>div{ margin-top:4px;}
 		.bottom-size{padding: 6px 39px;}
 		.text-align-center{ text-align:center;}
+		.text-align-right{ text-align:right;}
+		.widthonly{ width:1500px;}
+		.add-house-option,.add-min-option{height: 34px;
+background-color: #eee;
+border: 1px solid #ccc;
+border-radius: 4px;
+-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+box-shadow: inset 0 1px 1px rgba(0,0,0,.075); margin-left:5px;}
+		.altermargin{margin: 6px -15px;text-align: right;}
+		.width-105{ width:105px;}
     </style>
     {% block head %}
     {% endblock %}
@@ -108,10 +120,16 @@ border-radius: 5px;
 
 <body>
 <div class="navbar navbar-default" role="navigation">
-   <div class="navbar-header col-md-6 col-xs-6">
+   <div class="navbar-header col-md-4 col-xs-4">
       <a class="navbar-brand" href="#">订单管理系统</a>
    </div>
-   <div class="colmd-6 col-xs-6 text-align-right">
+   <div class="col-md-4 col-xs-4">
+       {% notifications_unread as unread_count %}
+       <a class="navbar-text" href="{% url 'message_info' %}" data-toggle="modal" data-target="#message">{% if unread_count %}消息
+    <span class="badge pull-right">{{ unread_count }}</span>
+{% endif %}</a>
+   </div>
+   <div class="col-md-4 col-xs-4 text-align-right">
        {% if user.is_active %}
        <p class="navbar-text navbar-right" style="margin-right:20px;">{{ user }}
          <a href="/logout" class="navbar-link">logout</a>
@@ -121,10 +139,10 @@ border-radius: 5px;
        {% endblock %}
    </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid addicon">
 <div class="row">
     {% if user.is_active %}
-<div class="col-md-2" id="addicon" style="margin-left:-9px;">
+<div class="col-md-2" style="margin-left:-9px;">
 <ul id="main-nav" class="nav nav-tabs nav-stacked bg-box-shadow">
    <li {% block home %}{% endblock %}>
        <a href="#home" class="nav-header collapsed" data-toggle="collapse">
@@ -132,7 +150,13 @@ border-radius: 5px;
                                <span class="pull-right glyphicon glyphicon-chevron-down"></span>
                         </a>
                         <ul id="home" class="nav nav-list collapse secondmenu {% block action_active %}{% endblock %}">
-                            <li><a href="#"><i class="glyphicon glyphicon-list-alt"></i>操作记录</a></li>
+                            <li><a href="{% url 'home' %}"><i class="glyphicon glyphicon-home"></i>主页</a></li>
+                            {% if user.is_superuser %}
+                            <!--<li><a href="#"><i class="glyphicon glyphicon-list-alt"></i>操作记录</a></li>-->
+                            <li><a href="{% url 'get_goal_info'%}"><i class="glyphicon glyphicon-flag"></i>目标管理</a></li>
+                            <li><a href="{% url 'get_server_cut_info'%}"><img src="../../../static/debug_toolbar/img/kefu.png">客服提成系数管理</a></li>
+                            <li><a href="{% url 'get_issuing_person_cut_info'%}"><img src="../../../static/debug_toolbar/img/jiedanyuan.png">出单人提成系数管理</a></li>
+                            {% endif %}
                         </ul>
     </li>
    <li {% block customer %}{% endblock %}>
@@ -193,8 +217,10 @@ border-radius: 5px;
        <a href="#reporter" class="nav-header collapsed" data-toggle="collapse">报表管理
        <span class="pull-right glyphicon glyphicon-chevron-down"></span></a>
        <ul id="reporter" class="nav nav-list collapse secondmenu {% block reporter_active %}{% endblock %}">
+                            <li><a href="{% url 'person_sale_report' %}">个人业绩报表</a></li>
+                            <li><a href="{% url 'team_sale_report' %}">团队业绩报表</a></li>
+                            <li><a href="{% url 'order_success_report' %}">计划完成报表</a></li>
                             <li><a href="{% url 'income_reporter' %}">收入报表</a></li>
-                            <li><a href="#">成本报表</a></li>
                             <li><a href="{% url 'issuing_person_reporter' %}">业务员业绩报表</a></li>
                         </ul>
    </li>
@@ -208,19 +234,25 @@ border-radius: 5px;
 </div>
 </div>
 </div>
-
+<div class="modal fade" id="message" tabindex="-1" role="dialog" aria-labelledby="messageLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content"></div>
+    </div>
+</div>
 
 
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
 <script src="/static/js/bootstrap-editable.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap-table.js" charset="UTF-8"></script>
 <script type="text/javascript" src="/static/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="/static/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/js/jquery.selectui.js" charset="UTF-8"></script>
+<script src="http://cdn.bootcss.com/sco.js/1.1.0/js/sco.message.js"></script>
 <script type="text/javascript">
 $.fn.datetimepicker.dates['zh-CN'] = {
 			days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
@@ -258,5 +290,10 @@ $('.form_date').datetimepicker({
 
 {% block js %}
 {% endblock js %}
+  <script>
+  $("table").addClass("table-hover");
+ // $("table").parent().addClass("table-responsive")
+ $("select").parent().addClass("profile")
+</script>
   </body>
 </html>

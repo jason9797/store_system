@@ -2,19 +2,33 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css"/>
 <link rel="stylesheet" type="text/css" href="/static/css/style.min.css"/>
-
+<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap-switch/3.3.2/css/bootstrap2/bootstrap-switch.min.css">
+<style>
+.modal-backdrop:before {
+  background-color: #000;
+  content: '';
+  position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  bottom: 0;
+}
+</style>
 {% endblock %}
 {% block role %}
 class="active"
 {% endblock %}
 {% block role_active %}in{% endblock %}
 {% block body %}
-			<div class="row">
-                <div class="col-md-6"></div><div class="col-md-3"><button class="btn btn-primary btn-lg" data-toggle="modal"
-   data-target="#role_add">新增角色</button></div>
+			<div class="row bg-box-shadow padding-10 panel panel-default">
+			<div class="panel-heading margin-5">
+    	<h3 class="panel-title">角色列表</h3>
+	</div>
+                <div class="col-md-12 addicon"  style="text-align:right; margin-bottom:10px;"><button class="btn btn-primary btn-lg" data-toggle="modal"
+   data-target="#role_add"><i class="glyphicon glyphicon-plus-sign"></i>新增角色</button></div>
                             {% if user.is_superuser %}
-                                            <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                 <table class="table table-bordered">
                                                 <thead>
                                                 <tr>
@@ -26,12 +40,13 @@ class="active"
                                                     {% for k in group %}
                                                     <tr>
                                                         <td>{{k.name}}</td>
-                                                        <td><a href="{% url 'role_name_edit' k.id %}" data-toggle="modal" data-target="#role_add">修改</a></td>
-                                                        <td><a href="{% url 'role_name_remove' %}?id={{ k.id }}">删除</a></td>
+                                                        <td><a href="{% url 'role_name_edit' k.id %}" class="addicon" data-toggle="modal" data-target="#role_edit">
+														<i class="glyphicon glyphicon-edit"></i>修改</a></td>
+                                                        <td><a href="{% url 'role_name_remove' %}?id={{ k.id }}" class="addicon" onclick= "return confirm('确定要删除?');">
+														<i class="glyphicon glyphicon-trash"></i>删除</a></td>
                                                     </tr>
                                                     {% endfor %}
                                                 </table>
-                                                    </div>
                                                 </div>
 								{% endif %}
 						</div>
@@ -53,6 +68,7 @@ class="active"
          </div>
          <div class="modal-body">
             <p><label>角色名称:</label>{{ group_form.name }}</p>
+           <input type="checkbox" name="my-checkbox" data-size="mini" data-off-text="折叠" data-on-text="展开" checked="false">
 			<div id="authtree"></div>
 
             <input type="hidden" name="authchecked" id="authchecked" value="">
@@ -68,7 +84,7 @@ class="active"
       </div><!-- /.modal-content -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="role_eidt" tabindex="-1" role="dialog"
+<div class="modal fade" id="role_edit" tabindex="-1" role="dialog"
    aria-labelledby="myModalLabel" aria-hidden="true">
    <div class="modal-dialog">
       <div class="modal-content">
@@ -78,8 +94,12 @@ class="active"
 
 {% endblock %}
 {% block js %}
-
+<script src="http://cdn.bootcss.com/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
 <script type="text/javascript" src="/static/js/jstree.min.js"></script>
+<script type="text/javascript">
+    $('.modal-body input').prop('required',true);
+
+</script>
 <script type="text/javascript">
 $('body').on('hidden.bs.modal', '.modal', function () {
 $(this).removeData('bs.modal');
@@ -97,8 +117,28 @@ $('#authtree').jstree({
 			  "plugins": ["checkbox"],
 			  'core':{
 			  'data':[{{data_json|safe}}]
-			  }		  
+			  }
 });
+
+$("[name='my-checkbox']").bootstrapSwitch('state',false
+);
+
+$("[name='my-checkbox']").on('switchChange.bootstrapSwitch', function (event, state) {
+    if (state==true){
+    var instance = $('#authtree').jstree(true);
+    instance.open_all();
+    }
+    else{
+    var instance = $('#authtree').jstree(true);
+    instance.close_all();
+    }
+});
+
+
+
+
+
+
 
 function get_authchecked()
 {
@@ -110,5 +150,8 @@ function submit_authchecked()
 {
         $('#authchecked').attr("value", get_authchecked());
 }
+
+
+
 </script>
 {% endblock %}

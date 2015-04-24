@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% block head %}
 {% endblock %}
 {% block role %}
@@ -6,11 +6,15 @@ class="active"
 {% endblock %}
 {% block role_active %} in {% endblock %}
 {% block body %}
-			<div class="row">
-                <div class="col-md-6"></div><div class="col-md-3"><button class="btn btn-primary btn-lg" data-toggle="modal"
-   data-target="#user_add">新增用户</button></div>
+			<div class="row bg-box-shadow padding-10 panel panel-default">
+			<div class="panel-heading margin-5">
+    	<h3 class="panel-title">用户信息</h3>
+	</div>
+               <div class="col-md-12" style="text-align:right; margin-bottom:10px;" id="addicon">
+<button class="btn btn-primary btn-lg" data-toggle="modal"
+   data-target="#user_add"><i class="glyphicon glyphicon-plus-sign"></i>新增用户</button></div>
                             {% if user.is_superuser %}
-                                            <div class="col-md-9">
+                                            <div class="col-md-12">
                                                 <table class="table table-bordered">
                                                 <thead>
                                                 <tr>
@@ -32,7 +36,7 @@ class="active"
                                                         <a href="{% url 'user_group_edit' k.username %}">
                                                             {% if k.is_superuser %}管理员{% else %}{% if k.groups.all%}{% for i in k.groups.all %}
                                                             {{ i.name }}{%endfor%}{%else%}无{%endif%}{% endif %}</a></td>
-                                                        <td><a href="{% url 'user_remove' %}?id={{ k.id }}">删除</a></td>
+                                                        <td><a href="{% url 'user_remove' %}?id={{ k.id }}" onclick= "return confirm('确定要删除?');">删除</a></td>
                                                     </tr>
                                                     {% endfor %}
                                                 </table>
@@ -45,7 +49,7 @@ class="active"
    aria-labelledby="myModalLabel" aria-hidden="true">
    <div class="modal-dialog">
       <div class="modal-content">
-          <form action="{% url 'user_add' %}" method="post" enctype="multipart/form-data">
+          <form action="{% url 'user_add' %}" data-toggle="validator" method="post" enctype="multipart/form-data">
               {% csrf_token %}
          <div class="modal-header">
             <button type="button" class="close"
@@ -57,14 +61,18 @@ class="active"
             </h4>
          </div>
          <div class="modal-body">
-            {{ user_form.as_p }}
+            <p><label class="col-md-2 text-align-right">用户名:</label>{{ user_form.username }}</p>
+             <p><label class="col-md-2 text-align-right">密码:</label>{{ user_form.password }}</p>
+             <p><label class="col-md-2 text-align-right">姓名:</label>{{ user_form.first_name }}</p>
+             <p><label class="col-md-2 text-align-right">邮箱:</label>{{ user_form.email }}</p>
+             <p><label class="col-md-2 text-align-right">角色:</label>{{ user_form.group }}</p>
          </div>
          <div class="modal-footer">
             <button type="button" class="btn btn-default"
                data-dismiss="modal">关闭
             </button>
             <button type="sumbit" class="btn btn-primary">
-               提交更改
+               确定
             </button>
              </div>
              </form>
@@ -72,14 +80,17 @@ class="active"
       </div><!-- /.modal-content -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="GroupModal" tabindex="-1" role="dialog" aria-labelledby="GroupModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content"></div>
-    </div>
-</div>
+
+
+
+
 
 {% endblock %}
 {% block js %}
+<script type="text/javascript">
+    $('.modal-body input').prop('required',true);
+    $('.modal-body select').prop('required',true);
+</script>
 <script type="text/javascript">
     function getCookie(name) {
     var cookieValue = null;
@@ -114,6 +125,7 @@ $.ajaxSetup({
 $('body').on('hidden.bs.modal', '.modal', function () {
 $(this).removeData('bs.modal');
 });
+
 </script>
 
 
@@ -127,6 +139,7 @@ $(document).ready(function() {
     var username1=$("td [name='username']").attr("name");
     $("td [name='username']").editable({
     name:username1,
+    placement:'right',
     url:"{% url 'user_edit' %}",
 	validate: function(value) {
   if($.trim(value) == '') 
@@ -140,6 +153,7 @@ $(document).ready(function() {
     $("td [name='password']").editable({
     name:password1,
     title:'',
+    placement:'right',
     url:"{% url 'user_edit' %}",
 	validate: function(value) {
   if($.trim(value) == '') 
@@ -153,6 +167,7 @@ $(document).ready(function() {
     var first_name1=$("td [name='first_name']").attr("name");
     $("td [name='first_name']").editable({
     name:first_name1,
+    placement:'right',
     url:"{% url 'user_edit' %}",
 	validate: function(value) {
   if($.trim(value) == '') 
@@ -164,12 +179,14 @@ $(document).ready(function() {
     var email1=$("td [name='email']").attr("name");
     $("td [name='email']").editable({
     name:email1,
-    url:"{% url 'user_edit' %}"/*,
+    placement:'right',
+    url:"{% url 'user_edit' %}",
 	validate: function(value) {
 	//var pemail=/^\w+((-\w+)|(\.\w+))*\@{1}\w+\.{1}\w{2,4}(\.{0,1}\w{2}){0,1}/ig,
-  if($.trim(value).search(pemail)==-1) 
-    return '输入的邮箱不能为空';
-}*/
+  //if($.trim(value).search(pemail))
+	if($.trim(value) == '')
+    return '请输入正确的邮箱';
+}
     }
     );
 

@@ -1,7 +1,54 @@
 {% extends 'base.html' %}
+{% load math_tag %}
+{% block head%}
+<style>
+.bg-red{ background:#FC8474;}
+.bg-green{ background:#488A48;}
+.bg-yellow{background:#E7C45C;}
+ul{width:100%;}
+ul li{text-align:center; margin-top:5px;}
+.mini-box{min-height:85px;padding:7px 0;}
+.mini-box:hover{ border-color:blue;}
+.mini-box .box-icon{display:inline-block;width:70px;height:70px;line-height:70px;vertical-align:middle;text-align:center;font-size:35px;border-radius:2px}
+.mini-box .box-icon.rounded{border-radius:50%}
+.mini-box .btn-icon{font-size:19px}
+.mini-box .btn-icon-b{font-size:32px}
+.mini-box .box-info{display:inline-block;vertical-align:top; margin-top:8px;}
+.mini-box .box-info p{margin:0}
+.btn-icon{display:inline-block;text-align:center;border-radius:2px;height:35px;width:35px;line-height:35px}
+.btn-icon-round{border-radius:50%}
+.btn-icon-lg-alt{height:40px;width:40px;line-height:44px}
+.btn-icon-lg-alt-b{height:60px;width:60px;line-height:70px}
+.bg-success{background-color:#F2FBEC}
+a.bg-success:hover{background-color:#d5f2c2}
+.bg-success{background-color:white;color:black;}
+.size-h2{font-size:20px} 
+.text-muted{color:red;}
+.size-h4{font-size:18px}
+.clear-margin{ margin:0;}
+table th{ text-align:center;}
+.mini-box .margin-style p{margin-left: 3px;font-size: 26px;margin-top: 13px;}
+.font-20{ font-size:20px;}
+.table-head{background-color: #FAFAFA;background-image: -moz-linear-gradient(center top , #FFFFFF, #E6E6E6);
+background-image: -webkit-gradient(linear,0 0,0 100%,from(white),to(#E6E6E6));
+background-image: -webkit-linear-gradient(top,white,#E6E6E6);
+background-image: -o-linear-gradient(top,white,#E6E6E6);
+background-image: linear-gradient(to bottom,white,#E6E6E6);
+background-image: -moz-linear-gradient(top,white,#E6E6E6);
+background-repeat: repeat-x;
+box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+height: 37px;
+margin-bottom: -1px;
+line-height:37px;
+}
+.margin-top6 .text-muted{ margin-top:6px;}
+</style>
+{% endblock %}
 {% block home %}
 class="active"
 {% endblock %}
+{% block action_active %}in{% endblock %}
 {% block form %}
 {% if user.is_active == False %}
 
@@ -18,7 +65,392 @@ class="active"
 {% endif %}
 {% endblock %}
 {% block body %}
-<p>designing</p>
+<div class="row bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+        <h3 class="panel-title">{% if user.is_superuser %}总体销售情况{% else %}本人销售情况{% endif %}</h3>
+	</div>
+	<ul class="nav ">
+		<li class="col-md-4 col-xs-6">
+			<div class="panel mini-box bg-red clear-margin">
+				<span class="btn-icon btn-icon-round btn-icon-lg-alt-b bg-success btn-icon-b">
+                  <i class="glyphicon glyphicon-cog" style="margin:0;"></i>
+                </span>
+                <div class="box-info margin-style">
+                    <p class="size-h2">{{user.get_this_today.1}}</p>
+                </div>
+				<div class="text-muted font-20">本日出单量</div>
+            </div>
+		</li>
+		<li class="col-md-4 col-xs-6">
+			<div class="panel mini-box bg-green clear-margin">
+				<span class="btn-icon btn-icon-round btn-icon-lg-alt-b bg-success btn-icon-b">
+				  <i class="glyphicon glyphicon-tasks" style="margin:0;"></i>
+				</span>
+				<div class="box-info margin-style">
+					<p class="size-h2">{{user.get_this_week.1}}</p>
+				</div>
+				<div class="text-muted font-20">本周出单量</div>
+			</div>
+		</li>
+		<li class="col-md-4 col-xs-6">
+			<div class="panel mini-box bg-yellow clear-margin">
+				<span class="btn-icon btn-icon-round btn-icon-lg-alt-b bg-success btn-icon-b">
+				  <i class="glyphicon glyphicon-music" style="margin:0;"></i>
+				</span>
+				<div class="box-info margin-style">
+					<p class="size-h2">{{user.get_this_month.1}}</p>
+				</div>
+				<div class="text-muted font-20">本月出单量</div>
+			</div>
+		</li>
+		<li class="col-md-4 col-xs-6">
+			<div class="panel mini-box bg-red clear-margin">
+				<span class="btn-icon btn-icon-round btn-icon-lg-alt-b bg-success btn-icon-b">
+				  <i class="glyphicon glyphicon-cog" style="margin:0;"></i>
+				</span>
+				<div class="box-info margin-style">
+					<p class="size-h2">{{user.get_this_today.0}}</p>
+				</div>
+				<div class="text-muted font-20">本日销售额</div>
+			</div>
+		</li>
+		<li class="col-md-4 col-xs-6">
+			<div class="panel mini-box bg-green clear-margin">
+				<span class="btn-icon btn-icon-round btn-icon-lg-alt-b bg-success btn-icon-b">
+				  <i class="glyphicon glyphicon-tasks" style="margin:0;"></i>
+				</span>
+				<div class="box-info margin-style">
+					<p class="size-h2">{{user.get_this_week.0}}</p>
+				</div>
+				<div class="text-muted font-20">本周销售额</div>
+			</div>
+		</li>
+		<li class="col-md-4 col-xs-6">
+			<div class="panel mini-box bg-yellow clear-margin">
+				<span class="btn-icon btn-icon-round btn-icon-lg-alt-b bg-success btn-icon-b">
+				  <i class="glyphicon glyphicon-music" style="margin:0;"></i>
+				</span>
+				<div class="box-info margin-style">
+					<p class="size-h2">{{user.get_this_month.0}}</p>
+				</div>
+				<div class="text-muted font-20">本月销售额</div>
+			</div>
+		</li>
+	</ul>
+</div>
+{% if not user.is_superuser %}
+<div class="row margin-top6">
+
+<div class="col-md-6 col-xs-12" style="padding-left:0;">
+  <div class=" bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+        <h3 class="panel-title">个人业绩统计表</h3>
+	</div>
+	<ul class="nav ">
+		<li class="col-md-6 col-xs-6">
+			<div class="panel mini-box bg-red clear-margin">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-success">
+                  <i class="glyphicon glyphicon-eye-open" style="margin:0;"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">
+                        {% if not user.is_superuser and user.get_person_goal %}
+                        {% if user.get_person_goal.goal_chosen %}
+                        销售额({{user.get_person_goal.goal_money }})
+                        {% else %}
+                        出单量({{ user.get_person_goal.goal_quantity }})
+                        {% endif %}
+                        {% endif %}
+                    </p>
+                </div>
+				<div class="text-muted">月度销售目标</div>
+            </div>
+		</li>
+		<li class="col-md-6 col-xs-6">
+			<div class="panel mini-box bg-red clear-margin">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-success">
+                  <i class="glyphicon glyphicon-align-center" style="margin:0;"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">
+                        {% if not user.is_superuser and user.get_person_goal %}
+                        {% if user.get_person_goal.goal_chosen %}
+                        {{ user.get_this_month.0|percentage:user.get_person_goal.goal_money}}
+                        {% else %}
+                        {{ user.get_this_month.1|percentage:user.get_person_goal.goal_quantity }}
+                        {% endif %}
+                        {% endif %}
+                    </p>
+                </div>
+				<div class="text-muted">月度目标完成率</div>
+            </div>
+		</li>
+		<li class="col-md-6 col-xs-6">
+			<div class="panel mini-box bg-red clear-margin">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-success">
+                  <i class="glyphicon glyphicon-refresh" style="margin:0;"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{{ user.get_order_success }}</p>
+                    
+                </div>
+				<div class="text-muted">月度妥投率</div>
+            </div>
+		</li>
+		<li class="col-md-6 col-xs-6">
+			<div class="panel mini-box bg-red clear-margin">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-success">
+                  <i class="glyphicon glyphicon-user" style="margin:0;"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">
+                        {% if user.get_person_cut %}
+                        {{ user.get_this_month.0|cut_money:user.get_person_cut.cut_percentage }}
+                        {% endif %}
+                    </p>
+                </div>
+				<div class="text-muted">月度个人提成额</div>
+			</div>
+		</li>
+		
+	</ul>
+	</div>
+</div>
+
+<div class="col-md-6 col-xs-12 bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+        <h3 class="panel-title">团队业绩统计表</h3>
+	</div>
+	<ul class="nav ">
+		<li class="col-md-6 col-xs-6">
+			<div class="panel mini-box bg-green clear-margin">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-success">
+                  <i class="glyphicon glyphicon-eye-open" style="margin:0;"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">销售额{% if user.get_team_goal %}{{ user.get_team_goal }}{% endif %}</p>
+                    
+                </div>
+				<div class="text-muted">月度销售目标</div>
+            </div>
+		</li>
+		<li class="col-md-6 col-xs-6">
+			<div class="panel mini-box bg-green clear-margin">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-success">
+                  <i class="glyphicon glyphicon-align-center" style="margin:0;"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{% if user.get_team_order and user.get_team_goal %}{{ user.get_team_order|percentage:user.get_team_goal }}{% endif %}</p>
+                    
+                </div>
+				<div class="text-muted">月度目标完成率</div>
+            </div>
+		</li>
+		<li class="col-md-6 col-xs-6">
+			<div class="panel mini-box bg-green clear-margin">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-success">
+                  <i class="glyphicon glyphicon-refresh" style="margin:0;"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{{ user.get_team_order_success }}</p>
+                    
+                </div>
+				<div class="text-muted">月度妥投率</div>
+            </div>
+		</li>
+	</ul>
+</div>
+
+<div class="col-md-6 col-xs-12" style="padding-left:0;">
+   <div class="bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+        <h3 class="panel-title">本人销售排名</h3>
+	</div>
+	<ul class="nav ">
+		<li class="col-md-6 col-xs-6">
+			<div class="panel mini-box bg-yellow clear-margin">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-success">
+                  <i class="glyphicon glyphicon-cog" style="margin:0;"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{{user.this_day_rank.0 }}(销售额{{ user.this_day_rank.1}})</p>
+                    
+                </div>
+				<div class="text-muted">本日排名</div>
+            </div>
+		</li>
+		<li class="col-md-6 col-xs-6">
+			<div class="panel mini-box bg-yellow clear-margin">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-success">
+                  <i class="glyphicon glyphicon-music" style="margin:0;"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{{user.this_week_rank.0 }}(销售额{{ user.this_week_rank.1}})</p>
+                    
+                </div>
+				<div class="text-muted">本周排名</div>
+            </div>
+		</li>
+		<li class="col-md-6 col-xs-6">
+			<div class="panel mini-box bg-yellow clear-margin">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-success">
+                  <i class="glyphicon glyphicon-music" style="margin:0;"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{{user.this_month_rank.0 }}(销售额{{ user.this_month_rank.1}})</p>
+                    
+                </div>
+				<div class="text-muted">本月排名</div>
+            </div>
+		</li>
+		
+	</ul>
+	</div>
+</div>
+
+</div>
+{% endif %}
+<div class="row bg-box-shadow padding-10 panel panel-default" style="clear:both;">
+	<div class="panel-heading margin-5">
+        <h3 class="panel-title">排名情况</h3>
+	</div>
+	<ul class="nav ">
+		<li class="col-md-4 col-xs-12">
+			<div class="table-head">月度小组销售额排名</div>
+			<table class="table table-bordered table-striped">		
+				<thead>
+				<tr>								
+					<th>销售组名称</th>
+					<th>销售额</th>
+					<th>排名</th>								
+				</tr>
+				</thead>
+				<tbody>
+						{% for i in user.get_team_rank %}
+					<tr>
+						<td>{{i.name}}</td>
+                        <td>{{ i.money}}</td>
+                        <td>{{ forloop.counter }}</td>
+					</tr>
+                {% endfor %}
+				</tbody>
+			</table>
+		</li>
+		<li class="col-md-4 col-xs-12">
+			<div class="table-head">个人出单量排名</div>
+			<table class="table table-bordered table-striped">		
+				<thead>
+				<tr>								
+					<th>所在销售组</th>
+					<th>姓名</th>
+                    <th>出单量</th>
+					<th>排名</th>								
+				</tr>
+				</thead>
+				<tbody>
+                {% for i in user.person_quantity_rank %}
+					<tr>
+						<td>{{i.customer__user.get_group_name}}</td>
+                        <td>{{ i.customer__user.first_name}}</td>
+                        <td>{{ i.quantity }}</td>
+                        <td>{{ forloop.counter }}</td>
+					</tr>
+                {% endfor %}
+				</tbody>
+			</table>
+		</li>
+		<li class="col-md-4 col-xs-12">
+			<div class="table-head">个人销售额排名</div>
+			<table class="table table-bordered table-striped">		
+				<thead>
+				<tr>								
+					<th>所在销售组</th>
+					<th>姓名</th>
+                    <th>销售额</th>
+					<th>排名</th>
+				</tr>
+				</thead>
+				<tbody>
+					{% for i in user.person_money_rank %}
+					<tr>
+						<td>{{i.customer__user.get_group_name}}</td>
+                        <td>{{ i.customer__user.first_name}}</td>
+                        <td>{{ i.money }}</td>
+                        <td>{{ forloop.counter }}</td>
+					</tr>
+                {% endfor %}
+				</tbody>
+			</table>
+		</li>
+	</ul>
+</div>
+
+<div class="row bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+        <h3 class="panel-title">其他</h3>
+	</div>
+	<ul class="nav ">
+		<li class="col-md-6 col-xs-12">
+			<div class="table-head">问题件</div>
+			<table class="table table-bordered table-striped"
+                    id="table"
+                data-toggle="table"
+       data-query-params="queryParams"
+	   data-page-list="5"
+       data-search="true"
+       data-order="true"
+       data-height="300">
+				<thead>
+				<tr>								
+					<th>订单编号</th>
+					<th>订单金额</th>
+                    <th>订单状态</th>
+					<th>下单时间</th>								
+				</tr>
+				</thead>
+				<tbody>
+					{% for i in user.get_failed_order %}
+					<tr>
+						<td>{{i.id }}</td>
+                        <td>{{ i.product.price }}</td>
+                        <td>{{ i.state.name}}</td>
+                        <td>{{ i.jointime|date:'Y-m-d H:i:s' }}</td>
+					</tr>
+                {% endfor %}
+				</tbody>
+			</table>
+		</li>
+		<li class="col-md-6 col-xs-12">
+			<div class="table-head">待审核订单</div>
+			<table class="table table-bordered table-striped"
+                    id="table"
+                data-toggle="table"
+       data-query-params="queryParams"
+	   data-page-list="5"
+       data-search="true"
+       data-order="true"
+       data-height="300">
+				<thead>
+				<tr>								
+					<th>订单编号</th>
+					<th>订单金额</th>
+					<th>下单时间</th>								
+				</tr>
+				</thead>
+				<tbody>
+					{% for i in user.get_no_approval_order %}
+					<tr>
+						<td>{{i.id }}</td>
+                        <td>{{ i.product.price }}</td>
+                        <td>{{ i.jointime|date:'Y-m-d H:i:s' }}</td>
+					</tr>
+                {% endfor %}
+				</tbody>
+			</table>
+		</li>
+	</ul>
+</div>
+
 {% endblock %}
 
 
