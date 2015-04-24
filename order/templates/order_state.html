@@ -1,7 +1,21 @@
-{% extends 'order_other.html' %}
+{% extends 'base.html' %}
+{% block head%}
+<link href="/static/css/magicsuggest.css" rel="stylesheet">
+{% endblock %}
+{% block order %}
+class="active"
+{% endblock %}
+{% block order_active %}in{% endblock %}
+{% block body %}
+<div class="row bg-box-shadow padding-10 panel panel-default">
+			<div class="panel-heading margin-5">
+    	<h3 class="panel-title">订单状态信息</h3>
+	</div>
+               <div class="col-md-12" style="text-align:right; margin-bottom:10px;" id="addicon">
+<button class="btn btn-primary btn-lg" data-toggle="modal"
+   data-target="#state_add"><i class="glyphicon glyphicon-plus-sign"></i>新增订单状态</button></div>
 
-{% block order_other %}
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                     <table class="table">
                         <thead>
                         <tr>
@@ -12,17 +26,103 @@
                     </thead>
                         {% for i in state_data %}
                         <tr>
-                        <td>{{ i.name }}</td>
-                        <td><a href="?id={{ i.id }}">edit</a>,<a href="{% url 'order_state_remove' %}?id={{ i.id }}">remove</a></td>
+                        <td><a href="#" name="name" data-type="text" data-pk="{{ i.id }}" data-title="输入名称">{{ i.name }}</a></td>
+                        <td><a href="{% url 'order_state_remove' %}?id={{ i.id }}" onclick= "return confirm('确定删除?');"><i class="glyphicon glyphicon-trash"></i>删除</a></td>
                         </tr>
                         {% endfor %}
                         </table>
                             </div>
-                        <div class="col-md-3">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                        <p><label>名称:</label>{{ state_form.name }}</p>
-                        <p><button type="submit" class="btn btn-primary bottom-size ">确定</button></p>
-                        </form>
-                        </div>
+    </div>
+<div class="modal fade" id="state_add" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+          <form action="{% url 'order_state' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+         <div class="modal-header">
+            <button type="button" class="close"
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               添加订单状态
+            </h4>
+         </div>
+         <div class="modal-body">
+             <label class="text-align-right">名称:</label>{{ state_form.name }}
+</div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+            <button type="sumbit" class="btn btn-primary">
+               确定
+            </button>
+             </div>
+             </form>
+         </div>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
 {% endblock %}
+{% block js %}
+<script type="text/javascript">
+    $('.modal-body input').prop('required',true);
+</script>
+<script type="text/javascript">
+$('body').on('hidden.bs.modal', '.modal', function () {
+$(this).removeData('bs.modal');
+});
+</script>
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+
+    var name1=$("td [name='name']").attr("name");
+    $("td [name='name']").editable({
+        name:name1,
+        url:"{% url 'order_state_edit' %}",
+        placement:'right',
+        validate: function(value) {
+  if($.trim(value) == '')
+    return '输入的名称不能为空';
+},
+        error:
+           function(xhr) {
+    if(xhr.status == 500) return '修改失败';
+}
+    });
+
+});
+</script>
+    {% endblock %}

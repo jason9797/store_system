@@ -8,7 +8,11 @@
             </h4>
         </div>
     <div class="modal-body">
-    <p><label>角色</label>{{ group_form.name }}</p>
+        <div class="input-group">
+         <span class="input-group-addon">客户名称</span>
+         <input type="text" name="customer_name" class="form-control" value="{{customer.name}}"/>
+         <span class="input-group-addon"><a class="a_post">确定</a></span>
+      </div>
 	<table class="table table-bordered">
         <thead>
         <tr>
@@ -52,3 +56,24 @@
     </table>
     </div>
         </div>
+
+
+
+
+<script type="text/javascript">
+    $(".a_post").on("click",function(event){
+    event.preventDefault();//使a自带的方法失效，即无法调整到href中的URL(http://www.baidu.com)
+    $.ajax({
+           type: "POST",
+           url: "{% url 'order_customer_edit' %}",
+           data:{name:'name',value:$("[name='customer_name']").val(),pk:'{{customer.id}}'},
+           success: function(result){
+             $("[name='customer_name']").html= $("[name='customer_name']").val();
+             alert("修改成功!");
+           },
+            error:function(result){
+            alert("名称不能为空");
+            }
+    });
+});
+    </script>

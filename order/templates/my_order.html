@@ -2,6 +2,7 @@
 {% block order %}
 class="active"
 {% endblock %}
+{% block order_active %}in{% endblock %}
 {% block body %}
 <table data-toggle="table"
        data-query-params="queryParams"
@@ -36,7 +37,13 @@ class="active"
             <td>{{ i.product }}</td>
             <td><a href="#" name="state" data-type="select" data-pk="{{ i.id }}" data-title="订单状态">{{ i.state }}</a></td>
                 <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
-            <td><a href="{% url 'order_remove' %}?id={{ i.id }}">删除</a></td>
+            <td><a href="{% url 'order_remove' %}?id={{ i.id }}" onclick= "return confirm('确定删除?');">
+                <i class="glyphicon glyphicon-trash"></i>删除</a>
+                {% if i.state.level == 1%}
+                <a href="{% url 'alert_sign_order' %}?receiver=admin&order_id={{i.id}}">
+                提醒管理员发货</a>
+                {% endif %}
+            </td>
             </tr>
             {% endfor %}
         </table>
@@ -45,4 +52,69 @@ class="active"
         <div class="modal-content"></div>
     </div>
 </div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+$('body').on('hidden.bs.modal', '.modal', function () {
+$(this).removeData('bs.modal');
+});
+</script>
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+$(".bootstrap-table").addClass("row bg-box-shadow padding-10 panel panel-default").prepend('<div class="panel-heading margin-5"><h3 class="panel-title">我的订单</h3></div>');
+    //toggle `popup` / `inline` mode
+    $.fn.editable.defaults.mode = 'popup';
+
+    var state1=$("td [name='state']").attr("name");
+   var now_state=$("td [name='state']").val();
+    $("td [name='state']").editable({
+        value: now_state,
+        name:state1,
+        url:"{% url 'order_edit' %}",
+        source: [
+        {% for i in state %}
+              {value: '{{i}}', text: '{{i.name}}'},
+              {% endfor %}
+           ],
+        error:
+           function(response) {
+    if(response.status === 404){return response.responseText;}
+    else{
+    return response.responseText;}
+}
+    });
+});
+</script>
+
+
 {% endblock %}

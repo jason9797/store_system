@@ -8,9 +8,7 @@ class="active"
 							<div class="panel-heading margin-5">
 								<h3 class="panel-title">订单导入</h3>
 							</div>
-                            <div class="alert alert-warning"><strong>仅支持txt,csv,xlx,xlsx</strong></div>
-                            <div class="alert alert-warning">第一列客户名称,第二列性别(男或女，不填默认女),第三列地址，第四列电话号码，
-                            第五列出单人(填写出单人的名字，必须已有的出单人,否则为空)，第六列产品(填写产品名称，需查看当前的已有产品名称)</div>
+                            <div class="alert alert-warning"><strong>仅支持xls,xlsx</strong><a href="/media/order/test.xlsx" class="btn">模版下载</a></div>
                         <form action="" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form.errors }}

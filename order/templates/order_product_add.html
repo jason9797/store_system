@@ -10,12 +10,11 @@ class="active"
 	</div>
                         <form action="" method="post">
                             {% csrf_token %}
-                            {{ product_form.errors }}
-                        <p><label>名称:</label>{{ product_form.name }}</p>
-                        <p><label>价格:</label>{{ product_form.price }}</p>
-                        <p><label>快递类型:</label>{{ product_form.delivery_type }}</p>
-						<p><label>备注:{{ product_form.detail}}</label></p>
-                        <p class="text-align-center"><button type="submit" class="btn btn-primary bottom-size">确定</button></p>
+                        <p><label class="col-md-5 text-align-right">名称:</label>{{ product_form.name }}<label>{{ product_form.errors.name.as_text}}</label></p>
+                        <p><label class="col-md-5 text-align-right">价格:</label>{{ product_form.price }}<label>{{ product_form.errors.price.as_text}}</label></p>
+                        <p><label class="col-md-5 text-align-right">快递类型:</label>{{ product_form.delivery_type }}<label>{{ product_form.errors.delivery_type.as_text}}</label></p>
+						<p><label class="col-md-5 text-align-right">备注:</label>{{ product_form.detail}}<label>{{ product_form.errors.remark.as_text}}</label></p>
+                        <p><label class="col-md-5"></label><button type="submit" class="btn btn-primary bottom-size">确定</button></p>
                         </form>
     </div>
 {% endblock %}

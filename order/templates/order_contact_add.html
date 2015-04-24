@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
 {% block customer %}
-class='active'
+class="active"
 {% endblock %}
+{% block customer_active %}in{% endblock %}
 {% block body %}
 
-
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row bg-box-shadow padding-10 panel panel-default">
+						<div class="panel-heading margin-5">
+							<h3 class="panel-title">联系方式添加</h3>
+						</div>
                         <form action="" method="post">
                             {% csrf_token %}
-                        {{  contact_form.errors }}
-                        <p><label>省:</label><select id="sheng" name="province" ></select>
+                        <p><label class="col-md-5 text-align-right">省:</label><select id="sheng" name="province" ></select>
                             <label>市:</label><select id="shi" name="city"></select>
                             <label>县:</label><select id="xian" name="country"></select>
                             <label>镇或街道</label><select id="xiang" name="street"></select>
                         </p>
-                        <p><label>详细地址:</label>{{ contact_form.address }}</p>
-                        <p><label>手机号码:</label>{{ contact_form.phone_number }}</p>
-                        <p><label>联系人:</label>{{ contact_form.customer }}<a href="{% url 'order_customer' %}" onclick="return showAddAnotherPopup(this)">add</a></p>
-                        <p><label>设为默认:</label><input type="checkbox" name='default' value="True"/></p>
-                            <p><button type="submit" class="btn">确定</button></p>
+                        <p><label class="col-md-5 text-align-right">详细地址:</label>{{ contact_form.address }}<label>{{ contact_form.errors.address.as_text}}</label></p>
+                        <p><label class="col-md-5 text-align-right">手机号码:</label>{{ contact_form.phone_number }}<label>{{ contact_form.errors.phone_number.as_text}}</label></p>
+                        <p><label class="col-md-5 text-align-right">联系人:</label>{{ contact_form.customer }}<label>{{ contact_form.errors.customer.as_text}}</label></p>
+                        <p><label class="col-md-5 text-align-right">设为默认:</label><input type="checkbox" name='default' value="True"/></p>
+                            <p><label class="col-md-5"></label><button type="submit" class="btn btn-primary bottom-size">确定</button></p>
                           </form>
                         </div>
-                    </div>
 {% endblock %}
 
 {% block js %}

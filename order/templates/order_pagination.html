@@ -27,7 +27,8 @@
             <td><a href="#" name="state" data-type="select" data-pk="{{ i.id }}" data-title="订单状态">{{ i.state }}</a></td>
             <td><a href="#" name="remark" data-type="text" data-pk="{{ i.id }}" data-title="输入备注">{{ i.remark }}</a></td>
                 <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
-            <td><a href="{% url 'order_remove' %}?id={{ i.id }}">删除</a></td>
+            <td><a href="{% url 'order_remove' %}?id={{ i.id }}" id="addicon"  onclick= "return confirm('确定要删除?');">
+			<i class="glyphicon glyphicon-trash"></i>删除</a></td>
             </tr>
             {% endfor %}
 <script type="text/javascript">

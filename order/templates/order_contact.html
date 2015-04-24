@@ -37,7 +37,14 @@ class="active"
     </div>
 
     <div class="row bg-box-shadow padding-5">
-        <table class="table table-bordered" id="table">
+        <div id="table_data">
+        <table class="table table-bordered" id="table"
+                data-toggle="table"
+       data-query-params="queryParams"
+	   data-page-list="20"
+       data-search="true"
+       data-order="true"
+       data-height="500">
         <thead>
         <tr>
             <th>地址</th>
@@ -53,10 +60,12 @@ class="active"
             <td><a href="#" name="phone_number" data-type="text" data-pk="{{ i.id }}" data-title="输入手机号码">{{ i.phone_number }}</a></td>
             <td><a href="#" name="default" class='{{ i.default }}' data-type="checklist" data-pk="{{ i.id }}" data-title="是否默认">{% if i.default %}是{% else %}否{% endif %}</a></td>
             <td><!--<a href="#" name="customer" data-type="select" data-pk="{{ i.id }}" data-title="选择客户">-->{{ i.customer }}<!--</a>--></td>
-            <td><a href="{% url 'order_contact_remove' %}?id={{ i.id }}" onclick= "return confirm('确定删除?');">删除</a></td>
+            <td><a href="{% url 'order_contact_remove' %}?id={{ i.id }}"  onclick= "return confirm('确定删除?');">
+			<i class="glyphicon glyphicon-trash"></i>删除</a></td>
             </tr>
             {% endfor %}
         </table>
+            </div>
         {% if contact%}
         <ul class="pagination" id="pagination"></ul>
         {% endif %}
@@ -119,7 +128,7 @@ $('#pagination').twbsPagination({
         //$('#table').children().remove();
         //$('#table').append(data)
         //$('#table').empty().append(data)
-        $('#table').html(data)
+        $('#table_data').html(data)
     }
             })
             }

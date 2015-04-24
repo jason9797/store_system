@@ -13,15 +13,14 @@ class="active"
 						</div>
                         <form action="" method="post">
                             {% csrf_token %}
-                        {{ order_form.errors }}
                         <!--<p><label>快递单号:</label>{{ order_form.delivery_no }}</p>
                         <p><label>实收金额:</label>{{ order_form.fact_money }}</p>-->
-                        <p><label>联系人:</label>{{ order_form.customer }}<!--<button type="button" id="position" onclick="getposition()">查看当前收货地址</button>--></p>
-                        <p><label>出单人:</label>{{ order_form.issuing_person }}</p>
-                        <p><label>产品:</label>{{ order_form.product }}</p>
-                        <p><label>备注:</label>{{ order_form.remark}}</p>
+                        <p><label class="col-md-5 text-align-right">联系人:</label>{{ order_form.customer }}<label>{{ order_form.errors.customer.as_text}}</label><!--<button type="button" id="position" onclick="getposition()">查看当前收货地址</button>--></p>
+                        <p><label class="col-md-5 text-align-right">出单人:</label>{{ order_form.issuing_person }}<label>{{ order_form.errors.issuing_person.as_text}}</label></p>
+                        <p><label class="col-md-5 text-align-right">产品:</label>{{ order_form.product }}<label>{{ order_form.errors.product.as_text}}</label></p>
+                        <p><label class="col-md-5 text-align-right">备注:</label>{{ order_form.remark}}<label>{{ order_form.errors.remark.as_text}}</label></p>
                         <!--<p><label>订单状态:</label>{{ order_form.state }}</p>-->
-                        <p class="text-align-center"><button type="submit" class="btn btn-primary bottom-size">确定</button></p>
+                        <p><label class="col-md-5"></label><button type="submit" class="btn btn-primary bottom-size">确定</button></p>
                         </form>
                     </div>
 

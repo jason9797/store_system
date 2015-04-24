@@ -15,21 +15,22 @@ class="active"
 		  {% csrf_token %}
         <div class="row">
         <div class="col-md-4 form-group">
-            <label>快递单号:<input type="text" name="delivery_no" {% if filter.delivery_no %} value="{{ filter.delivery_no }}"{%else%}value=""{% endif %}></label>
+            <label>快递单号:<input type="text" class="form-control" name="delivery_no" {% if filter.delivery_no %} value="{{ filter.delivery_no }}"{%else%}value=""{% endif %}></label>
             </div>
         <div class="col-md-4 form-group">
-            <label>实收金额:<input type="text" name="fact_money" {% if filter.fact_money %} value="{{ filter.fact_money }}"{%else%}value=""{% endif %}></label>
+            <label>实收金额:<input type="text" class="form-control" name="fact_money" {% if filter.fact_money %} value="{{ filter.fact_money }}"{%else%}value=""{% endif %}></label>
             </label>
             </div>
         <div class="col-md-4 form-group">
-            <label>客户:{{ form.customer }}</label>
+             <label>客户名称:
+            <input id="order_customer"  name="customer" type="text" value='' style="width:200px;"/></label>
             </div>
-        </div>
+            </div>
 		
 		<div class="row">
         <div class="col-md-4 form-group">
             <label>产品:
-            {{ form.product }}</label>
+            <input id="order_product" class="form-control" name="product" type="text" value='' style="width:200px;"/></label>
             </div>
 
         <div class="col-md-4 form-group">
@@ -37,42 +38,59 @@ class="active"
             {{ form.state }}</label>
             </div>
 		<div class="col-md-4 form-group">
-            <label>出单人:{{ form.issuing_person }}</label>
+             <label>出单人:
+            <input id="order_issuing_person" class="form-control" name="issuing_person" type="text" value='' style="width:200px;"/></label>
             </div>
             </div>
 		
         <div class="row">
-            <div class="col-md-4 form-group">
-            <input id="order_phone_number" class="form-control" name="phone_number" type="text" value='' style="width:300px;" placeholder="手机号码"/>
+            <div class="col-md-4 form-group"><label>手机号码:</label>
+            <input class="form-control" name="phone_number" type="text" value='{{filter.phone_number}}' />
         </div>
-            <div class="col-md-4 form-group">
-            <input id="order_address" class="form-control" name="address" type="text" value='' style="width:300px;" placeholder="联系地址"/>
+            <div class="col-md-4 form-group"><label>地址:</label>
+            <input class="form-control" name="address" type="text" value='{{ filter.address }}'/>
         </div>
 		 
             </div>
 			
 			
         
-        <div class="row">
-        <div class="col-md-4 form-group">
+        <div class="row" style="margin-top: 10px;">
+        <div class="col-md-5 form-group">
             <label>开始时间:
-                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
-                    <input class="form-control" size="16" name="starttime" type="text" value="{{filter.starttime}}" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" name="starttime" type="text" value="{{filter.starttime}}" readonly style="width:105px;">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
-            <input type="hidden" id="dtp_input1" value="" /><br/></label>
+            <input type="hidden" id="dtp_input1" value="" />
+			<select class="add-house-option" name="start_hour">
+                {% for i in hour_list %}
+                <option value="{{i}}" {% if filter.starthour == i %} selected {% endif %}>{{i}}</option>
+                {% endfor %}
+			</select>时
+			<select class="add-min-option" name="start_minute">{% for i in minute_list %}
+                <option value="{{i}}" {% if filter.startminute == i %} selected {% endif %}>{{i}}</option>
+                {% endfor %}</select>分</label>
             </div>
-        <div class="col-md-4 form-group">
+        <div class="col-md-5 form-group">
             <label>结束时间:
-                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
-                    <input class="form-control" size="16" name="endtime" type="text" value="{{ filter.endtime }}" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" name="endtime" type="text" value="{{ filter.endtime }}" readonly style="width:105px;">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
-            <input type="hidden" id="dtp_input2" value="" /><br/></label>
+            <input type="hidden" id="dtp_input2" value="" />
+			<select class="add-house-option" name="end_hour">
+                {% for i in hour_list %}
+                <option value="{{i}}" {% if filter.endhour == i %} selected {% endif %}>{{i}}</option>
+                {% endfor %}
+            </select>时
+			<select class="add-min-option" name="end_minute">
+                {% for i in minute_list %}
+                <option value="{{i}}" {% if filter.endminute == i %} selected {% endif %}>{{i}}</option>
+                {% endfor %}
+            </select>分</label>
             </div>
-			    <div class="col-md-4 form-group">
+			    <div class="col-md-2 form-group">
 	    <button type="SUBMIT" class="btn btn-primary bottom-size">查询</button>
         </div>
             </div>
@@ -81,8 +99,8 @@ class="active"
 
 
     </div>
-    <div class="row bg-box-shadow padding-5">
-        <table class="table table-bordered" id="table">
+    <div class="row bg-box-shadow padding-5 table-responsive">
+        <table class="table table-bordered widthonly" id="table">
         <thead>
         <tr>
             <th>订单号</th>
@@ -100,7 +118,7 @@ class="active"
         </tr>
         </thead>
             {% for i in order %}
-            <tr>
+            <tr id="order_{{i.id}}">
                 <td>{{ i.id }}</td>
             <td>{% if i.delivery_no %}<a href="{% url 'get_order_trace' %}?delivery_no={{i.delivery_no}}" data-toggle="modal" data-target="#traceorder" class="btn btn-default">{{ i.delivery_no }}</a>{% else %}{{ i.delivery_no }}{% endif %}</td>
             <td>{{ i.fact_money }}</td>
@@ -112,7 +130,8 @@ class="active"
             <td><a href="#" name="state" data-type="select" data-pk="{{ i.id }}" data-title="订单状态">{{ i.state }}</a></td>
             <td><a href="#" name="remark" data-type="text" data-pk="{{ i.id }}" data-title="输入备注">{{ i.remark }}</a></td>
                 <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
-            <td><a href="{% url 'order_remove' %}?id={{ i.id }}">删除</a></td>
+            <td><a href="javascript:" onclick="delete_id('{{i.id}}')" ><!--onclick= "return confirm('确定要删除?');"  {% url 'order_remove' %}?id={{ i.id }}-->
+			<i class="glyphicon glyphicon-trash"></i>删除</a></td>
             </tr>
             {% endfor %}
         </table>
@@ -128,6 +147,27 @@ class="active"
 {% endblock %}
 {% block js %}
 <script src="/static/js/jquery.twbsPagination.min.js"></script>
+<script>
+    function delete_id(order_id){
+        confirm_ = confirm('确定删除?');
+        if(confirm_){
+            $.ajax({
+                type:"GET",
+                url:'{% url 'order_remove' %}?id='+order_id,
+                success:function(msg){
+                    //alert("test order");
+                    //all delete is success,this can be execute
+                    $("#order_"+order_id).remove();
+                },
+                error:function(msg,status){
+                if(status=400){
+                alert("订单已发货，不能删除！");
+                }
+                }
+            });
+        }
+    };
+</script>
 <!--ajax——csrf验证-->
 <script type="text/javascript">
     function getCookie(name) {
@@ -188,19 +228,38 @@ $(document).ready(function(){
 <script src="/static/js/magicsuggest.js"></script>
 <script type="text/javascript">
 $(function() {
-	$('#order_address').magicSuggest({
+	var order_customer=$('#order_customer').magicSuggest({
 		method:'get',
-        data:'{% url 'get_contact_address' %}',
-		valueField: 'address',
-        displayField: 'address'
+        data:'{% url 'get_all_customer' %}',
+        placeholder:'输入客户名称',
+		valueField: 'name',
+        displayField: 'name'
 	});
+	{% if filter.customer %}
+	order_customer.setValue(['{{filter.customer}}']);
+	{% endif %}
 
-	$('#order_phone_number').magicSuggest({
+	var order_product=$('#order_product').magicSuggest({
 		method:'get',
-        data:'{% url 'get_contact_phone' %}',
-		valueField: 'phone_number',
-        displayField: 'phone_number'
+        data:'{% url 'get_all_product' %}',
+        placeholder:'输入产品名称',
+		valueField: 'name',
+        displayField: 'name'
 	});
+    {% if filter.product %}
+	order_product.setValue(['{{filter.product}}']);
+	{% endif %}
+
+	var order_issuing_person=$('#order_issuing_person').magicSuggest({
+		method:'get',
+        data:'{% url 'get_all_issuing_person' %}',
+        placeholder:'输入出单人姓名',
+		valueField: 'name',
+        displayField: 'name'
+	});
+	{% if filter.issuing_person %}
+	order_issuing_person.setValue(['{{filter.issuing_person}}']);
+	{% endif %}
 });
 </script>
 {% if order %}
@@ -222,7 +281,11 @@ $('#pagination').twbsPagination({
     product:$("[name='product']").val(),
     state:$("[name='state']").val(),
     starttime:$("[name='starttime']").val(),
+    start_hour:$("[name='start_hour']").val(),
+    start_minute:$("[name='start_minute']").val(),
     endtime:$("[name='endtime']").val(),
+    end_hour:$("[name='end_hour']").val(),
+    end_minute:$("[name='end_minute']").val(),
     page:page},
     datatype:"html",
     success:
@@ -316,7 +379,13 @@ $(document).ready(function() {
         {% for i in state %}
               {value: '{{i}}', text: '{{i.name}}'},
               {% endfor %}
-           ]
+           ],
+        error:
+           function(response) {
+    if(response.status === 404 || response.status === 400){return response.responseText;}
+    else{
+    return "请求失败";}
+}
     });
 
 });

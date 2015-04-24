@@ -57,7 +57,8 @@ class="active"
             <td><a href="#" name="price" class='{{ i.price }}' data-type="text" data-pk="{{ i.id }}" data-title="输入价格">{{ i.price }}</a></td>
             <td><a href="#" name="detail" data-type="text" data-pk="{{ i.id }}" data-title="输入备注">{{ i.detail }}</a></td>
                 <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
-            <td><a href="{% url 'order_product_remove' %}?id={{ i.id }}">删除</a></td>
+            <td><a href="{% url 'order_product_remove' %}?id={{ i.id }}"  onclick= "return confirm('确定要删除?');">
+			<i class="glyphicon glyphicon-trash"></i>删除</a></td>
             </tr>
             {% endfor %}
         </table>

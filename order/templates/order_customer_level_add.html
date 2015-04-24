@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block customer %}
+class="active"
+{% endblock %}
+{% block customer_active %}in{% endblock %}
+{% block body %}
+<div class="row bg-box-shadow padding-10 panel panel-default">
+<div class="panel-heading margin-5">
+    	<h3 class="panel-title">客户等级新增</h3>
+	</div>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                        <p><label class="col-md-5 text-align-right">名称:</label>{{ form.name }}{{ form.errors.name.as_text }}</p>
+                        <p><label class="col-md-5 text-align-right">等级:</label>{{ form.level }}{{ form.errors.level }}</p>
+                        <p><label class="col-md-5"></label><button type="submit" class="btn btn-primary bottom-size">确定</button></p>
+                        </form>
+    </div>
+{% endblock %}

@@ -1,57 +1,105 @@
 <thead>
+
         <tr>
+
             <th>姓名</th>
+
             <th>性别</th>
+
             <th>客户等级</th>
+
             <th>所属客服</th>
+
             <th>地址</th>
+
             <th>手机号码</th>
+
             <th>创建时间</th>
+
             <th>操作</th>
+
         </tr>
+
         </thead>
+
             {% for i in customer %}
+
             <tr>
-            <td>{% if i.user %}
-                <a href="#" name="name" data-type="text" data-pk="{{ i.id }}" data-title="输入名称">{{ i.name }}</a>
-                {% else %}{{i.name}}
-                {% endif %}
-             <a href="{% url 'get_customer_info' %}?customer_id={{ i.id }}" class="btn btn-success btn-xs" data-toggle="modal" data-target="#get_customer_info">查看客户信息</a>
+
+            <td>
+
+                <a href="{% url 'get_customer_info' %}?customer_id={{i.id}}" data-toggle="modal" data-target="#get_customer_info">{{ i.name }}</a>
+
             </td>
+
             <td>{% if i.user %}
+
                 <a href="#" name="sex" class='{{ i.sex }}' data-type="select" data-pk="{{ i.id }}" data-title="性别">
+
                    {% if i.sex %}男{% else %}女{% endif %}</a>
+
                 {% else %}{% if i.sex %}男{% else %}女{% endif %}{% endif %}
+
             </td>
+
             <td>{% if i.user %}<a href="#" name="level" data-type="select" data-pk="{{ i.id }}" data-title="等级">{{ i.level }}</a>
+
             {% else %}{{ i.level }}{% endif %}</td>
+
             <td>{{ i.user }}</td>
+
             {% if i.get_contact_info %}
+
                 <td>{% if i.user %}
+
                     <a href="#" name="address" data-type="text" data-pk="{{ i.id }}" data-title="输入地址">
+
                     {{ i.get_contact_info.0.address }}</a>
+
                 {% else %}
+
                 {{ i.get_contact_info.0.address }}{% endif %}</td>
+
                 <td>{% if i.user %}<a href="#" name="phone_number" data-type="text" data-pk="{{ i.id }}" data-title="输入手机">
+
                     {{ i.get_contact_info.0.phone_number }}</a>{% else %}{{ i.get_contact_info.0.phone_number }}{% endif %}
+
                 </td>
+
             {% else %}
+
                 <td>无</td>
+
                 <td>无
+
                 </td>
+
             {% endif %}
+
                 <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+
                 <td>
+
                 {% if not user.is_superuser %}
+
                 <a href="{% url 'order_contact_add'%}?id={{i.id}}">添加联系方式</a><br>
+
                     {% if not i.user %}
+
                 <a href="{% url 'order_customer_edit' %}?customer_id={{i.id}}">归属到自己</a>
+
                     {% else %}
+
                 <a href="{% url 'order_add'%}?customer_id={{i.id}}">开单</a><br>
+
                 {% endif %}
+
                 {% endif %}
-                 <a href="{% url 'order_customer_remove' %}?id={{i.id}}" id="addicon" onclick= "return confirm('确定删除?');" ><i class="glyphicon glyphicon-trash"></i>删除</a></td>
+
+                    <a href="{% url 'order_customer_remove' %}?id={{i.id}}" onclick= "return confirm('确定删除?');" ><i class="glyphicon glyphicon-trash"></i>删除</a></td>
+
             </tr>
+
             {% endfor %}
 <script type="text/javascript">
 $(document).ready(function() {
