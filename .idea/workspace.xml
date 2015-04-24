@@ -2,14 +2,65 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46e5afe4-f2b9-4e6f-a590-70363df33148" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/store_system/celery_conf.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/order/data_save.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/role/templates/goal_info.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/order/init_db.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/order/templates/message_info.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/order/templates/order_success_report.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/order/templates/person_sale_report.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/role/templates/server_cut_info.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/order/templates/team_sale_report.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/Thumbs.db" afterPath="$PROJECT_DIR$/static/css/Thumbs.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/customer/2015/04/06/test.xlsx" afterPath="$PROJECT_DIR$/media/customer/2015/04/06/test.xlsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role/templates/base.html" afterPath="$PROJECT_DIR$/role/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/contact_pagination.html" afterPath="$PROJECT_DIR$/order/templates/contact_pagination.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/contact_views.py" afterPath="$PROJECT_DIR$/order/contact_views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/customer_other.html" afterPath="$PROJECT_DIR$/order/templates/customer_other.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/customer_pagination.html" afterPath="$PROJECT_DIR$/order/templates/customer_pagination.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/debug.log" afterPath="$PROJECT_DIR$/log/debug.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/file_upload.py" afterPath="$PROJECT_DIR$/order/file_upload.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/forms.py" afterPath="$PROJECT_DIR$/order/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role/forms.py" afterPath="$PROJECT_DIR$/role/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/get_customer_info.html" afterPath="$PROJECT_DIR$/order/templates/get_customer_info.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role/templates/home.html" afterPath="$PROJECT_DIR$/role/templates/home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role/templates/login.html" afterPath="$PROJECT_DIR$/role/templates/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/models.py" afterPath="$PROJECT_DIR$/order/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role/models.py" afterPath="$PROJECT_DIR$/role/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/my_order.html" afterPath="$PROJECT_DIR$/order/templates/my_order.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_add.html" afterPath="$PROJECT_DIR$/order/templates/order_add.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_contact.html" afterPath="$PROJECT_DIR$/order/templates/order_contact.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_contact_add.html" afterPath="$PROJECT_DIR$/order/templates/order_contact_add.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_customer.html" afterPath="$PROJECT_DIR$/order/templates/order_customer.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_customer_add.html" afterPath="$PROJECT_DIR$/order/templates/order_customer_add.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_customer_level.html" afterPath="$PROJECT_DIR$/order/templates/order_customer_level.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_info.html" afterPath="$PROJECT_DIR$/order/templates/order_info.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_issuing_person.html" afterPath="$PROJECT_DIR$/order/templates/order_issuing_person.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_pagination.html" afterPath="$PROJECT_DIR$/order/templates/order_pagination.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_product.html" afterPath="$PROJECT_DIR$/order/templates/order_product.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_product_add.html" afterPath="$PROJECT_DIR$/order/templates/order_product_add.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_state.html" afterPath="$PROJECT_DIR$/order/templates/order_state.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/templates/order_upload.html" afterPath="$PROJECT_DIR$/order/templates/order_upload.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/report_views.py" afterPath="$PROJECT_DIR$/order/report_views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role/templates/role.html" afterPath="$PROJECT_DIR$/role/templates/role.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role/templates/role_info.html" afterPath="$PROJECT_DIR$/role/templates/role_info.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role/templates/role_name_edit.html" afterPath="$PROJECT_DIR$/role/templates/role_name_edit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store_system/settings.py" afterPath="$PROJECT_DIR$/store_system/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stock/templates/stock_channel.html" afterPath="$PROJECT_DIR$/stock/templates/stock_channel.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stock/templates/stock_info.html" afterPath="$PROJECT_DIR$/stock/templates/stock_info.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stock/templates/stock_management.html" afterPath="$PROJECT_DIR$/stock/templates/stock_management.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stock/templates/stock_mode.html" afterPath="$PROJECT_DIR$/stock/templates/stock_mode.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stock/templates/stock_order_no.html" afterPath="$PROJECT_DIR$/stock/templates/stock_order_no.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stock/templates/stock_other.html" afterPath="$PROJECT_DIR$/stock/templates/stock_other.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stock/templates/stock_type.html" afterPath="$PROJECT_DIR$/stock/templates/stock_type.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/urls.py" afterPath="$PROJECT_DIR$/order/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role/urls.py" afterPath="$PROJECT_DIR$/role/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store_system/urls.py" afterPath="$PROJECT_DIR$/store_system/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role/templates/user_info.html" afterPath="$PROJECT_DIR$/role/templates/user_info.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/order/views.py" afterPath="$PROJECT_DIR$/order/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role/views.py" afterPath="$PROJECT_DIR$/role/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stock/views.py" afterPath="$PROJECT_DIR$/stock/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="store_system.iws" />
@@ -34,14 +85,100 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/order/views.py">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/order/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58916086" vertical-offset="14858" max-vertical-offset="15645">
-              <caret line="1013" column="0" selection-start-line="1013" selection-start-column="0" selection-end-line="1013" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="687" max-vertical-offset="2940">
+              <caret line="189" column="20" selection-start-line="189" selection-start-column="20" selection-end-line="189" selection-end-column="20" />
               <folding>
-                <element signature="e#14#49#0" expanded="true" />
+                <element signature="e#14#42#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="contact_views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/order/contact_views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1320">
+              <caret line="82" column="64" selection-start-line="82" selection-start-column="64" selection-end-line="82" selection-end-column="64" />
+              <folding>
+                <element signature="e#15#64#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="file_upload.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/order/file_upload.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1317" max-vertical-offset="2010">
+              <caret line="108" column="78" selection-start-line="108" selection-start-column="78" selection-end-line="108" selection-end-column="78" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="order_upload.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/order/templates/order_upload.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.75" vertical-offset="0" max-vertical-offset="420">
+              <caret line="6" column="82" selection-start-line="6" selection-start-column="82" selection-end-line="6" selection-end-column="82" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="init_db.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/order/init_db.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.29411766" vertical-offset="0" max-vertical-offset="408">
+              <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+              <folding>
+                <element signature="e#14#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/role/templates/home.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-101.208336" vertical-offset="1201" max-vertical-offset="6930">
+              <caret line="242" column="88" selection-start-line="242" selection-start-column="88" selection-end-line="242" selection-end-column="88" />
+              <folding>
+                <element signature="n#style#0;n#i#0;n#span#0;n#div#0;n#li#2;n#ul#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="my_order.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/order/templates/my_order.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.375" vertical-offset="366" max-vertical-offset="1875">
+              <caret line="41" column="40" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="message_info.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/order/templates/message_info.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.0" vertical-offset="0" max-vertical-offset="480">
+              <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/role/templates/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-35.375" vertical-offset="1461" max-vertical-offset="4560">
+              <caret line="154" column="108" selection-start-line="154" selection-start-column="108" selection-end-line="154" selection-end-column="108" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -49,42 +186,11 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/order/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="266" max-vertical-offset="750">
-              <caret line="44" column="70" selection-start-line="44" selection-start-column="70" selection-end-line="44" selection-end-column="70" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="order_customer.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/order/templates/order_customer.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4145" max-vertical-offset="4665">
-              <caret line="303" column="9" selection-start-line="240" selection-start-column="0" selection-end-line="303" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="552" max-vertical-offset="1005">
+              <caret line="57" column="77" selection-start-line="57" selection-start-column="77" selection-end-line="57" selection-end-column="77" />
               <folding>
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#form#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#1;n#div#1;n#form#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#0#30#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="customer_pagination.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/order/templates/customer_pagination.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1340" max-vertical-offset="1860">
-              <caret line="118" column="9" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/order/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1110" max-vertical-offset="1470">
-              <caret line="81" column="10" selection-start-line="81" selection-start-column="10" selection-end-line="81" selection-end-column="10" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -97,63 +203,63 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/order/templates/reporter_chart.html" />
-        <option value="$PROJECT_DIR$/order/templates/testtst" />
-        <option value="$PROJECT_DIR$/order/templates/issuing_person_reporter.html" />
-        <option value="$PROJECT_DIR$/order/templates/income_reporter.html" />
-        <option value="$PROJECT_DIR$/role/models.py" />
-        <option value="$PROJECT_DIR$/stock/models.py" />
-        <option value="$PROJECT_DIR$/order/report_views.py" />
-        <option value="/Library/Python/2.7/site-packages/authority/utils.py" />
-        <option value="/Library/Python/2.7/site-packages/authority/admin.py" />
-        <option value="$PROJECT_DIR$/store_system/urls.py" />
-        <option value="/Library/Python/2.7/site-packages/debug_toolbar/settings.py" />
-        <option value="$PROJECT_DIR$/role/templates/user_edit.html" />
-        <option value="$PROJECT_DIR$/role/templates/user_permission_edit.html" />
-        <option value="$PROJECT_DIR$/store_system/settings.py" />
-        <option value="$PROJECT_DIR$/role/templates/home.html" />
-        <option value="$PROJECT_DIR$/role/templates/user_group_edit.html" />
-        <option value="$PROJECT_DIR$/order/templates/my_customer.html" />
-        <option value="$PROJECT_DIR$/order/contact_views.py" />
-        <option value="$PROJECT_DIR$/order/templates/order_trace.html" />
-        <option value="$PROJECT_DIR$/order/templates/my_order.html" />
-        <option value="$PROJECT_DIR$/order/templates/customer_upload.html" />
-        <option value="$PROJECT_DIR$/order/templates/order_upload.html" />
-        <option value="$PROJECT_DIR$/order/file_upload.py" />
-        <option value="$PROJECT_DIR$/role/templates/user_info.html" />
-        <option value="$PROJECT_DIR$/stock/templates/stock_order_no.html" />
-        <option value="$PROJECT_DIR$/stock/views.py" />
-        <option value="$PROJECT_DIR$/order/templates/order_customer_level.html" />
-        <option value="$PROJECT_DIR$/order/templates/customer_other.html" />
-        <option value="$PROJECT_DIR$/order/templates/order_product_add.html" />
-        <option value="$PROJECT_DIR$/order/templates/order_product.html" />
-        <option value="$PROJECT_DIR$/role/templates/base.html" />
-        <option value="$PROJECT_DIR$/order/templates/order_info.html" />
-        <option value="$PROJECT_DIR$/order/models.py" />
-        <option value="$PROJECT_DIR$/order/templates/order_customer_add.html" />
-        <option value="$PROJECT_DIR$/stock/urls.py" />
-        <option value="$PROJECT_DIR$/role/urls.py" />
-        <option value="$PROJECT_DIR$/static/js/jstree_demo.js" />
-        <option value="$PROJECT_DIR$/role/forms.py" />
-        <option value="$PROJECT_DIR$/order/forms.py" />
-        <option value="$PROJECT_DIR$/role/templates/role_name_edit.html" />
-        <option value="$PROJECT_DIR$/role/templates/role_info.html" />
-        <option value="$PROJECT_DIR$/role/views.py" />
         <option value="$PROJECT_DIR$/order/templates/order_contact.html" />
-        <option value="$PROJECT_DIR$/static/js/jquery.twbsPagination.min.js" />
-        <option value="$PROJECT_DIR$/order/templates/get_customer_info.html" />
-        <option value="$PROJECT_DIR$/order/templates/order_customer.html" />
-        <option value="$PROJECT_DIR$/order/urls.py" />
-        <option value="$PROJECT_DIR$/order/templates/order_pagination.html" />
+        <option value="$PROJECT_DIR$/order/templates/contact_pagination.html" />
         <option value="$PROJECT_DIR$/order/templates/customer_pagination.html" />
-        <option value="$PROJECT_DIR$/order/views.py" />
+        <option value="$PROJECT_DIR$/order/templates/order_pagination.html" />
+        <option value="$PROJECT_DIR$/order/templates/order_product_add.html" />
         <option value="$PROJECT_DIR$/order/templates/order_add.html" />
+        <option value="$PROJECT_DIR$/order/templates/order_contact_add.html" />
+        <option value="$PROJECT_DIR$/order/templates/order_customer_add.html" />
+        <option value="$PROJECT_DIR$/order/templates/order_customer_level.html" />
+        <option value="$PROJECT_DIR$/order/forms.py" />
+        <option value="$PROJECT_DIR$/role/templates/user_info.html" />
+        <option value="$PROJECT_DIR$/order/templates/order_issuing_person.html" />
+        <option value="$PROJECT_DIR$/order/templates/order_state.html" />
+        <option value="$PROJECT_DIR$/role/templates/role_info.html" />
+        <option value="$PROJECT_DIR$/role/templates/login.html" />
+        <option value="$PROJECT_DIR$/store_system/celery_conf.py" />
+        <option value="$PROJECT_DIR$/role/templates/role_name_edit.html" />
+        <option value="$PROJECT_DIR$/order/templates/order_info.html" />
+        <option value="$PROJECT_DIR$/test_scrapy.py" />
+        <option value="$PROJECT_DIR$/role/forms.py" />
+        <option value="$PROJECT_DIR$/role/urls.py" />
+        <option value="$PROJECT_DIR$/role/templates/goal_info.html" />
+        <option value="$PROJECT_DIR$/role/templates/server_cut_info.html" />
+        <option value="$PROJECT_DIR$/role/templates/issuing_person_cut_info.html" />
+        <option value="$PROJECT_DIR$/order/__init__.py" />
+        <option value="$PROJECT_DIR$/templatetags/__init__.py" />
+        <option value="$PROJECT_DIR$/templatetags/math_tag.py" />
+        <option value="$PROJECT_DIR$/role/templatetags/math_tag.py" />
+        <option value="$PROJECT_DIR$/role/views.py" />
+        <option value="$PROJECT_DIR$/role/models.py" />
+        <option value="$PROJECT_DIR$/order/models.py" />
+        <option value="$PROJECT_DIR$/order/templates/order_customer.html" />
+        <option value="$PROJECT_DIR$/order/templates/get_customer_info.html" />
+        <option value="$PROJECT_DIR$/order/templates/person_sale_report.html" />
+        <option value="$PROJECT_DIR$/order/data_save.py" />
+        <option value="$PROJECT_DIR$/order/templates/team_sale_report.html" />
+        <option value="$PROJECT_DIR$/order/report_views.py" />
+        <option value="$PROJECT_DIR$/order/templates/order_success_report.html" />
+        <option value="$PROJECT_DIR$/store_system/settings.py" />
+        <option value="$PROJECT_DIR$/store_system/urls.py" />
+        <option value="$PROJECT_DIR$/stock/views.py" />
+        <option value="$PROJECT_DIR$/order/views.py" />
+        <option value="$PROJECT_DIR$/order/urls.py" />
+        <option value="$PROJECT_DIR$/order/contact_views.py" />
+        <option value="$PROJECT_DIR$/order/templates/message_info.html" />
+        <option value="$PROJECT_DIR$/order/templates/my_order.html" />
+        <option value="$PROJECT_DIR$/role/templates/base.html" />
+        <option value="$PROJECT_DIR$/role/templates/home.html" />
+        <option value="$PROJECT_DIR$/order/file_upload.py" />
+        <option value="$PROJECT_DIR$/order/templates/order_upload.html" />
+        <option value="$PROJECT_DIR$/order/init_db.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="2" />
-    <option name="y" value="31" />
+    <option name="y" value="23" />
     <option name="width" value="1260" />
     <option name="height" value="692" />
   </component>
@@ -232,7 +338,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="django" />
+              <option name="myItemId" value="pinax" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -254,37 +360,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="django" />
+              <option name="myItemId" value="pinax" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="http" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="store_system" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="&lt; Python 2.7.6 (/usr/bin/python) &gt;" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="site-packages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="django" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="contrib" />
+              <option name="myItemId" value="notifications" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -306,15 +386,23 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="django" />
+              <option name="myItemId" value="pinax" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="contrib" />
+              <option name="myItemId" value="notifications" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="auth" />
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pinax" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="notifications" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -387,10 +475,6 @@
               <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -402,25 +486,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="store_system" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="store_system" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
+              <option name="myItemId" value="role" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -435,6 +501,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="role" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templatetags" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -530,10 +600,11 @@
       <recent name="$PROJECT_DIR$/order" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/store_system" />
+      <recent name="$PROJECT_DIR$/templatetags" />
       <recent name="$PROJECT_DIR$/" />
       <recent name="$PROJECT_DIR$/order/templates" />
-      <recent name="$PROJECT_DIR$/stock" />
-      <recent name="$PROJECT_DIR$/role" />
     </key>
   </component>
   <component name="RunManager" selected="Python.start">
@@ -723,26 +794,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="31" width="1260" height="692" extended-state="0" />
+    <frame x="2" y="23" width="1260" height="692" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288364" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32666665" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32833335" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288364" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39966273" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24939467" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32833335" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.325" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24939467" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24939467" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.325" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288364" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27333334" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288364" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39966273" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14666666" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
@@ -767,374 +838,432 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/order/contact_views.py</url>
+          <line>2</line>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/test_scrapy.py</url>
+          <line>7</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/store_system/urls.py</url>
+          <line>1</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="3" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///Library/Python/2.7/site-packages/django/utils/encoding.py">
+    <entry file="file://$PROJECT_DIR$/role/templates/goal_info.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.6608315" vertical-offset="3188" max-vertical-offset="3645">
-          <caret line="101" column="31" selection-start-line="101" selection-start-column="26" selection-end-line="101" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.6086956" vertical-offset="545" max-vertical-offset="2685">
+          <caret line="55" column="21" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/django/contrib/auth/forms.py">
+    <entry file="file://$PROJECT_DIR$/role/templates/server_cut_info.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19347319" vertical-offset="937" max-vertical-offset="5610">
-          <caret line="86" column="35" selection-start-line="85" selection-start-column="4" selection-end-line="86" selection-end-column="35" />
+        <state vertical-scroll-proportion="1.3695652" vertical-offset="0" max-vertical-offset="2145">
+          <caret line="42" column="21" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/role/templates/user_group_edit.html">
+    <entry file="file:///Library/Python/2.7/site-packages/django/template/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.054347824" vertical-offset="245" max-vertical-offset="720">
-          <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/role/templates/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65217394" vertical-offset="0" max-vertical-offset="460">
-          <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/income_reporter.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.021739" vertical-offset="2310" max-vertical-offset="4215">
+        <state vertical-scroll-proportion="-1.6652893" vertical-offset="806" max-vertical-offset="1290">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/issuing_person_reporter.html">
+    <entry file="file:///Library/Python/2.7/site-packages/django/templatetags/cache.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3210">
+        <state vertical-scroll-proportion="-2.0371902" vertical-offset="986" max-vertical-offset="1470">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stock/models.py">
+    <entry file="file:///Library/Python/2.7/site-packages/django/templatetags/future.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.037037" vertical-offset="848" max-vertical-offset="1305">
-          <caret line="82" column="31" selection-start-line="82" selection-start-column="31" selection-end-line="82" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/order_contact_add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.173913" vertical-offset="0" max-vertical-offset="630">
-          <caret line="36" column="14" selection-start-line="27" selection-start-column="0" selection-end-line="36" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/my_customer_pagination.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1380">
+        <state vertical-scroll-proportion="-1.4793389" vertical-offset="716" max-vertical-offset="1200">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/role/templates/add_role.html">
+    <entry file="file:///Library/Python/2.7/site-packages/django/templatetags/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="484">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/role/templates/user_permission_edit.html">
+    <entry file="file:///Library/Python/2.7/site-packages/django/templatetags/tz.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.3223143" vertical-offset="2576" max-vertical-offset="3060">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="484">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/order_trace.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6195652" vertical-offset="0" max-vertical-offset="540">
-          <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/my_order.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="795">
-          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/contact_views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60314685" vertical-offset="0" max-vertical-offset="572">
-          <caret line="28" column="49" selection-start-line="28" selection-start-column="49" selection-end-line="28" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/report_views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1590">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/customer_upload.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="460">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="24" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/order_upload.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47826087" vertical-offset="5" max-vertical-offset="465">
-          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/file_upload.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65495867" vertical-offset="2128" max-vertical-offset="2700">
-          <caret line="163" column="79" selection-start-line="163" selection-start-column="79" selection-end-line="163" selection-end-column="79" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stock/templates/stock_order_no.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5217391" vertical-offset="0" max-vertical-offset="825">
-          <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/django/contrib/auth/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="7215">
-          <caret line="78" column="37" selection-start-line="76" selection-start-column="25" selection-end-line="78" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/order_other.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="484">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/order_customer_level.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6847826" vertical-offset="15" max-vertical-offset="585">
-          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/order_product_add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.125" vertical-offset="0" max-vertical-offset="360">
-          <caret line="13" column="73" selection-start-line="13" selection-start-column="73" selection-end-line="13" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/customer_other.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29347825" vertical-offset="0" max-vertical-offset="460">
-          <caret line="9" column="68" selection-start-line="9" selection-start-column="68" selection-end-line="9" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stock/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.17768595" vertical-offset="4166" max-vertical-offset="5265">
-          <caret line="289" column="40" selection-start-line="289" selection-start-column="40" selection-end-line="289" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stock/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5268595" vertical-offset="0" max-vertical-offset="484">
-          <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/order_product.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.51086956" vertical-offset="635" max-vertical-offset="2535">
-          <caret line="58" column="16" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="116" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/order_customer_add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5869565" vertical-offset="0" max-vertical-offset="705">
-          <caret line="18" column="53" selection-start-line="18" selection-start-column="53" selection-end-line="18" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.0144628" vertical-offset="1976" max-vertical-offset="2460">
-          <caret line="99" column="7" selection-start-line="99" selection-start-column="7" selection-end-line="99" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/role/templates/user_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.5543478" vertical-offset="2060" max-vertical-offset="2520">
-          <caret line="59" column="32" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/jstree_demo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="484">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/my_customer.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.2173915" vertical-offset="3230" max-vertical-offset="3690">
-          <caret line="86" column="114" selection-start-line="86" selection-start-column="16" selection-end-line="86" selection-end-column="114" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/role/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38016528" vertical-offset="146" max-vertical-offset="1440">
-          <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/role/templates/role.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.8369565" vertical-offset="2225" max-vertical-offset="2685">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6484375" vertical-offset="426" max-vertical-offset="855">
+          <caret line="45" column="60" selection-start-line="45" selection-start-column="41" selection-end-line="45" selection-end-column="60" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/order/templates/order_contact.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.1956522" vertical-offset="1385" max-vertical-offset="2880">
-          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.546875" vertical-offset="480" max-vertical-offset="3015">
+          <caret line="46" column="25" selection-start-line="40" selection-start-column="44" selection-end-line="46" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/jquery.twbsPagination.min.js">
+    <entry file="file://$PROJECT_DIR$/role/templatetags/math_tag.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26258206" vertical-offset="0" max-vertical-offset="457">
-          <caret line="8" column="4895" selection-start-line="8" selection-start-column="4895" selection-end-line="8" selection-end-column="4895" />
+        <state vertical-scroll-proportion="0.18382353" vertical-offset="0" max-vertical-offset="408">
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/role/templates/base.html">
+    <entry file="file://$PROJECT_DIR$/role/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-158.75" vertical-offset="0" max-vertical-offset="4005">
-          <caret line="254" column="21" selection-start-line="254" selection-start-column="21" selection-end-line="254" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.63480395" vertical-offset="1211" max-vertical-offset="1695">
+          <caret line="99" column="109" selection-start-line="99" selection-start-column="109" selection-end-line="99" selection-end-column="109" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/role/views.py">
+    <entry file="file://$PROJECT_DIR$/order/templates/order_product.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.626033" vertical-offset="2336" max-vertical-offset="4905">
-          <caret line="305" column="44" selection-start-line="305" selection-start-column="44" selection-end-line="305" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2685">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/order/forms.py">
+    <entry file="file://$PROJECT_DIR$/order/templates/reporter_chart.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="821" max-vertical-offset="1470">
-          <caret line="81" column="10" selection-start-line="81" selection-start-column="10" selection-end-line="81" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/templates/income_reporter.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.691606" vertical-offset="3667" max-vertical-offset="4215">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/django/utils/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/django/utils/translation/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.2132353" vertical-offset="495" max-vertical-offset="3465">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/role/templates/role_name_edit.html">
+    <entry file="file:///Library/Python/2.7/site-packages/django/utils/translation/trans_null.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.625" vertical-offset="0" max-vertical-offset="885">
-          <caret line="25" column="14" selection-start-line="6" selection-start-column="4" selection-end-line="25" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="960">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/role/urls.py">
+    <entry file="file:///Library/Python/2.7/site-packages/django/utils/translation/trans_real.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
-          <caret line="14" column="48" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/role/templates/role_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4456522" vertical-offset="215" max-vertical-offset="1785">
-          <caret line="28" column="145" selection-start-line="28" selection-start-column="102" selection-end-line="28" selection-end-column="145" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/get_customer_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-30.0" vertical-offset="0" max-vertical-offset="885">
-          <caret line="48" column="30" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/order_pagination.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9347826" vertical-offset="1265" max-vertical-offset="1785">
-          <caret line="113" column="9" selection-start-line="113" selection-start-column="9" selection-end-line="113" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="266" max-vertical-offset="750">
-          <caret line="44" column="70" selection-start-line="44" selection-start-column="70" selection-end-line="44" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/contact_pagination.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065">
+        <state vertical-scroll-proportion="-21.022058" vertical-offset="8577" max-vertical-offset="11085">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/order/templates/order_customer.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4145" max-vertical-offset="4665">
-          <caret line="303" column="9" selection-start-line="240" selection-start-column="0" selection-end-line="303" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.509915" vertical-offset="2940" max-vertical-offset="9855">
+          <caret line="208" column="18" selection-start-line="208" selection-start-column="18" selection-end-line="208" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/templates/get_customer_info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53257793" vertical-offset="877" max-vertical-offset="1260">
+          <caret line="71" column="28" selection-start-line="71" selection-start-column="28" selection-end-line="71" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/data_save.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6911765" vertical-offset="732" max-vertical-offset="1140">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
           <folding>
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#form#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#1;n#form#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#14#40#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/customer_pagination.html">
+    <entry file="file://$PROJECT_DIR$/order/templates/person_sale_report.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1340" max-vertical-offset="1860">
-          <caret line="118" column="9" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
+        <state vertical-scroll-proportion="59.625" vertical-offset="1551" max-vertical-offset="1935">
+          <caret line="8" column="40" selection-start-line="0" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/order_info.html">
+    <entry file="file://$PROJECT_DIR$/order/templates/team_sale_report.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="8.923913" vertical-offset="725" max-vertical-offset="4935">
-          <caret line="322" column="9" selection-start-line="241" selection-start-column="0" selection-end-line="322" selection-end-column="9" />
+        <state vertical-scroll-proportion="2.578125" vertical-offset="0" max-vertical-offset="1785">
+          <caret line="66" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/order/templates/order_add.html">
+    <entry file="file://$PROJECT_DIR$/role/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49270073" vertical-offset="0" max-vertical-offset="975">
-          <caret line="18" column="159" selection-start-line="18" selection-start-column="159" selection-end-line="18" selection-end-column="159" />
+        <state vertical-scroll-proportion="1.6617647" vertical-offset="3447" max-vertical-offset="4515">
+          <caret line="275" column="0" selection-start-line="275" selection-start-column="0" selection-end-line="275" selection-end-column="0" />
+          <folding>
+            <element signature="e#14#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/role/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1029412" vertical-offset="0" max-vertical-offset="555">
+          <caret line="31" column="118" selection-start-line="31" selection-start-column="118" selection-end-line="31" selection-end-column="118" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/role/templates/issuing_person_cut_info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.15625" vertical-offset="0" max-vertical-offset="2130">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/templates/order_success_report.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.890625" vertical-offset="0" max-vertical-offset="1695">
+          <caret line="74" column="37" selection-start-line="74" selection-start-column="37" selection-end-line="74" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/role/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.32352942" vertical-offset="6777" max-vertical-offset="7185">
+          <caret line="457" column="16" selection-start-line="457" selection-start-column="16" selection-end-line="457" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/pinax/notifications/templates/pinax/notifications/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="135">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/pinax/notifications/templates/pinax/notifications/notice_settings.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3046875" vertical-offset="501" max-vertical-offset="885">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/pinax/notifications/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44117647" vertical-offset="0" max-vertical-offset="3165">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/store_system/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="387" max-vertical-offset="2715">
+          <caret line="45" column="20" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stock/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/report_views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44852942" vertical-offset="3477" max-vertical-offset="3885">
+          <caret line="244" column="0" selection-start-line="244" selection-start-column="0" selection-end-line="244" selection-end-column="0" />
+          <folding>
+            <element signature="e#14#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stock/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7794118" vertical-offset="4872" max-vertical-offset="5280">
+          <caret line="363" column="0" selection-start-line="363" selection-start-column="0" selection-end-line="363" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/order/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58916086" vertical-offset="14858" max-vertical-offset="15645">
-          <caret line="1013" column="0" selection-start-line="1013" selection-start-column="0" selection-end-line="1013" selection-end-column="0" />
+        <state vertical-scroll-proportion="40.919117" vertical-offset="0" max-vertical-offset="16935">
+          <caret line="1113" column="0" selection-start-line="1113" selection-start-column="0" selection-end-line="1113" selection-end-column="0" />
           <folding>
-            <element signature="e#14#49#0" expanded="true" />
+            <element signature="e#14#49#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/templates/order_trace.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="30" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/templates/order_info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45572916" vertical-offset="1655" max-vertical-offset="5970">
+          <caret line="122" column="41" selection-start-line="122" selection-start-column="41" selection-end-line="122" selection-end-column="151" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/store_system/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74264705" vertical-offset="132" max-vertical-offset="555">
+          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+          <folding>
+            <element signature="e#14#65#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="552" max-vertical-offset="1005">
+          <caret line="57" column="77" selection-start-line="57" selection-start-column="77" selection-end-line="57" selection-end-column="77" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/templates/message_info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.0" vertical-offset="0" max-vertical-offset="480">
+          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/templates/order_home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1110">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/templates/my_order.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.375" vertical-offset="366" max-vertical-offset="1875">
+          <caret line="41" column="40" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/role/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-35.375" vertical-offset="1461" max-vertical-offset="4560">
+          <caret line="154" column="108" selection-start-line="154" selection-start-column="108" selection-end-line="154" selection-end-column="108" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/contact_views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="852" max-vertical-offset="1320">
+          <caret line="82" column="64" selection-start-line="82" selection-start-column="64" selection-end-line="82" selection-end-column="64" />
+          <folding>
+            <element signature="e#15#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/role/templates/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-101.208336" vertical-offset="1201" max-vertical-offset="6930">
+          <caret line="242" column="88" selection-start-line="242" selection-start-column="88" selection-end-line="242" selection-end-column="88" />
+          <folding>
+            <element signature="n#style#0;n#i#0;n#span#0;n#div#0;n#li#2;n#ul#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2353" max-vertical-offset="2940">
+          <caret line="189" column="20" selection-start-line="189" selection-start-column="20" selection-end-line="189" selection-end-column="20" />
+          <folding>
+            <element signature="e#14#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/file_upload.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1317" max-vertical-offset="2010">
+          <caret line="108" column="78" selection-start-line="108" selection-start-column="78" selection-end-line="108" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/templates/order_upload.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.75" vertical-offset="0" max-vertical-offset="420">
+          <caret line="6" column="82" selection-start-line="6" selection-start-column="82" selection-end-line="6" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/init_db.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29411766" vertical-offset="0" max-vertical-offset="408">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <folding>
+            <element signature="e#14#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
