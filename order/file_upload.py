@@ -91,81 +91,43 @@ def order_file(request):
             orderfile.save()
             file_type=orderfile.file.name.split('.')[-1]
             filename=settings.MEDIA_ROOT+'/'+orderfile.file.name
-            if file_type=='txt':
-                f=open(filename,'rb')
-                data=f.readlines()
-                for i in data:
-                    info=i.split()
-                    name=info[0]
-                    sex=True if info[1]=='男' else False
-                    level=Customer_Level.objects.get(level=1)
-                    customer=Customer(name=name,sex=sex,level=level)
-                    customer.save()
-                    address=info[2]
-                    phone_number=info[3]
-                    contact=Contact_info(address=address,phone_number=phone_number,customer=customer,default=True)
-                    contact.save()
-                    try:
-                        issuing_person=Issuing_person.objects.get(name=_(info[4]))
-                    except:
-                        issuing_person=None
-                    try:
-                        product=Product.objects.get(name=_(info[5]))
-                    except:
-                        product=None
-                    order=Order(customer=customer,issuing_person=issuing_person,product=product,
-                                state=Order_State.objects.get(name=_("未发货")))
-                    order.save()
-                f.close()
-            if file_type=='csv':
-                csvfile=file(filename,'rb')
-                reader=csv.reader(csvfile)
-                for line in reader:
-                    name=line[0]
-                    sex=True if line[1]=='男' else False
-                    level=Customer_Level.objects.get(level=1)
-                    customer=Customer(name=name,sex=sex,level=level)
-                    customer.save()
-                    address=info[2]
-                    phone_number=info[3]
-                    contact=Contact_info(address=address,phone_number=phone_number,customer=customer,default=True)
-                    contact.save()
-                    try:
-                        issuing_person=Issuing_person.objects.get(name=_(info[4]))
-                    except:
-                        issuing_person=None
-                    try:
-                        product=Product.objects.get(name=_(info[5]))
-                    except:
-                        product=None
-                    order=Order(customer=customer,issuing_person=issuing_person,product=product,
-                                state=Order_State.objects.get(name=_("未发货")))
-                    order.save()
-                csvfile.close()
             if file_type in ['xls','xlsx']:
                 excel=xlrd.open_workbook(filename)
                 data=excel.sheets()[0]
                 nrows=data.nrows
-                for i in range(nrows):
-                    name=data.cell(i,0).value
+                for i in range(1,nrows):
+                    name=data.cell(i,2).value
                     sex=True if data.cell(i,1).value==u'男' else False
                     level=Customer_Level.objects.get(level=1)
-                    customer=Customer(name=name,sex=sex,level=level)
+                    user=data.cell(i,8).value
+                    try:
+                        user1=User.objects.get(username=user)
+                        if user1.is_superuser:
+                            user1=None
+                    except:
+                        user1=None
+                    customer=Customer(name=name,sex=sex,level=level,user=user1)
                     customer.save()
-                    address=data.cell(i,2).value
+                    address=data.cell(i,4).value
                     phone_number=str(data.cell(i,3).value).split('.')[0]
                     contact=Contact_info(address=address,phone_number=phone_number,customer=customer,default=True)
                     contact.save()
                     try:
-                        issuing_person=Issuing_person.objects.get(name=_(data.cell(i,4).value))
+                        issuing_person=Issuing_person.objects.get(name=_(data.cell(i,7).value))
                     except:
                         issuing_person=None
                     try:
                         product=Product.objects.get(name=_(data.cell(i,5).value))
                     except:
                         product=None
-                    order=Order(customer=customer,issuing_person=issuing_person,product=product,
-                                state=Order_State.objects.get(name=_("未发货")))
+                    order_no=data.cell(i,0).value
+                    if order_no:
+                        state=Order_State.objects.get(level=2)
+                    else:
+                        state=Order_State.objects.get(level=1)
+                    remark=_('(%s)%s'%(data.cell(i,1).value,data.cell(i,6).value))
+                    order=Order(delivery_no=order_no,customer=customer,issuing_person=issuing_person,product=product,
+                                state=state,remark=remark)
                     order.save()
             return HttpResponse("<script language='javascript'>alert('上传成功');history.go(-1)</script>")
         else:
