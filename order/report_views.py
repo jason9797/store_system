@@ -143,9 +143,11 @@ def issuing_person_reporter(request):
         except:
             continue
         try:
+            #print type(i['day'])
             all_person[Issuing_person.objects.get(pk=i['issuing_person']).name][str(int(i['day'][-2:]))]+=Product.objects.get(pk=i['product']).price
         except:
             all_person[Issuing_person.objects.get(pk=i['issuing_person']).name][str(int(i['day'][-2:]))]+=0
+
     return render(request,'issuing_person_reporter.html',{'alldata':all_person,'data':day_money,'starttime':starttime,'endtime':endtime,'issuing_person':issuing_person})
 
 @admin_required(login_url="/login/")

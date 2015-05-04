@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block customer %}
+class="active"
+{% endblock %}
+{% block customer_active %}in{% endblock %}
+{% block body %}
+<div class="row bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+    	<h3 class="panel-title">客户提醒管理</h3>
+	</div>
+    <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
+		  {% csrf_token %}
+        <div class="row">
+        <!--<div class="col-md-4 form-group">
+            <label>地址:<input type="text" name="address" {% if filter.address %} value="{{ filter.address }}"{%else%}value=""{% endif %}></label>
+            </div>-->
+        <div class="col-md-6 form-group">
+            <label style="display:block"><span class="col-md-3" style="text-align:right">客户名称:</span><select name="customer">
+                <option value="{{ customer.name }}" selected>{{customer.name}}</option>
+            </select><span style="color: red;margin-left: 5px;">*</span></label>
+            </div>
+        <div class="col-md-6 form-group">
+            <label style="display:block"><span class="col-md-3" style="text-align:right">手机号码:</span><input name="phone_number" value="{{customer.get_contact_info.0.phone_number}}" readonly="readonly"/></label>
+            </div>
+       </div>
+        <div class="row">
+        <div class="col-md-6 form-group">
+            <label style="display:block"><span class="col-md-3" style="text-align:right">提醒时间:</span>
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" name="date" type="text" value="" readonly style="width:105px;" required>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            <input type="hidden" id="dtp_input1" value="" required/>
+			<select class="add-house-option" name="hour" required>
+                {% for i in hour_list %}
+                <option value="{{i}}" {% if i == 0 %} selected {% endif %}>{{i}}</option>
+                {% endfor %}
+			</select>时
+			<select class="add-min-option" name="minute" required>{% for i in minute_list %}
+                <option value="{{i}}" {% if i == 0 %} selected {% endif %}>{{i}}</option>
+                {% endfor %}</select>分<span style="color: red;margin-left: 5px;">*</span></label>
+            </div></label>
+			
+			<div class="col-md-6 form-group">
+				<label style="display:block"><span class="col-md-3" style="text-align:right">提醒人:</span>
+					<select name="alert_user" required>
+					{% for i in user_list %}
+					<option value="{{i.username}}" {% if user == i %} selected{% endif %}>{{i.first_name}}</option>
+					{% endfor %}
+					</select><span style="color: red;margin-left: 5px;">*</span>
+				</label>
+			</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+            <label style="display:block;"><span class="col-md-3" style="text-align:right">提醒内容:</span>
+                <div class="col-md-9 row"><textarea name="alert_content"
+                                                    style="width: 100%;height: 135px;max-width: 100%;max-height: 135px;" required>
+
+                </textarea></div><span style="color: red;margin-left: 5px;">*</span></label>
+			</div>
+        </div>
+    <div class="col-md-6 form-group row">
+	<span class="col-md-3"></span>
+	    <button type="SUBMIT" class="btn btn-primary bottom-size">添加</button>
+        <a href="{% url 'customer_alert_info' %}" class="btn btn-primary bottom-size">查看所有提醒</a>
+        </div>
+
+    			</form>
+
+
+    </div>
+
+
+{% endblock %}

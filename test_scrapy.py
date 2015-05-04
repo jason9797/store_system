@@ -2,9 +2,9 @@
 
 from BeautifulSoup import BeautifulSoup
 import urllib,urllib2
-f=open("/Users/jason_lee/Downloads/no.txt",'rb')
+f=open("/Users/jason_lee/Downloads/no (2).txt",'rb')
 info=f.readlines()
-f1=open("number.txt","a")
+f1=open("number1.txt","a")
 for i in info:
     number=i.split()[0]
     url_info=urllib.urlopen("http://www.haosou.com/s?ie=utf-8&shb=1&src=360sou_newhome&q=%s"%number)

@@ -71,6 +71,9 @@ class Customer(models.Model):
             return contact.filter(default=True)
         else:
             return contact.order_by('id')
+    def get_recent_order(self):
+        order=Order.objects.filter(customer=self).order_by("-jointime")
+        return order
 
 class Stock_Product(models.Model):
     '''
@@ -188,3 +191,34 @@ class Order_all_info(models.Model):
         verbose_name="订单详情"
     def __unicode__(self):
         return '%s'%self.order_no
+
+class Order_Server(models.Model):
+    order=models.ForeignKey(Order,verbose_name='订单号',blank=True,null=True,on_delete=models.SET_NULL)
+    content=models.CharField(verbose_name='内容',max_length=255)
+    jointime=models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
+
+    class Meta:
+        verbose_name="服务纪录"
+    def __unicode__(self):
+        return '%s'%self.order
+
+
+class Customer_Alert(models.Model):
+    #customer=models.ForeignKey(Customer,verbose_name='顾客',blank=True,null=True,on_delete=models.SET_NULL)
+    customer=models.CharField(verbose_name='客户',max_length=50)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                                 message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    phone_number = models.CharField('手机号码',max_length=20,validators=[phone_regex], blank=True)
+    content=models.CharField(verbose_name='内容',max_length=255)
+    alert_user=models.ForeignKey(User,verbose_name='提醒人',blank=True,null=True,on_delete=models.SET_NULL)
+    add_user=models.CharField(verbose_name="添加人",max_length=50)
+    alert_time=models.DateTimeField(verbose_name='提醒时间')
+    alert_state=models.BooleanField(verbose_name='提醒状态',default=0)
+    task_id=models.CharField(verbose_name='任务id',max_length='100',blank=True,null=True)
+    jointime=models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
+
+    class Meta:
+        verbose_name="客户提醒"
+    def __unicode__(self):
+        return self.customer
+

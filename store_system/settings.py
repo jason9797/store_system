@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     #'reversion',
     'simple_history',
     'notifications',
+    'djcelery',
     #"pinax.notifications",
     #"pinax_theme_bootstrap",
     #"bootstrapform",
@@ -59,6 +60,15 @@ CACHES = {
         }
     }
 }
+#celery
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = 'redis://127.0.0.1:6379/1'
+BROKER_TRANSPORT = 'redis'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERY_RESULT_BACKEND='djcelery.backends.cache:CacheBackend'
+CELERY_IMPORTS=("order.task")
+#####
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"

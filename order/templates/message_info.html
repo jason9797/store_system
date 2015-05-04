@@ -14,13 +14,15 @@
             <tr>
             <th>发送方</th>
             <th>内容</th>
+            <th>备注</th>
             <th>发送时间</th>
             </tr></thead>
                  {% for i in alert %}
                 <tr>
                  <td>{{i.actor.first_name}}</td>
             <td>{{i.verb}}</td>
-                <td>{{ i.timestamp|date:'Y-m-d h:i:s' }}</td>
+                <td>{% if i.description %}{{ i.description }}{% else %}无{% endif %} </td>
+                    <td>{{ i.timestamp|date:'Y-m-d H:i:s' }}</td>
                 </tr>
                  {% endfor %}
             </table>

@@ -17,7 +17,7 @@
                 原料:{{ k.stock }},数量:{{ k.quantity }}<br>
                 {% endfor %}
             </td>
-                <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+                <td>{{ i.jointime|date:'Y-m-d H:i:s' }}</td>
             <td><a href="{% url 'order_product_remove' %}?id={{ i.id }}">删除</a></td>
             </tr>
             {% endfor %}

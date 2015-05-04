@@ -17,7 +17,7 @@
             <td><a href="#" name="level" data-type="select" data-pk="{{ i.id }}" data-title="等级">{{ i.level }}</a></td>
             <td><a href="#" name="user" data-type="select" data-pk="{{ i.id }}" data-title="所属客服">{{ i.user }}</a></td>
             <td><a href="#" name="issuing_person" data-type="select" data-pk="{{ i.id }}" data-title="出单人">{{ i.issuing_person }}</a></td>
-            <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+            <td>{{ i.jointime|date:'Y-m-d H:i:s' }}</td>
             <td><a href="{% url 'stock_management_remove' %}?id={{ i.id }}">删除</a></td>
             </tr>
             {% endfor %}

@@ -273,6 +273,67 @@ def get_no_approval_order(self):
     this_month_order=Order.objects.filter(Q(state=Order_State.objects.filter(level=1))&Q(jointime__gte=month_start)).order_by("-jointime")
     return this_month_order
 
+def get_this_week_success(self):
+    week_monday=datetime.date.today()-datetime.timedelta(days=datetime.date.today().weekday())
+    this_week_order=Order.objects.filter(Q(jointime__gte=week_monday)).count()
+    this_week_success=Order.objects.filter(Q(jointime__gte=week_monday)&Q(state=Order_State.objects.get(name=_('已签收')))).count()
+    try:
+        success_per="%.2f%%" %((float(this_week_success) / float(this_week_order)) * 100)
+    except:
+        success_per=0
+    return success_per
+
+def get_last_week_success(self):
+    last_week_monday=datetime.date.today()-datetime.timedelta(days=(datetime.date.today().weekday()+7))
+    last_week_order=Order.objects.filter(Q(jointime__gte=last_week_monday)).count()
+    last_week_success=Order.objects.filter(Q(jointime__gte=last_week_monday)&Q(state=Order_State.objects.get(name=_('已签收')))).count()
+    try:
+        success_per="%.2f%%" %((float(last_week_success) / float(last_week_order)) * 100)
+    except:
+        success_per=0
+    return success_per
+
+def get_this_month_success(self):
+    this_month_start=datetime.date(datetime.date.today().year,datetime.date.today().month,1)
+    this_month_order=Order.objects.filter(Q(jointime__gte=this_month_start)).count()
+    this_month_success=Order.objects.filter(Q(jointime__gte=this_month_start)&Q(state=Order_State.objects.get(name=_('已签收')))).count()
+    try:
+        success_per="%.2f%%" %((float(this_month_success) / float(this_month_order)) * 100)
+    except:
+        success_per=0
+    return success_per
+
+def get_last_month_success(self):
+    last_month_start=datetime.date(datetime.date.today().year,datetime.date.today().month,1)
+    last_month_order=Order.objects.filter(Q(jointime__gte=last_month_start)).count()
+    last_month_success=Order.objects.filter(Q(jointime__gte=last_month_start)&Q(state=Order_State.objects.get(name=_('已签收')))).count()
+    try:
+        success_per="%.2f%%" %((float(last_month_success) / float(last_month_order)) * 100)
+    except:
+        success_per=0
+    return success_per
+
+def get_week_order(self):
+    week_monday=datetime.date.today()-datetime.timedelta(days=datetime.date.today().weekday())
+    this_week_order_count=Order.objects.filter(Q(jointime__gte=week_monday)&Q(state=Order_State.objects.get(name=_('已签收')))).count()
+    this_week_order_money=Order.objects.filter(Q(jointime__gte=week_monday)&Q(
+        state=Order_State.objects.get(name=_('已签收')))).aggregate(Sum('product__price'))['product__price__sum']
+    if not this_week_order_money:
+        this_week_order_money=0
+    return this_week_order_count,this_week_order_money
+
+def get_month_order(self):
+    this_month_start=datetime.date(datetime.date.today().year,datetime.date.today().month,1)
+    this_month_order_count=Order.objects.filter(Q(jointime__gte=this_month_start)&Q(state=Order_State.objects.get(name=_('已签收')))).count()
+    this_month_order_money=Order.objects.filter(Q(jointime__gte=this_month_start)&Q(
+        state=Order_State.objects.get(name=_('已签收')))).aggregate(Sum('product__price'))['product__price__sum']
+    if not this_month_order_money:
+        this_month_order_money=0
+    return this_month_order_count,this_month_order_money
+
+
+
+
 
 
 User.add_to_class("get_group_name",get_group_name)
@@ -293,3 +354,9 @@ User.add_to_class("person_money_rank",person_money_rank)
 User.add_to_class("get_team_rank",get_team_rank)
 User.add_to_class("get_failed_order",get_failed_order)
 User.add_to_class("get_no_approval_order",get_no_approval_order)
+User.add_to_class("get_this_week_success",get_this_week_success)
+User.add_to_class("get_last_week_success",get_last_week_success)
+User.add_to_class("get_this_month_success",get_this_month_success)
+User.add_to_class("get_last_month_success",get_last_month_success)
+User.add_to_class("get_week_order",get_week_order)
+User.add_to_class("get_month_order",get_month_order)

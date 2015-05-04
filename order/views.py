@@ -1,34 +1,19 @@
 #coding=utf-8
-from django.shortcuts import render
-import urllib,urllib2
-from collections import OrderedDict
-from django.http import Http404
+import urllib
 import ast
-from django.contrib.auth.models import User,Group
-from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
+
+from django.shortcuts import render
+from django.http import Http404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required,permission_required
-from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-from django.shortcuts import render_to_response,redirect
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext as _
-from django.core import serializers
-from django.template import RequestContext
-from django.forms.models import model_to_dict
-from django.db.models import Q
-from django.contrib.auth.decorators import user_passes_test
-from role.models import *
-from role.forms import *
-import math
-from stock.forms import *
-import datetime
-import json
-import csv
-import xlrd
-from models import *
-from forms import *
-from store_system import settings
 
+from role.forms import *
+from forms import *
+from order import task
+import math
+from store_system.celery import app
 
 @permission_required('order.add_order',login_url='/permission/deny/')
 def order_add(request):
@@ -1010,6 +995,7 @@ def order_info(request):
             filter_dict['starttime']=starttime
             filter_dict['starthour']=request.POST.get("start_hour")
             filter_dict['startminute']=request.POST.get("start_minute")
+            starttime=starttime+' %s:%s:00'%(request.POST.get("start_hour"),request.POST.get("start_minute"))
             order=order.filter(jointime__gte=starttime)
             #filter_dict['starttime']=starttime
         endtime=request.POST.get('endtime')
@@ -1017,6 +1003,7 @@ def order_info(request):
             filter_dict['endtime']=endtime
             filter_dict['endhour']=request.POST.get("end_hour")
             filter_dict['endminute']=request.POST.get("end_minute")
+            endtime=endtime+' %s:%s:00'%(request.POST.get("end_hour"),request.POST.get("end_minute"))
             order=order.filter(jointime__lte=endtime)
             #filter_dict['endtime']=endtime
         form=OrderForm(initial)
@@ -1120,4 +1107,123 @@ def get_customer_info(request):
     customer=Customer.objects.get(pk=customer_id)
     contact_info=Contact_info.objects.filter(customer=customer)
     order_info=Order.objects.filter(customer=customer).order_by("-jointime")
-    return render(request,'get_customer_info.html',{"customer":customer,"contact_info":contact_info,"order_info":order_info})
+    try:
+        server_record=Order_Server.objects.filter(order=order_info[0])
+    except:
+        server_record=[]
+    print server_record
+    return render(request,'get_customer_info.html',{"customer":customer,"contact_info":contact_info,"order_info":order_info,'server_record':server_record})
+
+@login_required(login_url="/login")
+def order_server_record(request):
+    if request.method=="POST":
+        customer_id=request.POST.get("customer_id")
+        customer=Customer.objects.get(pk=customer_id)
+        order=customer.get_recent_order()[0]
+        if order:
+            content=request.POST.get("content")
+            order_server=Order_Server(order=order,content=content)
+            order_server.save()
+            return HttpResponse("<script language='javascript'>alert('设置备注成功');window.location.href=document.referrer;</script>")
+        else:
+            return HttpResponse("<script language='javascript'>alert('设置失败');</script>")
+
+@login_required(login_url="/login")
+def customer_alert_add(request):
+    if request.method=="POST":
+        customer=request.POST.get("customer")
+        phone_number=request.POST.get("phone_number")
+        alert_time=request.POST.get("date")+' %s:%s:00'%(request.POST.get("hour"),request.POST.get("minute"))
+        alert_user=User.objects.get(username=request.POST.get("alert_user"))
+        alert_content=request.POST.get("alert_content")
+        add_user=request.user.username
+        customer_alert=Customer_Alert(customer=customer,content=alert_content,phone_number=phone_number,alert_time=alert_time,alert_user=alert_user,add_user=add_user)
+        customer_alert.save()
+        alert_time=datetime.datetime.strptime(alert_time,"%Y-%m-%d %H:%M:%S")
+        do_time=alert_time-datetime.timedelta(hours=8)#传到celery多了8个小时
+
+        #print do_time
+        task_result=task.alert.apply_async((request.POST.get("alert_user"),request.user.username,alert_content,alert_time,phone_number,customer),eta=do_time)
+        task_id=task_result.id
+        customer_alert.task_id=task_id
+        customer_alert.save()
+        #app.control.revoke(task_id,terminate=True)
+        return HttpResponse("<script language='javascript'>alert('添加提醒成功');window.location.href=document.referrer;</script>")
+    else:
+        customer_id=request.GET.get('customer_id')
+        customer=Customer.objects.get(pk=int(customer_id))
+        user_list=User.objects.all()
+        hour_list=["0"+str(i) if i<10 else str(i) for i in range(24)]
+        minute_list=["0"+str(i) if i<10 else str(i) for i in range(0,60,5)]
+        return render(request,'customer_alert_add.html',{'customer':customer,'user_list':user_list,'hour_list':hour_list,
+                                                         'minute_list':minute_list})
+
+@login_required(login_url='/login')
+def customer_alert_info(request):
+    if request.method=='POST':
+        customer=request.POST.get('customer')
+        filter_dict={}
+        if customer:
+            customer_alert=Customer_Alert.objects.filter(customer__contains=customer)
+            filter_dict['customer']=customer
+        else:
+            customer_alert=Customer_Alert.objects.all()
+        alert_state=request.POST.get('alert_state')
+        if alert_state =='All' or not alert_state:
+            filter_dict['alert_state']='All'
+        else:
+            customer_alert=customer_alert.filter(alert_state=eval(alert_state))
+            filter_dict['alert_state']=eval(alert_state)
+        alert_user=request.POST.get('alert_user')
+        if alert_user:
+            #contact=contact.filter(phone_number__contains=phone_number)
+            customer_alert=customer_alert.filter(alert_user=User.objects.get(username=alert_user))
+            filter_dict['alert_user']=alert_user
+        starttime=request.POST.get('starttime')
+        if starttime:
+            customer_alert=customer_alert.filter(jointime__gte=starttime)
+            filter_dict['starttime']=starttime
+        endtime=request.POST.get('endtime')
+        if endtime:
+            customer_alert=customer_alert.filter(jointime__lte=endtime)
+            filter_dict['endtime']=endtime
+        page=request.POST.get('page')
+        if page:
+            total_page=int(math.ceil(float(len(customer_alert))/20))
+            if int(page)==1:
+                start_page=0
+                end_page=20
+            else:
+                start_page=20*(int(page)-1)
+                end_page=20*int(page)
+            customer_alert=customer_alert[start_page:end_page]
+            user_list=User.objects.all()
+            return render(request,'alert_pagination.html',{'customer_alert':customer_alert,'user_list':user_list
+                                              })
+
+        else:
+            start_page=0
+            end_page=20
+            total_page=int(math.ceil(float(len(customer_alert))/20))
+            customer_alert=customer_alert[:end_page]
+            page=1
+    else:
+        customer_alert=[]
+        filter_dict={}
+        total_page=0
+        page=0
+    user_list=User.objects.all()
+    info={'customer_alert':customer_alert,'filter':filter_dict,'user_list':user_list,
+        'total_page':total_page,'current_page':page}
+    return render(request,'customer_alert.html',info)
+
+@login_required(login_url='/login')
+def customer_alert_remove(request):
+    customer_alert_id=request.GET.get("id")
+    customer_alert=Customer_Alert.objects.get(pk=customer_alert_id)
+    if customer_alert.alert_state:
+        customer_alert.delete()
+    else:
+        app.control.revoke(customer_alert.task_id,terminate=True)
+        customer_alert.delete()
+    return HttpResponse("<script language='javascript'>alert('删除成功');</script>")

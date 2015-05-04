@@ -36,7 +36,7 @@ class="active"
             <td>{{ i.issuing_person }}</td>
             <td>{{ i.product }}</td>
             <td><a href="#" name="state" data-type="select" data-pk="{{ i.id }}" data-title="订单状态">{{ i.state }}</a></td>
-                <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+                <td>{{ i.jointime|date:'Y-m-d H:i:s' }}</td>
             <td><a href="{% url 'order_remove' %}?id={{ i.id }}" onclick= "return confirm('确定删除?');">
                 <i class="glyphicon glyphicon-trash"></i>删除</a>
                 {% if i.state.level == 1%}

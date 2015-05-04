@@ -76,7 +76,7 @@
 
             {% endif %}
 
-                <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>
+                <td>{{ i.jointime|date:'Y-m-d H:i:s' }}</td>
 
                 <td>
 
@@ -136,7 +136,7 @@ $(document).ready(function() {
         url:"{% url 'order_customer_edit' %}",
         source: [
         {% for i in level %}
-              {value: {{i}}, text: '{{i.level}}'},
+              {value: '{{i}}', text: '{{i.level}}'},
               {% endfor %}
            ]
     });
