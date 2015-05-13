@@ -1,7 +1,7 @@
 <thead>
 
         <tr>
-
+            <th>客户编号</th>
             <th>姓名</th>
 
             <th>性别</th>
@@ -25,7 +25,7 @@
             {% for i in customer %}
 
             <tr>
-
+            <td>{{i.id}}</td>
             <td>
 
                 <a href="{% url 'get_customer_info' %}?customer_id={{i.id}}" data-toggle="modal" data-target="#get_customer_info">{{ i.name }}</a>

@@ -14,9 +14,14 @@ from forms import *
 from order import task
 import math
 from store_system.celery import app
+import json
+from datetime import datetime,timedelta
 
 @permission_required('order.add_order',login_url='/permission/deny/')
 def order_add(request):
+    '''
+    添加订单
+    '''
     if request.method=="POST":
         order_form=OrderForm(request.POST)
         if order_form.is_valid():
@@ -40,7 +45,26 @@ def order_add(request):
             #order_state=data['state']
             order=Order(delivery_no='',fact_money=0,customer=customer,issuing_person=issuing_person,
                     product=product,state=Order_State.objects.get(name='未发货'),remark=remark)
+
             order.save()
+            data={}
+            for i in order._meta.fields:
+                try:
+                    verbose_name=order._meta.get_field(i.name).verbose_name.title().decode('utf-8')
+                except:
+                    verbose_name=order._meta.get_field(i.name).verbose_name.title()
+                #print verbose_name
+                #print inspect.isclass(type(getattr(order,i.name))),getattr(order,i.name),type(getattr(order,i.name)),dir(getattr(order,i.name))
+                if hasattr(getattr(order,i.name),'_meta'):
+                    data[verbose_name]=getattr(order,i.name).__unicode__()
+                else:
+                    if isinstance(getattr(order,i.name),datetime):
+                        data[verbose_name]=(getattr(order,i.name)+timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+                    else:
+                        data[verbose_name]=getattr(order,i.name)
+            data=json.dumps(data)
+            data={'data':data}
+            user_log=UserLog.objects.create(user=request.user,action='create',model_name=order.__class__.__name__,model_object_id=order.id,data=data)
             if request.user.is_superuser:
                 js_data="<script language='javascript'>var r=confirm('添加成功,确定继续添加,取消返回到订单列表!');if (r==true){  window.location.href='/order/order/add/?customer_id=%s'}else{window.location.href='/order/order/'}</script>"%customer.id
             else:
@@ -96,21 +120,58 @@ def order_edit(request):
             #print value
         info_dict={'%s'%name:value}
         order=Order.objects.filter(pk=request.POST.get("pk"))
+        data={}
+        try:
+            verbose_name=order[0]._meta.get_field(name).verbose_name.title().decode('utf-8')
+        except:
+            verbose_name=order[0]._meta.get_field(name).verbose_name.title()
+        #print verbose_name
+        #print inspect.isclass(type(getattr(order,i.name))),getattr(order,i.name),type(getattr(order,i.name)),dir(getattr(order,i.name))
+        if hasattr(getattr(order[0],name),'_meta'):
+            data[verbose_name]=[getattr(order[0],name).__unicode__(),value.__unicode__()]
+        else:
+            data[verbose_name]=[getattr(order[0],name),value]
+        data=json.dumps(data)
+        data={'data':data}
+        user_log=UserLog.objects.create(user=request.user,action='edit',model_name=order[0].__class__.__name__,model_object_id=order[0].id,data=data)
         order.update(**info_dict)
         if name=='delivery_no':
             product=Order.objects.get(pk=request.POST.get('pk')).product
             #stock_product=Stock_Product.objects.filter(product=product)
             stock_management=Stock_Management(stock_mode=True,product=product,mode=Stock_Mode.objects.get(pk=1))
             stock_management.save()
+        # user_log=UserLog(user=request.user,action='edit',model_name=order[0].__class__.__name__,model_object_id=order[0].id)
+        # user_log.save()
         return HttpResponse('success')
 
 @permission_required('order.delete_order',login_url='/permission/deny')
 def order_home_remove(request):
     order_id=request.GET.get("id")
     order=Order.objects.get(pk=order_id)
-    if order.state !=Order_State.objects.get(name=_("未发货")):
+    print order.state
+    if order.state !=Order_State.objects.get(level=1):
         return HttpResponse("<script language='javascript'>alert('订单已发货或结束，无法删除!');window.history.go(-1);</script>",status=400)
     else:
+    # user_log=UserLog(user=request.user,action='delete',model_name=order.__class__.__name__,model_object_id=order_id)
+    # user_log.save()
+        data={}
+        for i in order._meta.fields:
+            try:
+                verbose_name=order._meta.get_field(i.name).verbose_name.title().decode('utf-8')
+            except:
+                verbose_name=order._meta.get_field(i.name).verbose_name.title()
+            #print verbose_name
+            #print inspect.isclass(type(getattr(order,i.name))),getattr(order,i.name),type(getattr(order,i.name)),dir(getattr(order,i.name))
+            if hasattr(getattr(order,i.name),'_meta'):
+                data[verbose_name]=getattr(order,i.name).__unicode__()
+            else:
+                if isinstance(getattr(order,i.name),datetime):
+                    data[verbose_name]=(getattr(order,i.name)+timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+                else:
+                    data[verbose_name]=getattr(order,i.name)
+        data=json.dumps(data)
+        data={'data':data}
+        user_log=UserLog.objects.create(user=request.user,action='delete',model_name=order.__class__.__name__,model_object_id=order.id,data=data)
         order.delete()
     return HttpResponse("<script language='javascript'>alert('删除成功!');window.location.href=document.referrer;</script>")
 
@@ -138,6 +199,28 @@ def order_customer_add(request):
             phone_number=data['phone_number']
             contact=Contact_info(address=address,phone_number=phone_number,customer=customer,default=True)
             contact.save()
+            # user_log=UserLog(user=request.user,action='create',model_name=customer.__class__.__name__,model_object_id=customer.id)
+            # user_log.save()
+
+            data={u'地址':address,u'手机号码':phone_number}
+            for i in customer._meta.fields:
+                try:
+                    verbose_name=customer._meta.get_field(i.name).verbose_name.title().decode('utf-8')
+                except:
+                    verbose_name=customer._meta.get_field(i.name).verbose_name.title()
+                #print verbose_name
+                #print inspect.isclass(type(getattr(customer,i.name))),getattr(customer,i.name),type(getattr(customer,i.name)),dir(getattr(customer,i.name))
+                if hasattr(getattr(customer,i.name),'_meta'):
+                    data[verbose_name]=getattr(customer,i.name).__unicode__()
+                else:
+                    if isinstance(getattr(customer,i.name),datetime):
+                        data[verbose_name]=(getattr(customer,i.name)+timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+                    else:
+                        data[verbose_name]=getattr(customer,i.name)
+
+            data=json.dumps(data)
+            data={'data':data}
+            user_log=UserLog.objects.create(user=request.user,action='create',model_name=customer.__class__.__name__,model_object_id=customer.id,data=data)
             js_data="<script language='javascript'>var r=confirm('添加成功,确定继续添加,取消返回到客户列表!');if (r==true){  window.location.href='/order/customer/add'}else{window.location.href='/order/customer/'}</script>"
             return HttpResponse(js_data)
 
@@ -160,7 +243,30 @@ def order_customer_add(request):
 def order_customer_remove(request):
     customer_id=request.GET.get("id")
     customer=Customer.objects.get(pk=customer_id)
+    address=customer.get_contact_info()[0].address
+    phone_number=customer.get_contact_info()[0].phone_number
+    data={u'地址':address,u'手机号码':phone_number}
+    for i in customer._meta.fields:
+        try:
+            verbose_name=customer._meta.get_field(i.name).verbose_name.title().decode('utf-8')
+        except:
+            verbose_name=customer._meta.get_field(i.name).verbose_name.title()
+        #print verbose_name
+        #print inspect.isclass(type(getattr(customer,i.name))),getattr(customer,i.name),type(getattr(customer,i.name)),dir(getattr(customer,i.name))
+        if hasattr(getattr(customer,i.name),'_meta'):
+            data[verbose_name]=getattr(customer,i.name).__unicode__()
+        else:
+            if isinstance(getattr(customer,i.name),datetime):
+                data[verbose_name]=(getattr(customer,i.name)+timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+            else:
+                data[verbose_name]=getattr(customer,i.name)
+
+    data=json.dumps(data)
+    data={'data':data}
+    user_log=UserLog.objects.create(user=request.user,action='delete',model_name=customer.__class__.__name__,model_object_id=customer.id,data=data)
     customer.delete()
+    # user_log=UserLog(user=request.user,action='delete',model_name=customer.__class__.__name__,model_object_id=customer_id)
+    # user_log.save()
     return HttpResponseRedirect("/order/customer")
 
 @permission_required('order.change_customer',login_url='/permission/deny')
@@ -748,8 +854,25 @@ def order_customer_edit(request):
         if not value:
             raise Http404
         info_dict={'%s'%name:value}
+        #print info_dict
         customer=Customer.objects.filter(pk=request.POST.get("pk"))
+        data={}
+        try:
+            verbose_name=customer[0]._meta.get_field(name).verbose_name.title().decode('utf-8')
+        except:
+            verbose_name=customer[0]._meta.get_field(name).verbose_name.title()
+        #print verbose_name
+        #print inspect.isclass(type(getattr(customer,i.name))),getattr(customer,i.name),type(getattr(customer,i.name)),dir(getattr(customer,i.name))
+        if hasattr(getattr(customer[0],name),'_meta'):
+            data[verbose_name]=[getattr(customer[0],name).__unicode__(),value.__unicode__()]
+        else:
+            data[verbose_name]=[getattr(customer[0],name),value]
+        data=json.dumps(data)
+        data={'data':data}
+        user_log=UserLog.objects.create(user=request.user,action='edit',model_name=customer[0].__class__.__name__,model_object_id=customer[0].id,data=data)
         customer.update(**info_dict)
+        # user_log=UserLog(user=request.user,action='edit',model_name=customer[0].__class__.__name__,model_object_id=customer[0].id)
+        # user_log.save()
         return HttpResponse('success')
     else:
         customer_id=request.GET.get('customer_id')
@@ -1227,3 +1350,6 @@ def customer_alert_remove(request):
         app.control.revoke(customer_alert.task_id,terminate=True)
         customer_alert.delete()
     return HttpResponse("<script language='javascript'>alert('删除成功');</script>")
+
+
+

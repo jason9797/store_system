@@ -1,6 +1,7 @@
 #__author__ = 'jason_lee'
 from django.conf.urls import *
 from views import *
+from order.log_views import *
 urlpatterns=patterns('',
             url(r'^home/$',home,name='home'),
             url(r'^permission/deny/$',permission_deny,name='permission_deny'),
@@ -30,4 +31,7 @@ urlpatterns=patterns('',
         url(r'^issuing_person/cut/info/add/$',issuing_person_cut_info_add,name="get_issuing_person_cut_add"),
         url(r'^issuing_person/cut/info/edit/$',issuing_person_cut_info_edit,name="get_issuing_person_cut_edit"),
         url(r'^issuing_person/cut/info/remove/$',issuing_person_cut_info_remove,name="get_issuing_person_cut_remove"),
+        url(r'^user/log/info/$',user_log_info,name="user_log_info"),
+        url(r'^get/object/info/$',get_object_info,name="get_object_info"),
+
 )

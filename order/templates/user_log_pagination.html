@@ -1,0 +1,13 @@
+<table class="table table-bordered" id="table">
+        <thead>
+        <tr>
+            <th>内容</th>
+        </tr>
+        </thead>
+            {% for i in user_log %}
+            <tr>
+            <td>用户{{i.user}},于{{i.jointime|date:'Y-m-d H:i:s'}} {{i.get_action_display}}{% if i.model_name == 'Order' %}订单{% else %}客户{% endif %},
+                编号:<a href="{% url 'get_object_info' %}?id={{i.id}}" data-toggle="modal" data-target="#get_object_info">{{i.id}}</a></td>
+            </tr>
+            {% endfor %}
+        </table>

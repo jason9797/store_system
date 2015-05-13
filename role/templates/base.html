@@ -152,7 +152,7 @@ box-shadow: inset 0 1px 1px rgba(0,0,0,.075); margin-left:5px;}
                         <ul id="home" class="nav nav-list collapse secondmenu {% block action_active %}{% endblock %}">
                             <li><a href="{% url 'home' %}"><i class="glyphicon glyphicon-home"></i>主页</a></li>
                             {% if user.is_superuser %}
-                            <!--<li><a href="#"><i class="glyphicon glyphicon-list-alt"></i>操作记录</a></li>-->
+                            <li><a href="{% url 'user_log_info'%}"><i class="glyphicon glyphicon-list-alt"></i>操作记录</a></li>
                             <li><a href="{% url 'get_goal_info'%}"><i class="glyphicon glyphicon-flag"></i>目标管理</a></li>
                             <li><a href="{% url 'get_server_cut_info'%}"><img src="../../../static/debug_toolbar/img/kefu.png">客服提成系数管理</a></li>
                             <li><a href="{% url 'get_issuing_person_cut_info'%}"><img src="../../../static/debug_toolbar/img/jiedanyuan.png">出单人提成系数管理</a></li>

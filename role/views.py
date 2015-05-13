@@ -258,18 +258,25 @@ def role_name_remove(request):
     return response
 
 def get_all_permissions():
-    permission_choices=[u'原料',u'产品',u'客户水平',u'客户',u'订单状态',u'联系方式',u'订单',u'出单人',u'角色',u'客户导入',u'订单导入']
+    #permission_choices=[u'原料',u'产品',u'客户水平',u'客户',u'订单状态',u'联系方式',u'订单',u'出单人',u'角色',u'客户导入',u'订单导入']
+    #permission_choices=['stock','product','customer_alert','customer','contact_info','order','issuing_person','role','customerfile','orderfile']
+    permission_choices={'stock':u'原料','product':u'产品','customer_level':u'客户水平','customer':u'客户',
+                        'order_state':u'订单状态','contact_info':u'联系方式','order':u'订单','issuing_person':u'出单人',
+                        'role':u'角色','customerfile':u'客户导入','orderfile':u'订单导入'}
     data_json={'text':u'权限','children':[]}
-    for i in permission_choices:
-        if i ==u'原料':
-            permission=Permission.objects.filter(content_type=ContentType.objects.get(name=i))
+    for i,j in permission_choices.items():
+        # if i ==u'原料':
+        if i=='stock':
+            #permission=Permission.objects.filter(content_type=ContentType.objects.get(name=i))
+            permission=Permission.objects.filter(content_type=ContentType.objects.get(model=i))
             for k in permission:
                 if 'Can change' in k.name:
                     data_dict={'id':str(k.id),'text':u'仓管(填写单号)'}
             data_json['children'].append(data_dict)
         else:
-            data_dict={'text':i,'children':[]}
-            permission=Permission.objects.filter(content_type=ContentType.objects.get(name=i))
+            data_dict={'text':j,'children':[]}
+            #permission=Permission.objects.filter(content_type=ContentType.objects.get(name=i))
+            permission=Permission.objects.filter(content_type=ContentType.objects.get(model=i))
             for k in permission:
                 if 'Can add' in k.name:
                     data_dict['children'].append({'id':str(k.id),'text':k.name.replace('Can add ',u'添加')})
@@ -283,11 +290,14 @@ def get_all_permissions():
     #return HttpResponse(str(data_json))
     return data_json
 def get_user_permission(permission_list):
-    permission_choices=[u'原料',u'产品',u'客户水平',u'客户',u'订单状态',u'联系方式',u'订单',u'出单人',u'角色',u'客户导入',u'订单导入']
+    #permission_choices=[u'原料',u'产品',u'客户水平',u'客户',u'订单状态',u'联系方式',u'订单',u'出单人',u'角色',u'客户导入',u'订单导入']
+    permission_choices={'stock':u'原料','product':u'产品','customer_level':u'客户水平','customer':u'客户',
+                        'order_state':u'订单状态','contact_info':u'联系方式','order':u'订单','issuing_person':u'出单人',
+                        'role':u'角色','customerfile':u'客户导入','orderfile':u'订单导入'}
     data_json={'text':u'权限','children':[],'state':{"opened":'true'}}
-    for i in permission_choices:
-        if i ==u'原料':
-            permission=Permission.objects.filter(content_type=ContentType.objects.get(name=i))
+    for i,j in permission_choices.items():
+        if i =='stock':
+            permission=Permission.objects.filter(content_type=ContentType.objects.get(model=i))
             for k in permission:
                 if 'Can change' in k.name:
                     if k.id in permission_list:
@@ -296,8 +306,8 @@ def get_user_permission(permission_list):
                         data_dict={'id':str(k.id),'text':u'仓管(填写单号)'}
             data_json['children'].append(data_dict)
         else:
-            data_dict={'text':i,'children':[]}
-            permission=Permission.objects.filter(content_type=ContentType.objects.get(name=i))
+            data_dict={'text':j,'children':[]}
+            permission=Permission.objects.filter(content_type=ContentType.objects.get(model=i))
             for k in permission:
                 if 'Can add' in k.name:
                     if k.id in permission_list:

@@ -7,6 +7,7 @@ from django.core.validators import RegexValidator
 from django.utils.translation import gettext as _
 from role.models import *
 from django.contrib.auth.models import Group
+
 class ProductForm(forms.Form):
 
     name = forms.CharField(label='名称',max_length=100)
@@ -98,3 +99,9 @@ class OrderFileForm(forms.ModelForm):
     class Meta:
         model=OrderFile
         fields=['title','file']
+
+
+class User_LogForm(forms.ModelForm):
+    class Meta:
+        model=UserLog
+        fields=['user','action']

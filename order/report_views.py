@@ -77,7 +77,7 @@ def income_reporter(request):
             try:
                 last_day_money[str(int(i['day'][-2:]))]+=Product.objects.get(pk=i['product']).price
             except:
-                last_day_money+=0
+                last_day_money[str(int(i['day'][-2:]))]+=0
     else:
         for i in range(1,last_month_endtime.day+1):
                 #last_day_money[last_month_endtime.replace(day=i).strftime('%Y-%m-%d')]=0

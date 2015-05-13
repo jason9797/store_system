@@ -3,7 +3,7 @@ from django.db import models
 from django.core.validators import RegexValidator
 import datetime
 # Create your models here.
-from simple_history.models import HistoricalRecords
+#from simple_history.models import HistoricalRecords
 
 class Stock(models.Model):
     '''
@@ -17,7 +17,7 @@ class Stock(models.Model):
     stock_type = models.ForeignKey('Stock_Type',verbose_name='类别',blank=True,null=True,on_delete=models.SET_NULL)
     stock_channel = models.ForeignKey('Stock_Channel',verbose_name='进货渠道',blank=True,null=True,on_delete=models.SET_NULL)
     jointime = models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
-    history = HistoricalRecords()
+    #history = HistoricalRecords()
     class Meta:
         verbose_name='原料'
 
@@ -30,7 +30,7 @@ class Stock_Type(models.Model):
     原料类别
     '''
     type_name = models.CharField(verbose_name='类别名称',max_length=50)
-    history = HistoricalRecords()
+    #history = HistoricalRecords()
     class Meta:
         verbose_name='原料类别'
 
@@ -46,7 +46,7 @@ class Stock_Channel(models.Model):
                                  message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone_number = models.CharField(verbose_name='手机号码',max_length=20,validators=[phone_regex], blank=True)
     jointime=models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
-    history = HistoricalRecords()
+    #history = HistoricalRecords()
     class Meta:
         verbose_name='原料渠道'
 
@@ -62,7 +62,7 @@ class Stock_Management(models.Model):
     product=models.ForeignKey('order.Product',verbose_name='产品',blank=True,null=True,on_delete=models.SET_NULL)
     mode = models.ForeignKey('Stock_Mode',verbose_name='出入方式',blank=True,null=True,on_delete=models.SET_NULL)
     jointime =models.DateTimeField(verbose_name='添加时间',auto_now_add=True)
-    history = HistoricalRecords()
+    #history = HistoricalRecords()
     class Meta:
         verbose_name='库存管理'
 
@@ -76,7 +76,7 @@ class Stock_Mode(models.Model):
     
     method = models.CharField(verbose_name='方式',max_length=200)
     description = models.CharField(verbose_name='描述',max_length=100)
-    history = HistoricalRecords()
+    #history = HistoricalRecords()
     class Meta:
         verbose_name='出入方式'
     def __unicode__(self):

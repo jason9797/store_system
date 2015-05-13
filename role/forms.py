@@ -49,9 +49,13 @@ class UsergroupForm(forms.ModelForm):
         # self.groups=forms.ModelChoiceField(label=_('组'),queryset=Group.objects.all(),
         # widget=forms.RadioSelect(),required=False)
 class GroupForm(forms.ModelForm):
-    permission_choices=[u'原料',u'产品',u'客户水平',u'客户',u'订单状态',u'联系方式',u'订单',u'出单人',u'角色',u'客户导入',u'订单导入']
+    #permission_choices=[u'原料',u'产品',u'客户水平',u'客户',u'订单状态',u'联系方式',u'订单',u'出单人',u'角色',u'客户导入',u'订单导入']
+    # permissions=forms.ModelMultipleChoiceField(label=_('权限'),queryset=Permission.objects.filter(
+    #     content_type__in=ContentType.objects.filter(name__in=permission_choices)),
+    #     widget=FilteredSelectMultiple("verbose name",is_stacked=False))
+    permission_choices=['stock','product','customer_level','customer','contact_info','order','issuing_person','role','customerfile','orderfile']
     permissions=forms.ModelMultipleChoiceField(label=_('权限'),queryset=Permission.objects.filter(
-        content_type__in=ContentType.objects.filter(name__in=permission_choices)),
+        content_type__in=ContentType.objects.filter(model__in=permission_choices)),
         widget=FilteredSelectMultiple("verbose name",is_stacked=False))
     class Meta:
         model=Group

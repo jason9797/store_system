@@ -1,0 +1,35 @@
+{% load verbose_name %}
+<div class="modal-header">
+        <button type="button" class="close"
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+        <h4 class="modal-title" id="myModalLabel">
+               操作类型:
+            {% if object.action == 'delete' %}删除
+            {% else %}
+            {% if object.action == 'create' %}
+            新建{% else %}
+            修改{% endif %}
+            {% endif %}
+            </h4>
+        </div>
+    <div class="modal-body">
+        {% if object.action == 'edit' %}
+        {% for i,k in data.items %}
+        <p><label class="col-md-5 text-align-right">{{i}}:</label>
+        <input name="" value="{{ k.0 }}" readonly="readonly"/>改成<input name="" value="{{ k.1 }}" readonly="readonly"/></p>
+        {% endfor %}
+        {% else %}
+        {% for i,k in data.items %}
+    <p><label class="col-md-5 text-align-right">{% if i == 'Id' %}编号:{% else %}{{i}}:{% endif %} </label>
+        <input name="" value="{{ k }}" readonly="readonly"/></p>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+    <button type="submit" class="btn btn-primary">确定</button>
+        </div>

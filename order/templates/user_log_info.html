@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% block home %}
+class="active"
+{% endblock %}
+{% block action_active %}in{% endblock %}
+{% block body %}
+<div class="row bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+    	<h3 class="panel-title">操作记录</h3>
+	</div>
+    <form action="" class="form-inline" id="filter" method="post" enctype="multipart/form-data" data-ajax="false">
+		  {% csrf_token %}
+        <div class="row">
+        <div class="col-md-3 form-group">
+            <label>用户名:{{ form.user }}</label>
+            </div>
+        <div class="col-md-3 form-group">
+            <label>类别:<select name="type"><option value="">---------</option> <option value="Order" {% if filter.type == 'Order' %} selected{% endif %}>
+                订单</option><option value="Customer" {% if filter.type == 'Customer' %} selected{% endif %}>客户</option></select></label>
+        </div>
+        <div class="col-md-3 form-group">
+            <label>开始时间:
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
+                    <input class="form-control" size="12" name="starttime" type="text" value="{{filter.starttime}}" readonly>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            <input type="hidden" id="dtp_input1" value="" /><br/></label>
+            </div>
+			<div class="col-md-3 form-group">
+            <label>结束时间:
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2">
+                    <input class="form-control" size="12" name="endtime" type="text" value="{{ filter.endtime }}" readonly>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            <input type="hidden" id="dtp_input2" value="" /><br/></label>
+            </div>
+            </div>
+        <div class="col-md-12 text-align-center">
+			<button type="SUBMIT" class="btn btn-primary bottom-size">查询</button>
+            </div>
+    </form>
+
+
+    </div>
+    <div class="row bg-box-shadow padding-5">
+        <table class="table table-bordered" id="table">
+        <thead>
+        <tr>
+            <th>内容</th>
+        </tr>
+        </thead>
+            {% for i in user_log %}
+            <tr>
+            <td>用户{{i.user}},于{{i.jointime|date:'Y-m-d H:i:s'}} {{i.get_action_display}}{% if i.model_name == 'Order' %}订单{% else %}客户{% endif %},
+                编号:<a href="{% url 'get_object_info' %}?id={{i.id}}" data-toggle="modal" data-target="#get_object_info">{{i.id}}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if user_log %}
+        <ul class="pagination" id="pagination"></ul>
+        {% endif %}
+    </div>
+<div class="modal fade" id="get_object_info" tabindex="-1" role="dialog"
+
+   aria-labelledby="myModalLabel" aria-hidden="true">
+
+   <div class="modal-dialog" style="width:1030px;">
+
+      <div class="modal-content">
+
+          </div>
+
+       </div>
+
+    </div>
+{% endblock %}
+{% block js %}
+<script src="/static/js/jquery.twbsPagination.min.js"></script>
+<!--ajax——csrf验证-->
+<script type="text/javascript">
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+
+<script type="text/javascript">
+
+$('body').on('hidden.bs.modal', '.modal', function () {
+
+$(this).removeData('bs.modal');
+
+});
+
+</script>
+
+{% if user_log %}
+<script type="text/javascript">
+$('#pagination').twbsPagination({
+        totalPages: {{ total_page }},
+		startPage:{{ current_page }},
+        visiblePages: {% if total_page > 4 %}5{% else %}{{ total_page }}{% endif %},
+        onPageClick: function (event, page) {
+            $.ajax({
+            type:"POST",
+            url:"{% url 'user_log_info' %}",
+    data:{
+      user:$("[name='user']").val(),
+      type:$("[name='type']").val(),
+    starttime:$("[name='starttime']").val(),
+    endtime:$("[name='endtime']").val(),
+    page:page},
+    datatype:"html",
+    success:
+        function(data){
+        //$('#table').children().remove();
+        //$('#table').append(data)
+        //$('#table').empty().append(data)
+        $('#table').html(data)
+    }
+            })
+            }
+    });
+</script>
+{% endif %}
+<!--分页-->
+{% endblock%}

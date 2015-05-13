@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '#ktu%6p9wllfd3jcc9$q@@d-an8+zzp_xzp+_1xkdq6-tapg6&'
-
+#SECURE_SSL_REDIRECT=False
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 #DEBUG=False
@@ -42,9 +42,11 @@ INSTALLED_APPS = (
     'role',
     'debug_toolbar',
     #'reversion',
-    'simple_history',
     'notifications',
     'djcelery',
+    'django.contrib.postgres',
+    'django_extensions',
+    "django_hstore",
     #"pinax.notifications",
     #"pinax_theme_bootstrap",
     #"bootstrapform",
@@ -86,7 +88,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'simple_history.middleware.HistoryRequestMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
@@ -130,11 +132,35 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'serverdb',
+        'USER': 'jason',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    },
 }
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -164,7 +190,6 @@ MEDIA_URL = "/media/"
 TEMPLATE_DIRS = (
      os.path.join(BASE_DIR, "templates"),
 )
-
 
 LOGGING = {
     'version': 1,
