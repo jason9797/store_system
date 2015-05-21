@@ -14,13 +14,26 @@ class="active"
 		  {% csrf_token %}
         <div class="row">
         <div class="col-md-6">
-            <label>名称:<input type="text" name="name" {% if filter.name %} value="{{ filter.name }}"{%else%}value=""{% endif %}></label>
-            </div>
+            <label>名称:{% if filter.name %}
+                <input type="text" name="name"  value="{{ filter.name }}"/>
+            {%else%}
+            <input type="text" name="name"  value=""/>
+            {% endif %}
+            </label></div>
         <div class="col-md-6">
             <label>性别:<select name="sex">
                 <option value=""></option>
-                <option value="True" {% if filter.sex == True %} selected{% endif %}>男</option>
-                <option value="False" {% if filter.sex == False %} selected{% endif %}>女</option>
+                {% if filter.sex == True %}<option value="True" selected>
+                {% else %}
+                <option value="True">
+                {% endif %}
+                男</option>
+                {% if filter.sex == False %}
+                <option value="False" selected>
+                {% else %}
+                    <option value="False">
+                {% endif %}
+                女</option>
             </select>
                 <!--
                 <input type="radio" name="sex" value="True" {% if filter.sex == True %} checked{% endif %}/>男

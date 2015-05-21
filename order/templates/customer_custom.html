@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block customer %}
+class="active"
+{% endblock %}
+{% block customer_active %}in{% endblock %}
+{% block head %}
+<style type="text/css">
+    .add-row {
+        padding-left:18px;
+        background:url(/static/images/add.png) no-repeat left center;
+    }
+    .delete-row {
+        float:right;
+        display:block;
+        margin:5px 0 0 5px;
+        text-indent:-6000px;
+        background:url(/static/images/delete.png) no-repeat left center;
+        width:16px;
+        height:16px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div class="row bg-box-shadow padding-10 panel panel-default">
+	<div class="panel-heading margin-5">
+    	<h3 class="panel-title">客户自定义字段管理</h3>
+	</div>
+    <form id="myForm" method="post" action="">
+        {% csrf_token %}
+    <table class="table">
+        <thead><tr>
+            <th>字段名称</th>
+            <th>字段类型</th>
+            <th>必填</th>
+            <th>客户检索显示</th>
+        </tr></thead>
+        <tbody>
+            {% for form in formset.forms %}
+            {% if formset.forms|length == 1 %}
+            <tr>
+               <td>{{ form.name }}</td>
+               <td class="select_type">{{ form.column_type }}</td>
+               <td>{{ form.required }}</td>
+                <td>{{ form.display }}</td>
+            </tr>
+            {% endif %}
+            {% if forloop.counter <= formset.forms|length %}
+            <tr>
+               <td>{{ form.name }}</td>
+               <td class="select_type">{{ form.column_type }}</td>
+               <td>{{ form.required }}</td>
+                <td>{{ form.display }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        {{ formset.management_form }}
+        </tbody>
+    </table>
+        <button type="submit">确定修改</button>
+</form>
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script src="/static/js/jquery.formset.js/"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#myForm tbody tr').formset(
+        {
+            addText:'添加字段',
+            deleteText:'删除该字段',
+            formCssClass: 'dynamic-formset2'
+        }
+        );
+    })
+/*
+    $(function(){
+    var select1=$('.select_type').find('select')
+    select1.change(function(){
+    var value = $(this).find("option:selected").val();
+    if(value=='char')
+    {
+    select1.parent().after('<input style="margin-left: 15px;width: 80px;" name='+$(this).attr('name').substring(0,7)+'char value="" placeholder="字符长度"/>');
+    }
+
+    });
+    })
+*/
+</script>
+{% endblock %}

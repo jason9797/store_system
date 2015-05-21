@@ -15,11 +15,22 @@ class="active"
             <label>地址:<input type="text" name="address" {% if filter.address %} value="{{ filter.address }}"{%else%}value=""{% endif %}></label>
             </div>-->
         <div class="col-md-4 form-group">
-            <label>手机号码:<input type="text" name="phone_number" {% if filter.phone_number %} value="{{ filter.phone_number }}"{%else%}value=""{% endif %}></label>
-            </div>
+            <label>手机号码:{% if filter.phone_number %}
+                <input type="text" name="phone_number" value="{{ filter.phone_number }}">
+                {%else%}
+            <input type="text" name="phone_number" value="">
+            {% endif %}</label>
+        </div>
         <div class="col-md-4 form-group">
-            <label>是否默认:<input type="radio" name="default" value="True" {% if filter.default == True %} checked{% endif %}/>是
-                <input type="radio" name="default" value="False" {% if filter.default == False %} checked{% endif %}/>否
+            <label>是否默认:{% if filter.default == True %}
+                <input type="radio" name="default" value="True"  checked/>
+                <input type="radio" name="default" value="True"/>
+                {% endif %}是
+                {% if filter.default == False %}
+                <input type="radio" name="default" value="False" checked/>
+                {% else %}
+                <input type="radio" name="default" value="False" />
+                {% endif %}否
             </label>
             </div>
             <!--</div>

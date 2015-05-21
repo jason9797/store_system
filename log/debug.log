@@ -13992,3 +13992,1377 @@ Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/db/models/options.py", line 414, in <genexpr>
     "concrete_fields", (f for f in self.fields if f.concrete)
 AttributeError: 'VirtualField' object has no attribute 'concrete'
+Not Found: /favicon.ico
+Not Found: /
+Not Found: /favicon.ico
+Not Found: /
+Not Found: /
+Not Found: /
+Internal Server Error: /home/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/views.py", line 21, in home
+    return render(request,'home.html')
+  File "/Library/Python/2.7/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Library/Python/2.7/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 89, in render
+    output = self.filter_expression.resolve(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 647, in resolve
+    obj = self.var.resolve(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 787, in resolve
+    value = self._resolve_lookup(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 847, in _resolve_lookup
+    current = current()
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/models.py", line 94, in get_this_today
+    this_day_money=sum([i.product.price for i in today_order])
+AttributeError: 'NoneType' object has no attribute 'price'
+Internal Server Error: /home/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/views.py", line 21, in home
+    return render(request,'home.html')
+  File "/Library/Python/2.7/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Library/Python/2.7/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 322, in render
+    match = condition.eval(context)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 937, in eval
+    return self.value.resolve(context, ignore_failures=True)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 647, in resolve
+    obj = self.var.resolve(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 787, in resolve
+    value = self._resolve_lookup(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 847, in _resolve_lookup
+    current = current()
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/models.py", line 94, in get_this_today
+    this_day_money=sum([i.product.price for i in today_order])
+AttributeError: 'NoneType' object has no attribute 'price'
+Internal Server Error: /home/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/views.py", line 21, in home
+    return render(request,'home.html')
+  File "/Library/Python/2.7/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Library/Python/2.7/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 322, in render
+    match = condition.eval(context)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 937, in eval
+    return self.value.resolve(context, ignore_failures=True)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 647, in resolve
+    obj = self.var.resolve(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 787, in resolve
+    value = self._resolve_lookup(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 847, in _resolve_lookup
+    current = current()
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/models.py", line 94, in get_this_today
+    this_day_money=sum([i.product.price for i in today_order])
+AttributeError: 'NoneType' object has no attribute 'price'
+Internal Server Error: /home/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/views.py", line 21, in home
+    return render(request,'home.html')
+  File "/Library/Python/2.7/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Library/Python/2.7/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 322, in render
+    match = condition.eval(context)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 937, in eval
+    return self.value.resolve(context, ignore_failures=True)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 647, in resolve
+    obj = self.var.resolve(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 787, in resolve
+    value = self._resolve_lookup(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 847, in _resolve_lookup
+    current = current()
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/models.py", line 94, in get_this_today
+    this_day_money=sum([i.product.price for i in today_order])
+AttributeError: 'NoneType' object has no attribute 'price'
+Not Found: /favicon.ico
+Not Found: /apple-touch-icon-precomposed.png
+Not Found: /apple-touch-icon.png
+Not Found: /favicon.ico
+Internal Server Error: /order/customer/edit/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 151, in get_response
+    % (callback.__module__, view_name))
+ValueError: The view order.views.order_customer_edit didn't return an HttpResponse object. It returned None instead.
+Internal Server Error: /order/customer/edit/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 151, in get_response
+    % (callback.__module__, view_name))
+ValueError: The view order.views.order_customer_edit didn't return an HttpResponse object. It returned None instead.
+Internal Server Error: /order/customer/edit/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 151, in get_response
+    % (callback.__module__, view_name))
+ValueError: The view order.views.order_customer_edit didn't return an HttpResponse object. It returned None instead.
+Internal Server Error: /order/customer/edit/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 881, in order_customer_edit
+    Customer.objects.filter(id__in=id_list).update({'user':User.objects.get(username=server)})
+TypeError: update() takes exactly 1 argument (2 given)
+Internal Server Error: /order/customer/remove/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 249, in order_customer_remove
+    customer=Customer.objects.get(pk=customer_id)
+  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 334, in get
+    self.model._meta.object_name
+DoesNotExist: Customer matching query does not exist.
+Internal Server Error: /order/customer/edit/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 878, in order_customer_edit
+    customer_edit_log(i,request.user,'user',User.objects.get(username=server))
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 894, in customer_edit_log
+    verbose_name=customer[0]._meta.get_field(name).verbose_name.title()
+TypeError: 'Customer' object does not support indexing
+Internal Server Error: /order/customer/edit/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 878, in order_customer_edit
+    customer_edit_log(i,request.user,'user',User.objects.get(username=server))
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 901, in customer_edit_log
+    data=json.dumps(data)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py", line 243, in dumps
+    return _default_encoder.encode(obj)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: <User: 201> is not JSON serializable
+Internal Server Error: /order/customer/edit/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 878, in order_customer_edit
+    customer_edit_log(i,request.user,'user',User.objects.get(username=server))
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 901, in customer_edit_log
+    data=json.dumps(data)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py", line 243, in dumps
+    return _default_encoder.encode(obj)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: <User: 201> is not JSON serializable
+Not Found: /
+Not Found: /order/home/
+Internal Server Error: /order/customer/edit/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 878, in order_customer_edit
+    customer_edit_log(i,request.user,'user',User.objects.get(username=server))
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 902, in customer_edit_log
+    data=json.dumps(data)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py", line 243, in dumps
+    return _default_encoder.encode(obj)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: <User: test1> is not JSON serializable
+Internal Server Error: /order/customer/edit/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 878, in order_customer_edit
+    customer_edit_log(i,request.user,'user',User.objects.get(username=server))
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 903, in customer_edit_log
+    data=json.dumps(data)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py", line 243, in dumps
+    return _default_encoder.encode(obj)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: <User: test1> is not JSON serializable
+Internal Server Error: /order/customer/edit/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 878, in order_customer_edit
+    customer_edit_log(i,request.user,'user',User.objects.get(username=server))
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 898, in customer_edit_log
+    data[verbose_name]=[getattr(customer,name).__unicode__(),value.__unicode__()]
+AttributeError: 'NoneType' object has no attribute '__unicode__'
+Not Found: /
+Not Found: /
+Not Found: /customer/custom/settings
+Not Found: /favicon.ico
+Not Found: /customer/custom/setting
+Forbidden (CSRF token missing or incorrect.): /customer/column/setting/
+Forbidden (CSRF token missing or incorrect.): /customer/column/setting/
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 98, in customer_custom_design
+    return render(request,'customer_custom.html',{'formset':formset})
+UnboundLocalError: local variable 'formset' referenced before assignment
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 98, in customer_custom_design
+    return render(request,'customer_custom.html',{'formset':formset})
+UnboundLocalError: local variable 'formset' referenced before assignment
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/store_system/urls.py", line 18, in <module>
+    url(r'',include("role.urls")),
+  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/urls.py", line 4, in <module>
+    from order.log_views import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 9, in <module>
+    from forms import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/forms.py", line 117, in <module>
+    class Table_designForm(forms.Form):
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/forms.py", line 119, in Table_designForm
+    column_type=forms.ChoiceField(label="类型",choices=Column_Types,default=Column_Types[0][0])
+  File "/Library/Python/2.7/site-packages/django/forms/fields.py", line 831, in __init__
+    initial=initial, help_text=help_text, *args, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'default'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 223, in get_response
+    response = middleware_method(request, response)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/middleware.py", line 94, in process_response
+    new_response = panel.process_response(request, response)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/panels/request.py", line 41, in process_response
+    match = resolve(request.path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 522, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/store_system/urls.py", line 18, in <module>
+    url(r'',include("role.urls")),
+  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/urls.py", line 4, in <module>
+    from order.log_views import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 9, in <module>
+    from forms import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/forms.py", line 117, in <module>
+    class Table_designForm(forms.Form):
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/forms.py", line 119, in Table_designForm
+    column_type=forms.ChoiceField(label="类型",choices=Column_Types,default=Column_Types[0][0])
+  File "/Library/Python/2.7/site-packages/django/forms/fields.py", line 831, in __init__
+    initial=initial, help_text=help_text, *args, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'default'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 99, in customer_custom_design
+    return render(request,'customer_custom.html',{'formset':formset})
+UnboundLocalError: local variable 'formset' referenced before assignment
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 99, in customer_custom_design
+    return render(request,'customer_custom.html',{'formset':formset})
+UnboundLocalError: local variable 'formset' referenced before assignment
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 99, in customer_custom_design
+    return render(request,'customer_custom.html',{'formset':formset})
+UnboundLocalError: local variable 'formset' referenced before assignment
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 99, in customer_custom_design
+    return render(request,'customer_custom.html',{'formset':formset})
+UnboundLocalError: local variable 'formset' referenced before assignment
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/store_system/urls.py", line 18, in <module>
+    url(r'',include("role.urls")),
+  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/urls.py", line 4, in <module>
+    from order.log_views import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 96
+    else:
+       ^
+IndentationError: expected an indented block
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 223, in get_response
+    response = middleware_method(request, response)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/middleware.py", line 94, in process_response
+    new_response = panel.process_response(request, response)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/panels/request.py", line 41, in process_response
+    match = resolve(request.path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 522, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/store_system/urls.py", line 18, in <module>
+    url(r'',include("role.urls")),
+  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/urls.py", line 4, in <module>
+    from order.log_views import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 96
+    else:
+       ^
+IndentationError: expected an indented block
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 99, in customer_custom_design
+    return render(request,'customer_custom.html',{'formset':formset})
+UnboundLocalError: local variable 'formset' referenced before assignment
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 99, in customer_custom_design
+    return render(request,'customer_custom.html',{'formset':formset})
+UnboundLocalError: local variable 'formset' referenced before assignment
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 99, in customer_custom_design
+    return render(request,'customer_custom.html',{'formset':formset})
+UnboundLocalError: local variable 'formset' referenced before assignment
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 99, in customer_custom_design
+    data=form.clean_data()
+AttributeError: 'Table_designForm' object has no attribute 'clean_data'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 99, in customer_custom_design
+    data=form.clean_data
+AttributeError: 'Table_designForm' object has no attribute 'clean_data'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 99, in customer_custom_design
+    data=form.cleaned_data()
+TypeError: 'dict' object is not callable
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 97, in customer_custom_design
+    print formset.cleaned_data
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 197, in cleaned_data
+    raise AttributeError("'%s' object has no attribute 'cleaned_data'" % self.__class__.__name__)
+AttributeError: 'Table_designFormFormSet' object has no attribute 'cleaned_data'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/store_system/urls.py", line 18, in <module>
+    url(r'',include("role.urls")),
+  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/urls.py", line 4, in <module>
+    from order.log_views import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 9, in <module>
+    from forms import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/forms.py", line 125, in <module>
+    table_design_formset=forms.formset_factory(Table_designForm,max_num=10,min_num=0,prefix='customer')
+TypeError: formset_factory() got an unexpected keyword argument 'prefix'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 223, in get_response
+    response = middleware_method(request, response)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/middleware.py", line 94, in process_response
+    new_response = panel.process_response(request, response)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/panels/request.py", line 41, in process_response
+    match = resolve(request.path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 522, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/store_system/urls.py", line 18, in <module>
+    url(r'',include("role.urls")),
+  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/urls.py", line 4, in <module>
+    from order.log_views import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 9, in <module>
+    from forms import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/forms.py", line 125, in <module>
+    table_design_formset=forms.formset_factory(Table_designForm,max_num=10,min_num=0,prefix='customer')
+TypeError: formset_factory() got an unexpected keyword argument 'prefix'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/store_system/urls.py", line 18, in <module>
+    url(r'',include("role.urls")),
+  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/urls.py", line 4, in <module>
+    from order.log_views import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 9, in <module>
+    from forms import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/forms.py", line 125, in <module>
+    table_design_formset=forms.formset_factory(Table_designForm(prefix='customer'),max_num=10,min_num=0)
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 432, in formset_factory
+    return type(form.__name__ + str('FormSet'), (formset,), attrs)
+AttributeError: 'Table_designForm' object has no attribute '__name__'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 223, in get_response
+    response = middleware_method(request, response)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/middleware.py", line 94, in process_response
+    new_response = panel.process_response(request, response)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/panels/request.py", line 41, in process_response
+    match = resolve(request.path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 522, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/store_system/urls.py", line 18, in <module>
+    url(r'',include("role.urls")),
+  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/urls.py", line 4, in <module>
+    from order.log_views import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 9, in <module>
+    from forms import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/forms.py", line 125, in <module>
+    table_design_formset=forms.formset_factory(Table_designForm(prefix='customer'),max_num=10,min_num=0)
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 432, in formset_factory
+    return type(form.__name__ + str('FormSet'), (formset,), attrs)
+AttributeError: 'Table_designForm' object has no attribute '__name__'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 101, in customer_custom_design
+    print formset.is_valid()
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 304, in is_valid
+    self.errors
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 278, in errors
+    self.full_clean()
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 325, in full_clean
+    for i in range(0, self.total_form_count()):
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 115, in total_form_count
+    return min(self.management_form.cleaned_data[TOTAL_FORM_COUNT], self.absolute_max)
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 97, in management_form
+    code='missing_management_form',
+ValidationError: [u'\u7ba1\u7406\u8868\u5355\u7684\u6570\u636e\u7f3a\u5931\u6216\u8005\u5df2\u88ab\u7be1\u6539']
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 101, in customer_custom_design
+    print formset.is_valid()
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 304, in is_valid
+    self.errors
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 278, in errors
+    self.full_clean()
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 325, in full_clean
+    for i in range(0, self.total_form_count()):
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 115, in total_form_count
+    return min(self.management_form.cleaned_data[TOTAL_FORM_COUNT], self.absolute_max)
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 97, in management_form
+    code='missing_management_form',
+ValidationError: [u'\u7ba1\u7406\u8868\u5355\u7684\u6570\u636e\u7f3a\u5931\u6216\u8005\u5df2\u88ab\u7be1\u6539']
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 101, in customer_custom_design
+    print formset.is_valid()
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 304, in is_valid
+    self.errors
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 278, in errors
+    self.full_clean()
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 325, in full_clean
+    for i in range(0, self.total_form_count()):
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 115, in total_form_count
+    return min(self.management_form.cleaned_data[TOTAL_FORM_COUNT], self.absolute_max)
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 97, in management_form
+    code='missing_management_form',
+ValidationError: [u'\u7ba1\u7406\u8868\u5355\u7684\u6570\u636e\u7f3a\u5931\u6216\u8005\u5df2\u88ab\u7be1\u6539']
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 101, in customer_custom_design
+    print formset.is_valid()
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 304, in is_valid
+    self.errors
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 278, in errors
+    self.full_clean()
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 325, in full_clean
+    for i in range(0, self.total_form_count()):
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 115, in total_form_count
+    return min(self.management_form.cleaned_data[TOTAL_FORM_COUNT], self.absolute_max)
+  File "/Library/Python/2.7/site-packages/django/forms/formsets.py", line 97, in management_form
+    code='missing_management_form',
+ValidationError: [u'\u7ba1\u7406\u8868\u5355\u7684\u6570\u636e\u7f3a\u5931\u6216\u8005\u5df2\u88ab\u7be1\u6539']
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 101, in customer_custom_design
+    data=form.cleaned_data
+AttributeError: 'Table_designForm' object has no attribute 'cleaned_data'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 101, in customer_custom_design
+    data=form.cleaned_data
+AttributeError: 'Table_designForm' object has no attribute 'cleaned_data'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 112, in customer_custom_design
+    customer_table.save()
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Library/Python/2.7/site-packages/django/db/models/sql/compiler.py", line 971, in execute_sql
+    cursor.execute(sql, params)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/panels/sql/tracking.py", line 159, in execute
+    return self._record(self.cursor.execute, sql, params)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/panels/sql/tracking.py", line 101, in _record
+    return method(sql, params)
+  File "/Library/Python/2.7/site-packages/django/db/backends/utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/Library/Python/2.7/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Python/2.7/site-packages/django/db/utils.py", line 97, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/Library/Python/2.7/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+InternalError: Syntax error near '[' at position 9
+LINE 1: ...", "schema_data", "jointime") VALUES ('customer', '{"data": ...
+                                                             ^
+
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 110, in customer_custom_design
+    table_dict=eval(json.dumps({'data':table_list}))
+  File "<string>", line 1, in <module>
+NameError: name 'false' is not defined
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 111, in customer_custom_design
+    table_dict=eval(json.dumps({'data':table_list}))
+  File "<string>", line 1, in <module>
+NameError: name 'false' is not defined
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 112, in customer_custom_design
+    customer_table.save()
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Library/Python/2.7/site-packages/django/db/models/sql/compiler.py", line 971, in execute_sql
+    cursor.execute(sql, params)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/panels/sql/tracking.py", line 159, in execute
+    return self._record(self.cursor.execute, sql, params)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/panels/sql/tracking.py", line 101, in _record
+    return method(sql, params)
+  File "/Library/Python/2.7/site-packages/django/db/backends/utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/Library/Python/2.7/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Python/2.7/site-packages/django/db/utils.py", line 97, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/Library/Python/2.7/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+DataError: invalid input syntax for type boolean: "测试"
+LINE 1: ..., 'name', 'column_type', 'display'], ARRAY[false, '测试', 'i...
+                                                             ^
+
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 110, in customer_custom_design
+    table_dict=eval(json.dump({'data':dict(table_list)}))
+ValueError: dictionary update sequence element #0 has length 4; 2 is required
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 110, in customer_custom_design
+    print eval(json.dump({'data':dict(table_list)}))
+ValueError: dictionary update sequence element #0 has length 4; 2 is required
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 110, in customer_custom_design
+    print json.dump({'data':dict(table_list)})
+ValueError: dictionary update sequence element #0 has length 4; 2 is required
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 110, in customer_custom_design
+    print json.dump({'data':table_list})
+TypeError: dump() takes at least 2 arguments (1 given)
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 110, in customer_custom_design
+    print json.dump(table_list)
+TypeError: dump() takes at least 2 arguments (1 given)
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 116, in customer_custom_design
+    data=json.loads(customer_table.schema_data['data'])
+AttributeError: 'QuerySet' object has no attribute 'schema_data'
+Internal Server Error: /order/customer/add
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 235, in order_customer_add
+    customer_extra=json.loads(Table_Design.objects.filter(schema_model='customer').order_by('-jointime')[0]['data'])
+TypeError: 'Table_Design' object has no attribute '__getitem__'
+Internal Server Error: /order/customer/add
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 246, in order_customer_add
+    return render(request,'order_customer_add.html',form_list)
+  File "/Library/Python/2.7/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 98, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 35, in get_template
+    return engine.get_template(template_name, dirs)
+  File "/Library/Python/2.7/site-packages/django/template/backends/django.py", line 30, in get_template
+    return Template(self.engine.get_template(template_name, dirs))
+  File "/Library/Python/2.7/site-packages/django/template/engine.py", line 167, in get_template
+    template, origin = self.find_template(template_name, dirs)
+  File "/Library/Python/2.7/site-packages/django/template/engine.py", line 141, in find_template
+    source, display_name = loader(name, dirs)
+  File "/Library/Python/2.7/site-packages/django/template/loaders/base.py", line 13, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/Library/Python/2.7/site-packages/django/template/loaders/base.py", line 23, in load_template
+    template = Template(source, origin, template_name, self.engine)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 190, in __init__
+    self.nodelist = engine.compile_string(template_string, origin)
+  File "/Library/Python/2.7/site-packages/django/template/engine.py", line 261, in compile_string
+    return parser.parse()
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 341, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 210, in do_extends
+    nodelist = parser.parse()
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 341, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 184, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 341, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 872, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 341, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 1014, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 341, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 1550, in do_with
+    "assignment" % bits[0])
+TemplateSyntaxError: u'with' expected at least one variable assignment
+Internal Server Error: /order/customer/add
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 246, in order_customer_add
+    return render(request,'order_customer_add.html',form_list)
+  File "/Library/Python/2.7/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Library/Python/2.7/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 217, in render
+    nodelist.append(node.render(context))
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 329, in render
+    return nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 1195, in render
+    return func(*resolved_args, **resolved_kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/templatetags/verbose_name.py", line 34, in get_widget
+    return table_widget.table_char
+AttributeError: type object 'table_widget' has no attribute 'table_char'
+Internal Server Error: /order/customer/add
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 246, in order_customer_add
+    return render(request,'order_customer_add.html',form_list)
+  File "/Library/Python/2.7/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Library/Python/2.7/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 217, in render
+    nodelist.append(node.render(context))
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 329, in render
+    return nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 1195, in render
+    return func(*resolved_args, **resolved_kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/templatetags/verbose_name.py", line 34, in get_widget
+    return table_widget().table_char
+AttributeError: 'table_widget' object has no attribute 'table_char'
+Internal Server Error: /order/customer/add
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 246, in order_customer_add
+    return render(request,'order_customer_add.html',form_list)
+  File "/Library/Python/2.7/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Library/Python/2.7/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Library/Python/2.7/site-packages/django/test/utils.py", line 96, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 217, in render
+    nodelist.append(node.render(context))
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 329, in render
+    return nodelist.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 1195, in render
+    return func(*resolved_args, **resolved_kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/templatetags/verbose_name.py", line 42, in get_widget
+    return forms.DateTimeBaseInput(attrs={'reqired':True}).render(name,'')
+AttributeError: 'module' object has no attribute 'DateTimeBaseInput'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 105, in customer_custom_design
+    data=form.cleaned_data
+AttributeError: 'Table_designForm' object has no attribute 'cleaned_data'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 105, in customer_custom_design
+    data=form.cleaned_data
+AttributeError: 'Table_designForm' object has no attribute 'cleaned_data'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 120, in customer_custom_design
+    return render(request,'customer_custom.html',{'formset':formset})
+  File "/Library/Python/2.7/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 98, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 35, in get_template
+    return engine.get_template(template_name, dirs)
+  File "/Library/Python/2.7/site-packages/django/template/backends/django.py", line 30, in get_template
+    return Template(self.engine.get_template(template_name, dirs))
+  File "/Library/Python/2.7/site-packages/django/template/engine.py", line 167, in get_template
+    template, origin = self.find_template(template_name, dirs)
+  File "/Library/Python/2.7/site-packages/django/template/engine.py", line 141, in find_template
+    source, display_name = loader(name, dirs)
+  File "/Library/Python/2.7/site-packages/django/template/loaders/base.py", line 13, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/Library/Python/2.7/site-packages/django/template/loaders/base.py", line 23, in load_template
+    template = Template(source, origin, template_name, self.engine)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 190, in __init__
+    self.nodelist = engine.compile_string(template_string, origin)
+  File "/Library/Python/2.7/site-packages/django/template/engine.py", line 261, in compile_string
+    return parser.parse()
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 341, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 210, in do_extends
+    nodelist = parser.parse()
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 341, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 184, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 341, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 872, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 341, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 1014, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 339, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 394, in invalid_block_tag
+    (command, get_text_list(["'%s'" % p for p in parse_until])))
+TemplateSyntaxError: Invalid block tag: 'endfor', expected 'elif'\uff0c'else' \u6216 'endif'
+Not Found: /customer/custom/setting
+Not Found: /customer/custom/setting/
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 121, in customer_custom_design
+    data=json.loads(customer_table[0].schema_data['data'])
+KeyError: 'data'
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 107, in customer_custom_design
+    if data['name']:
+KeyError: 'name'
+Internal Server Error: /order/customer/add
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 196, in order_customer_add
+    if i['required'] == True:
+TypeError: string indices must be integers
+Internal Server Error: /order/customer/add
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 193, in order_customer_add
+    customer_extra=json.loads(customer_table.schema_data)['data']
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/decoder.py", line 365, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+TypeError: expected string or buffer
+Internal Server Error: /order/customer/add
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/views.py", line 203, in order_customer_add
+    customer.save()
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Library/Python/2.7/site-packages/django/db/models/sql/compiler.py", line 971, in execute_sql
+    cursor.execute(sql, params)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/panels/sql/tracking.py", line 159, in execute
+    return self._record(self.cursor.execute, sql, params)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/panels/sql/tracking.py", line 101, in _record
+    return method(sql, params)
+  File "/Library/Python/2.7/site-packages/django/db/backends/utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/Library/Python/2.7/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Python/2.7/site-packages/django/db/utils.py", line 97, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/Library/Python/2.7/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+ProgrammingError: function hstore(text[], integer[]) does not exist
+LINE 1: ...data", "jointime") VALUES ('测试', true, 9, NULL, hstore(ARR...
+                                                             ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+Not Found: /favicon.ico
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 126, in customer_custom_design
+    except exceptions:
+NameError: global name 'exceptions' is not defined
+Internal Server Error: /customer/column/setting/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 125, in customer_custom_design
+    name = data['name']
+KeyError: 'name'
+Internal Server Error: /order/customer/other/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/store_system/urls.py", line 18, in <module>
+    url(r'',include("role.urls")),
+  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/urls.py", line 4, in <module>
+    from order.log_views import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 9, in <module>
+    from forms import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/forms.py", line 11, in <module>
+    class ProductForm(forms.Form):
+NameError: name 'forms' is not defined
+Internal Server Error: /order/customer/other/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 223, in get_response
+    response = middleware_method(request, response)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/middleware.py", line 94, in process_response
+    new_response = panel.process_response(request, response)
+  File "/Library/Python/2.7/site-packages/debug_toolbar/panels/request.py", line 41, in process_response
+    match = resolve(request.path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 522, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/store_system/urls.py", line 18, in <module>
+    url(r'',include("role.urls")),
+  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/Users/jason_lee/Downloads/deskop/store_system/role/urls.py", line 4, in <module>
+    from order.log_views import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/log_views.py", line 9, in <module>
+    from forms import *
+  File "/Users/jason_lee/Downloads/deskop/store_system/order/forms.py", line 11, in <module>
+    class ProductForm(forms.Form):
+NameError: name 'forms' is not defined
+Not Found: /favicon.ico

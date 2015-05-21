@@ -23,7 +23,12 @@
         {% else %}
         {% for i,k in data.items %}
     <p><label class="col-md-5 text-align-right">{% if i == 'Id' %}编号:{% else %}{{i}}:{% endif %} </label>
-        <input name="" value="{{ k }}" readonly="readonly"/></p>
+        {% if i == '性别' %} {% if k == True %}<input name="" value="女" readonly="readonly"/>
+                            {% else %} <input name="" value="男" readonly="readonly"/>{% endif %}
+        {%else%}
+
+        <input name="" value="{{k}}" readonly="readonly"/>{% endif %}
+        </p>
         {% endfor %}
         {% endif %}
     </div>

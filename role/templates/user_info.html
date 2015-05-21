@@ -29,7 +29,7 @@ class="active"
                                                     {% for k in userinfo %}
                                                     <tr>
                                                         <td><a href="#" name="username" data-type="text" data-pk="{{ k.id }}" data-title="输入账号">{{ k.username }}</a></td>
-                                                        <td><a href="#" name="password" data-type="password" data-pk="{{ k.id }}" data-title="重设密码">重设密码</a></td>
+                                                        <td><a href="#" name="password" data-type="text" data-pk="{{ k.id }}" data-title="重设密码">重设密码</a></td>
                                                         <td><a href="#" name="first_name" data-type="text" data-pk="{{ k.id }}" data-title="输入名字">{{ k.first_name }}</a></td>
                                                         <td><a href="#" name="email" data-type="text" data-pk="{{ k.id }}" data-title="输入邮箱">{{ k.email }}</a></td>
                                                         <td><!--<a href="{% url 'user_group_edit' k.username %}" data-toggle="modal" data-target="#GroupModal" class="btn btn-default">角色</a>-->
@@ -41,10 +41,9 @@ class="active"
                                                     {% endfor %}
                                                 </table>
                                         </div>
-                                                </div>
-								{% endif %}
-						</div>
 
+								{% endif %}
+</div>
 <div class="modal fade" id="user_add" tabindex="-1" role="dialog"
    aria-labelledby="myModalLabel" aria-hidden="true">
    <div class="modal-dialog">
@@ -71,7 +70,7 @@ class="active"
             <button type="button" class="btn btn-default"
                data-dismiss="modal">关闭
             </button>
-            <button type="sumbit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">
                确定
             </button>
              </div>

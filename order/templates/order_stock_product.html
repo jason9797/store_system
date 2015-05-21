@@ -5,11 +5,22 @@
 		  {% csrf_token %}
         <div class="row">
         <div class="col-md-3 form-group">
-            <label>数量:<input type="text" name="quantity" {% if filter.quantity %} value="{{ filter.quantity }}"{%else%}value=""{% endif %}></label>
+            <label>数量:{% if filter.quantity %}
+                <input type="text" name="quantity" value="{{ filter.quantity }}">
+            {%else%}<input type="text" name="quantity" value="">{% endif %}
+            </label>
             </div>
         <div class="col-md-2 form-group">
-            <label>是否运费:<input type="radio" name="delivery_bill" value="True" {% if filter.delivery_bill == True %} checked{% endif %}/>是
-                <input type="radio" name="delivery_bill" value="False" {% if filter.delivery_bill == False %} checked{% endif %}/>否
+            <label>是否运费:{% if filter.delivery_bill == True %}
+                <input type="radio" name="delivery_bill" value="True" checked/>
+                {% else %}
+                <input type="radio" name="delivery_bill" value="True" />
+                {% endif %}是
+                {% if filter.delivery_bill == False %}
+                <input type="radio" name="delivery_bill" value="False" checked/>
+                {% else %}
+                <input type="radio" name="delivery_bill" value="False" />
+                {% endif %}否
             </label>
             </div>
             <div class="col-md-3 form-group">

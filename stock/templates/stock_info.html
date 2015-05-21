@@ -19,7 +19,10 @@ border-radius: 9px;
 		  {% csrf_token %}
         <div class="row">
         <div class="col-md-12 form-group" style="margin: 10px 0;">
-            <label style="width:100%"><span class="col-md-5" style="text-align:right">名称:</span><input type="text" name="name" {% if filter.name %} value="{{ filter.name }}"{%else%}value=""{% endif %}></label>
+            <label style="width:100%"><span class="col-md-5" style="text-align:right">名称:</span>
+                {% if filter.name %}
+                <input type="text" name="name"  value="{{ filter.name }}">
+            {%else%}<input type="text" name="name"  value="">{% endif %}</label>
             </div>
         <div class="col-md-12 form-group">
             <label style="width:100%;"><span class="col-md-5" style="text-align:right;">开始时间:</span>

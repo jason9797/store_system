@@ -15,18 +15,34 @@ class="active"
             <label>地址:<input type="text" name="address" {% if filter.address %} value="{{ filter.address }}"{%else%}value=""{% endif %}></label>
             </div>-->
         <div class="col-md-4 form-group">
-            <label>客户名称:<input type="text" name="customer" {% if filter.customer %} value="{{ filter.customer }}"{%else%}value=""{% endif %}></label>
+            <label>客户名称:{% if filter.customer %}<input type="text" name="customer" value="{{ filter.customer }}">
+            {%else%}<input type="text" name="customer" value="">{% endif %}
+            </label>
             </div>
         <div class="col-md-4 form-group">
-            <label>提醒状态:<input type="radio" name="alert_state" value="True" {% if filter.alert_state == True %} checked{% endif %}/>已提醒
-                <input type="radio" name="alert_state" value="False" {% if filter.alert_state == False %} checked{% endif %}/>未提醒
-                <input type="radio" name="alert_state" value="All" {% if filter.alert_state == 'All' %} checked{% endif %}/>全部
+            <label>提醒状态:{% if filter.alert_state == True %}
+                <input type="radio" name="alert_state" value="True" checked/>
+                {% else %}
+                <input type="radio" name="alert_state" value="True" />
+                {% endif %}
+                已提醒
+                {% if filter.alert_state == False %}<input type="radio" name="alert_state" value="False" checked/>
+                {% else %}
+                <input type="radio" name="alert_state" value="False"/>
+                {% endif %}未提醒
+                {% if filter.alert_state == 'All' %}<input type="radio" name="alert_state" value="All" checked/>
+                {% else %}<input type="radio" name="alert_state" value="All" />
+                {% endif %}全部
             </label>
             </div>
         <div class="col-md-4 form-group"><label>提醒人:</label>
         <select name="alert_user">
             {% for i in user_list%}
-            <option value="{{i.username}}" {% if filter.alert_user == i.username %}selected{% endif %}>{{i.first_name}}</option>
+            {% if filter.alert_user == i.username %}
+            <option value="{{i.username}}" selected>
+                {% else %}
+                <option value="{{i.username}}" >
+                {% endif %}{{i.first_name}}</option>
             {% endfor %}
         </select>
         </div>
@@ -36,7 +52,6 @@ class="active"
             <label>开始时间:
                 <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2">
                     <input class="form-control" size="16" name="starttime" type="text" value="{{filter.starttime}}" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             <input type="hidden" id="dtp_input1" value="" /><br/></label>
@@ -45,7 +60,6 @@ class="active"
             <label>结束时间:
                 <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2">
                     <input class="form-control" size="16" name="endtime" type="text" value="{{ filter.endtime }}" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             <input type="hidden" id="dtp_input2" value="" /><br/></label>
@@ -91,7 +105,11 @@ class="active"
                 <td>{{ i.alert_user}}</td>
                 <td>{{ i.content}}</td>
                 <td>{{ i.alert_time|date:"Y-m-d H:i:s"}}</td>
-                <td {% if not i.alert_state %}style="color:red;"{% endif %}>{% if i.alert_state %}已提醒{% else %}未提醒{% endif %}</td>
+                {% if not i.alert_state %}<td style="color:red;">
+                {% else %}
+                <td>
+                {% endif %}
+                {% if i.alert_state %}已提醒{% else %}未提醒{% endif %}</td>
                 <td>{{ i.jointime|date:"Y-m-d H:i:s"}}</td>
                 <td><a href="javascript:" onclick="delete_id('{{i.id}}')" ><i class="glyphicon glyphicon-trash"></i>删除</a></td>
             </tr>

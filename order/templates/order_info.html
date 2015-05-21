@@ -15,10 +15,18 @@ class="active"
 		  {% csrf_token %}
         <div class="row">
         <div class="col-md-4 form-group">
-            <label>快递单号:<input type="text" class="form-control" name="delivery_no" {% if filter.delivery_no %} value="{{ filter.delivery_no }}"{%else%}value=""{% endif %}></label>
+            <label>快递单号:{% if filter.delivery_no %}
+                <input type="text" class="form-control" name="delivery_no" value="{{ filter.delivery_no }}">
+            {%else%}
+                <input type="text" class="form-control" name="delivery_no" value="">
+                {% endif %}></label>
             </div>
         <div class="col-md-4 form-group">
-            <label>实收金额:<input type="text" class="form-control" name="fact_money" {% if filter.fact_money %} value="{{ filter.fact_money }}"{%else%}value=""{% endif %}></label>
+            <label>实收金额: {% if filter.fact_money %}
+                <input type="text" class="form-control" name="fact_money" value="{{ filter.fact_money }}">
+            {%else%}
+                <input type="text" class="form-control" name="fact_money" value="">
+                {% endif %}
             </label>
             </div>
         <div class="col-md-4 form-group">
@@ -65,11 +73,21 @@ class="active"
             <input type="hidden" id="dtp_input1" value="" />
 			<select class="add-house-option" name="start_hour">
                 {% for i in hour_list %}
-                <option value="{{i}}" {% if filter.starthour == i %} selected {% endif %}>{{i}}</option>
+                {% if filter.starthour == i %}
+                <option value="{{i}}" selected >
+                    {% else %}
+                    <option value="{{i}}">
+                    {% endif %}
+                    {{i}}</option>
                 {% endfor %}
 			</select>时
-			<select class="add-min-option" name="start_minute">{% for i in minute_list %}
-                <option value="{{i}}" {% if filter.startminute == i %} selected {% endif %}>{{i}}</option>
+			<select class="add-min-option" name="start_minute">
+                {% for i in minute_list %}
+                {% if filter.startminute == i %}
+                <option value="{{i}}"  selected>
+                    {% else %}
+                    <option value="{{i}}">
+                    {% endif %}{{i}}</option>
                 {% endfor %}</select>分</label>
             </div>
         <div class="col-md-5 form-group">
@@ -81,12 +99,21 @@ class="active"
             <input type="hidden" id="dtp_input2" value="" />
 			<select class="add-house-option" name="end_hour">
                 {% for i in hour_list %}
-                <option value="{{i}}" {% if filter.endhour == i %} selected {% endif %}>{{i}}</option>
+                {% if filter.endhour == i %}
+                <option value="{{i}}" selected>
+                    {% else %}
+                    <option value="{{i}}">
+                    {% endif %}{{i}}</option>
                 {% endfor %}
             </select>时
 			<select class="add-min-option" name="end_minute">
                 {% for i in minute_list %}
-                <option value="{{i}}" {% if filter.endminute == i %} selected {% endif %}>{{i}}</option>
+                {% if filter.endminute == i %}
+                <option value="{{i}}" selected>
+                    {% else %}
+                   <option value="{{i}}">
+                    {% endif %}
+                    {{i}}</option>
                 {% endfor %}
             </select>分</label>
             </div>

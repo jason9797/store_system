@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/jquery.datetimepicker.css">
+{% endblock %}
+{% load verbose_name %}
 {% block customer %}
 class="active"
 {% endblock %}
@@ -35,12 +39,28 @@ class="active"
                             <label>{{ customer_form.errors.address.as_text}}</label></div>
 							<div class="col-md-12"><label class="col-md-5 text-align-right">手机号码:</label>{{ customer_form.phone_number }}
                             <label>{{ customer_form.errors.phone_number.as_text}}</label></div>
-						
+						{% for i in customer_extra %}
+                            {% if i.required %}
+                            <div class="col-md-12"><label class="col-md-5 text-align-right">{{i.name}}:</label>
+                            {%  get_widget i.column_type i.column_id %}<label>＊自定义字段(必填)</label>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
 						<div class="col-md-12"><label class="col-md-5"></label><button type="submit" class="btn btn-primary bottom-size">确定</button></div>
                         </form>
                     </div>
 {% endblock %}
 {% block js %}
+<script src="/static/js/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+$('.datetimepicker').datetimepicker({
+    lang:'ch',
+	timepicker:false,
+	format:'Y-m-d',
+	formatDate:'Y-m-d',
+	minDate:'2014-01-02',
+	maxDate:'2017-01-02'});
+</script>
 <script type="text/javascript" src="/static/js/address/GlobalProvinces_main.js"></script>
 <script type="text/javascript" src="/static/js/address/GlobalProvinces_extend.js"></script>
 <script type="text/javascript" src="/static/js/address/initLocation.js"></script>

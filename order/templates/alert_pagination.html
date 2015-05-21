@@ -20,7 +20,9 @@
                 <td>{{ i.alert_user}}</td>
                 <td>{{ i.content}}</td>
                 <td>{{ i.alert_time|date:"Y-m-d H:i:s"}}</td>
-                <td {% if not i.alert_state %}style="color:red;"{% endif %}>{% if i.alert_state %}已提醒{% else %}未提醒{% endif %}</td>
+                {% if not i.alert_state %}<td style="color:red;">{% else %}
+                <td>{% endif %}
+                    {% if i.alert_state %}已提醒{% else %}未提醒{% endif %}</td>
                 <td>{{ i.jointime|date:"Y-m-d H:i:s"}}</td>
                 <td><a href="javascript:" onclick="delete_id('{{i.id}}')" ><i class="glyphicon glyphicon-trash"></i>删除</a></td>
             </tr>
