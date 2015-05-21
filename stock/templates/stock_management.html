@@ -19,8 +19,17 @@ border-radius: 9px;">
 		  {% csrf_token %}
         <div class="row" style="margin: 16px 0;">
         <div class="col-md-12 form-group">
-            <label style="width:100%"><span style="text-align:right" class="col-md-5">出／入库:</span><input type="radio" name="stock_mode" value="True" {% if filter.stock_mode == True %} checked{% endif %}/>出
-                <input type="radio" name="stock_mode" value="False" {% if filter.stock_mode == False %} checked{% endif %}/>入
+            <label style="width:100%"><span style="text-align:right" class="col-md-5">出／入库:</span>
+                {% if filter.stock_mode == True %}
+                <input type="radio" name="stock_mode" value="True" checked/>
+                {% else %}
+                <input type="radio" name="stock_mode" value="True"/>
+                {% endif %}出
+                {% if filter.stock_mode == False %}
+                <input type="radio" name="stock_mode" value="False" checked/>
+                {% else %}
+                <input type="radio" name="stock_mode" value="False"/>
+                {% endif %}入
 
                 </label>
             </div>
@@ -80,7 +89,7 @@ border-radius: 9px;">
         </thead>
             {% for i in stock_management %}
             <tr>
-            <td><a href="#" name="stock_mode" class="{{ i.stock_mode }}"data-type="checklist" data-pk="{{ i.id }}" data-title="选择出入库">{{i.stock_mode}}</a></td>
+            <td><a href="#" name="stock_mode" class="{{ i.stock_mode }}" data-type="checklist" data-pk="{{ i.id }}" data-title="选择出入库">{{i.stock_mode}}</a></td>
                 <td><a href="#" name="product" data-type="select" data-pk="{{ i.id }}" data-title="产品">{{ i.product }}</a></td>
             <td><a href="#" name="mode" data-type="select" data-pk="{{ i.id }}" data-title="模式">{{ i.mode }}</a></td>
                 <td>{{ i.jointime|date:'Y-m-d h:i:s' }}</td>

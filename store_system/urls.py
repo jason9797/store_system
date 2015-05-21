@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.conf.urls.static import static
@@ -9,24 +9,23 @@ import notifications
 # admin.autodiscover()
 # authority.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     # Examples:
     # url(r'^$', 'store_system.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'',include("role.urls")),
-    url(r'^stock/',include("stock.urls")),
-    url(r'^order/',include("order.urls")),
-    url('^inbox/notifications/', include(notifications.urls)),
-    #url(r"^notifications/", include("pinax.notifications.urls")),
-    #(r'^messages/', include('django_messages.urls')),
+    url(r'^admin/', include(admin.site.urls)), url(
+        r'', include("role.urls")), url(r'^stock/', include("stock.urls")), url(
+            r'^order/', include("order.urls")), url(
+                '^inbox/notifications/', include(notifications.urls)),
+    # url(r"^notifications/", include("pinax.notifications.urls")),
+    # (r'^messages/', include('django_messages.urls')),
     # (r'^authority/', include('authority.urls')),
-)+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+) + static(settings.STATIC_URL,
+           document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += patterns('',
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    )
+                            url(r'^__debug__/', include(debug_toolbar.urls)),)

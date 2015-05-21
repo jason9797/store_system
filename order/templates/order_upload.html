@@ -8,7 +8,12 @@ class="active"
 							<div class="panel-heading margin-5">
 								<h3 class="panel-title">订单导入</h3>
 							</div>
-                            <div class="alert alert-warning"><strong>仅支持xls,xlsx</strong><a href="/media/order/test.xlsx" class="btn">模版下载</a></div>
+                            <div class="alert alert-warning">
+                                <div class="container">
+                                <div class="col-md-6"><strong>仅支持xls,xlsx</strong></div>
+                                <div class="col-md-6">
+                                <a href="/media/order/test.xlsx" class="btn" style="color:red;">模版下载</a>
+                                </div></div></div>
                         <form action="" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form.errors }}

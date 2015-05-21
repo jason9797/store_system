@@ -26,7 +26,10 @@
         </thead>
         {% for i in contact_info %}
 
-        <tr {% if i.default %} style="color:red;"{% endif %}>
+        {% if i.default %}<tr style="color:red;">
+        {% else %}
+        <tr>
+        {% endif %}
             <td>{{ i.address }}</td>
             <td>{{ i.phone_number }}</td>
             <td><a href="{% url 'order_contact_edit' %}?customer_id={{ customer.id }}&contact_id={{ i.id }}">设为默认</a></td>

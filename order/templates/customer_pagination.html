@@ -1,8 +1,9 @@
 <thead>
-
-        <tr>
-            <th>客户编号</th>
-            <th>姓名</th>
+<tr>
+			<th><input type="checkbox">
+			</th>
+            <th style="position:relative;">姓名
+			</th>
 
             <th>性别</th>
 
@@ -24,8 +25,10 @@
 
             {% for i in customer %}
 
-            <tr>
-            <td>{{i.id}}</td>
+            <tr id="customer_{{i.id}}">
+			<td><input type="checkbox" value={{i.id}}>
+
+			</td>
             <td>
 
                 <a href="{% url 'get_customer_info' %}?customer_id={{i.id}}" data-toggle="modal" data-target="#get_customer_info">{{ i.name }}</a>
@@ -82,25 +85,26 @@
 
                 {% if not user.is_superuser %}
 
-                <a href="{% url 'order_contact_add'%}?id={{i.id}}">添加联系方式</a><br>
+                <a href="{% url 'order_contact_add'%}?id={{i.id}}"><i class="glyphicon glyphicon-plus-sign"></i>添加联系方式</a>
 
                     {% if not i.user %}
 
-                <a href="{% url 'order_customer_edit' %}?customer_id={{i.id}}">归属到自己</a>
+                <a href="javascript:;" onclick= "owner_id('{{i.id}}')"><i class="glyphicon glyphicon-check"></i>归属到自己</a>
 
                     {% else %}
 
-                <a href="{% url 'order_add'%}?customer_id={{i.id}}">开单</a><br>
+                <a href="{% url 'order_add'%}?customer_id={{i.id}}"><i class="glyphicon glyphicon-edit"></i>开单</a>
 
                 {% endif %}
 
                 {% endif %}
 
-                    <a href="{% url 'order_customer_remove' %}?id={{i.id}}" onclick= "return confirm('确定删除?');" ><i class="glyphicon glyphicon-trash"></i>删除</a></td>
+                    <a href="javascript:;" onclick= "delete_id('{{i.id}}')" ><i class="glyphicon glyphicon-trash"></i>删除</a></td>
 
             </tr>
 
             {% endfor %}
+
 <script type="text/javascript">
 $(document).ready(function() {
     //toggle `popup` / `inline` mode
@@ -164,4 +168,24 @@ $(document).ready(function() {
     );
 
 });
+$(".widthonly thead input[type=checkbox]").click(function (){
+	if($(this).is(":checked")){
+		$(".widthonly tbody input[type=checkbox]").prop("checked",true);
+		$(".float-case").show();
+	}else{
+		$(".widthonly tbody input[type=checkbox]").prop("checked",false);
+		$(".float-case").hide();
+	}
+});
+$(".widthonly tbody input[type=checkbox]").click(function (){
+	if($(this).is(":checked")){
+		($(".widthonly tbody input[type=checkbox]:checked").length)<($(".widthonly tbody input[type=checkbox]").length)?
+		$(".widthonly thead input[type=checkbox]").prop("checked",false):$(".widthonly thead input[type=checkbox]").prop("checked",true);
+		$(".float-case").show();
+	}else{
+		$(".widthonly thead input[type=checkbox]").prop("checked",false);
+		($(".widthonly tbody input[type=checkbox]:checked").length)<1?$(".float-case").hide():$(".float-case").show();
+	}
+});
+
 </script>

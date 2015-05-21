@@ -15,8 +15,18 @@ class="active"
             <label>用户名:{{ form.user }}</label>
             </div>
         <div class="col-md-3 form-group">
-            <label>类别:<select name="type"><option value="">---------</option> <option value="Order" {% if filter.type == 'Order' %} selected{% endif %}>
-                订单</option><option value="Customer" {% if filter.type == 'Customer' %} selected{% endif %}>客户</option></select></label>
+            <label>类别:<select name="type"><option value="">---------</option>
+                {% if filter.type == 'Order' %}
+                <option value="Order" selected>
+                    {% else %}
+                     <option value="Order">
+                    {% endif %}
+                订单</option>
+                {% if filter.type == 'Customer' %}
+                <option value="Customer"  selected>
+                    {% else %}
+                    <option value="Customer">
+                    {% endif %}客户</option></select></label>
         </div>
         <div class="col-md-3 form-group">
             <label>开始时间:
