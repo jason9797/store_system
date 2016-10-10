@@ -1,5 +1,5 @@
 # store_system
-CRM system(based on Tea company who use phone to sale product(tea))
+a failed system. just give up!
 
 Fuction:
 
